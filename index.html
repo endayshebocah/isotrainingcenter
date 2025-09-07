@@ -188,6 +188,8 @@
         .print-view-active .add-row-toggle-btn,
         .print-view-active .module-btn,
         .print-view-active #open-rekapan-btn,
+        .print-view-active #open-export-modal-btn,
+        .print-view-active #open-import-modal-btn,
         .print-view-active .print-btn,
         .print-view-active #landing-page,
         .print-view-active #app-page,
@@ -236,7 +238,7 @@
             .page-content.active {
                 display: block !important;
             }
-            .btn-3d, .back-btn, .add-row-toggle-btn, .module-btn, #open-rekapan-btn, .print-btn {
+            .btn-3d, .back-btn, .add-row-toggle-btn, .module-btn, #open-rekapan-btn, #open-export-modal-btn, #open-import-modal-btn, .print-btn {
                 display: none !important;
             }
             #landing-page, #app-page {
@@ -327,6 +329,13 @@
                 </button>
                 <button id="open-rekapan-btn" class="w-full btn-3d bg-indigo-600 hover:bg-indigo-700 text-white py-4 px-6 rounded-lg text-xl font-semibold shadow-md mt-4">
                     Semua Rekapan Data Tersimpan
+                </button>
+                
+                <button id="open-export-modal-btn" class="w-full btn-3d bg-teal-600 hover:bg-teal-700 text-white py-4 px-6 rounded-lg text-xl font-semibold shadow-md mt-4">
+                    Ekspor ke Excel
+                </button>
+                <button id="open-import-modal-btn" class="w-full btn-3d bg-orange-600 hover:bg-orange-700 text-white py-4 px-6 rounded-lg text-xl font-semibold shadow-md mt-4">
+                    Impor dari CSV
                 </button>
             </div>
         </div>
@@ -1285,6 +1294,71 @@
     </div>
     
     
+    <div id="export-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="height: auto; max-height: 90vh;">
+            <h3 class="text-xl font-bold mb-6 text-center">Ekspor Data ke Excel</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="export-tanggal-mulai" class="block text-sm font-medium text-gray-700">Tanggal Mulai (Opsional)</label>
+                    <input type="date" id="export-tanggal-mulai" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="export-tanggal-selesai" class="block text-sm font-medium text-gray-700">Tanggal Selesai (Opsional)</label>
+                    <input type="date" id="export-tanggal-selesai" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="export-form-select" class="block text-sm font-medium text-gray-700">Pilih Formulir</label>
+                    <select id="export-form-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option value="catatan-mutu-page">Daftar Catatan Mutu</option>
+                        <option value="sasaran-mutu-page">Sasaran Mutu & Rencana Tindakan</option>
+                        <option value="daftar-inventaris-page">Daftar Inventaris (Semua)</option>
+                        <option value="jadwal-perawatan-page">Jadwal Perawatan Infrastruktur</option>
+                        <option value="ceklis-perawatan-page">Checklist Perawatan</option>
+                        <option value="opportunity-page">Tabel Opportunity</option>
+                        <option value="analisa-resiko-page">Analisa Resiko</option>
+                        <option value="formulir-pendukung">Formulir Pendukung (Matriks & Pelatihan)</option>
+                        <option value="data-pendukung">Data Pendukung (Gambar)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-between items-center mt-8">
+                <button id="close-export-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
+                <button id="export-file-btn" class="btn-3d bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-6 rounded-lg">Ekspor File</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="import-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="height: auto; max-height: 90vh;">
+            <h3 class="text-xl font-bold mb-6 text-center">Impor Data dari CSV</h3>
+            <div class="space-y-4">
+                <p class="text-sm text-center text-gray-600">Pilih formulir tujuan, lalu klik "Impor File" untuk memilih file CSV dari perangkat Anda.</p>
+                <div>
+                    <label for="import-form-select" class="block text-sm font-medium text-gray-700">Pilih Formulir Tujuan</label>
+                    <select id="import-form-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option value="catatan-mutu-page">Daftar Catatan Mutu</option>
+                        <option value="sasaran-mutu-page">Sasaran Mutu</option>
+                        <option value="rencana-tindakan">Rencana Tindakan (Sasaran Mutu)</option>
+                        <option value="daftar-inventaris-1">Daftar Inventaris (Tabel 1)</option>
+                        <option value="daftar-inventaris-2">Daftar Inventaris (Tabel 2)</option>
+                        <option value="jadwal-perawatan-page">Jadwal Perawatan Infrastruktur</option>
+                        <option value="ceklis-perawatan-page">Checklist Perawatan</option>
+                        <option value="opportunity-page">Tabel Opportunity</option>
+                        <option value="analisa-resiko-page">Analisa Resiko</option>
+                        <option value="matriks-kompetensi-page">Matriks Kompetensi</option>
+                        <option value="jadwal-pelatihan-page">Jadwal Pelatihan</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex justify-between items-center mt-8">
+                <button id="close-import-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
+                <button id="import-file-btn" class="btn-3d bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-6 rounded-lg">Impor File</button>
+            </div>
+        </div>
+    </div>
+
+
     <div id="tanggal-pendukung-modal" class="modal-overlay hidden">
         <div class="modal-content" style="height: auto;">
             <h3 class="text-xl font-bold mb-6 text-center">Pilih Rentang Tanggal</h3>
@@ -1378,6 +1452,7 @@
     </div>
 
     <input type="file" id="image-upload-input" class="hidden" accept="image/*">
+    <input type="file" id="csv-import-input" class="hidden" accept=".csv">
 
     
     <div id="opportunity-resiko-modal" class="modal-overlay hidden">
@@ -1482,7 +1557,9 @@
                         imageAction: document.getElementById('image-action-modal'),
                         imageView: document.getElementById('image-view-modal'),
                         sasaranDataPendukung: document.getElementById('sasaran-data-pendukung-modal'),
-                        signature: document.getElementById('signature-modal')
+                        signature: document.getElementById('signature-modal'),
+                        export: document.getElementById('export-modal'),
+                        import: document.getElementById('import-modal'),
                     };
                 },
                 open(id) { this.modals[id]?.classList.remove('hidden'); },
@@ -1504,6 +1581,7 @@
                 this.setupImageUpload();
                 this.setupPWA();
                 this.setupPrintButtons();
+                this.setupImportExport(); // New function for import/export logic
                 this.checkAndTriggerMaintenanceNotification();
 
                 try {
@@ -1528,6 +1606,8 @@
 
                 // Modal Triggers
                 this.elements.openRekapanBtn = document.getElementById('open-rekapan-btn');
+                this.elements.openExportModalBtn = document.getElementById('open-export-modal-btn');
+                this.elements.openImportModalBtn = document.getElementById('open-import-modal-btn');
                 this.elements.openOpportunityResikoModalBtn = document.getElementById('open-opportunity-resiko-modal-btn');
                 this.elements.openFormulirPendukungBtn = document.getElementById('open-formulir-pendukung-btn');
                 this.elements.openTanggalPendukungBtn = document.getElementById('open-tanggal-pendukung-btn');
@@ -1707,6 +1787,8 @@
             setupModalEventListeners() {
                 // Open Modals
                 if(this.elements.openRekapanBtn) this.elements.openRekapanBtn.addEventListener('click', () => this.ModalManager.open('rekapan'));
+                if(this.elements.openExportModalBtn) this.elements.openExportModalBtn.addEventListener('click', () => this.ModalManager.open('export'));
+                if(this.elements.openImportModalBtn) this.elements.openImportModalBtn.addEventListener('click', () => this.ModalManager.open('import'));
                 if(this.elements.openOpportunityResikoModalBtn) this.elements.openOpportunityResikoModalBtn.addEventListener('click', () => this.ModalManager.open('opportunityResiko'));
                 if(this.elements.openFormulirPendukungBtn) this.elements.openFormulirPendukungBtn.addEventListener('click', () => this.ModalManager.open('sasaranDataPendukung'));
 
@@ -1715,6 +1797,8 @@
                     const modalId = btn.id.replace('close-', '').replace('-btn', '');
                     const modalName = {
                         'rekapan': 'rekapan',
+                        'export': 'export',
+                        'import': 'import',
                         'opportunity-resiko-modal': 'opportunityResiko',
                         'sasaran-data-pendukung-modal': 'sasaranDataPendukung',
                         'tanggal-pendukung': 'tanggalPendukung',
@@ -2340,6 +2424,146 @@
                 if (this.elements.closePrintInstructionsXBtn) {
                     this.elements.closePrintInstructionsXBtn.addEventListener('click', closePrintOverlay);
                 }
+            },
+            
+            setupImportExport() {
+                const exportBtn = document.getElementById('export-file-btn');
+                const importBtn = document.getElementById('import-file-btn');
+                const importInput = document.getElementById('csv-import-input');
+
+                if (exportBtn) {
+                    exportBtn.addEventListener('click', () => this.handleExport());
+                }
+                if (importBtn) {
+                    importBtn.addEventListener('click', () => importInput.click());
+                }
+                if(importInput) {
+                    importInput.addEventListener('change', (e) => this.handleImport(e));
+                }
+            },
+            
+            handleExport() {
+                const formId = document.getElementById('export-form-select').value;
+                let dataToExport = [];
+                let headers = [];
+                let filename = `${formId.replace('-page', '')}.csv`;
+
+                const escapeCsvCell = (cell) => {
+                    const strCell = String(cell === null || cell === undefined ? '' : cell);
+                    if (strCell.includes(',') || strCell.includes('"') || strCell.includes('\\n')) {
+                        return `"${strCell.replace(/"/g, '""')}"`;
+                    }
+                    return strCell;
+                };
+
+                const convertToCsv = (data, headerRow) => {
+                    const rows = data.map(obj => headerRow.map(key => escapeCsvCell(obj[key])).join(','));
+                    return [headerRow.join(','), ...rows].join('\\n');
+                };
+
+                switch(formId) {
+                    case 'catatan-mutu-page':
+                        headers = ['nama', 'no', 'lokasi', 'masa', 'metode', 'media', 'penanggungJawab', 'keterangan'];
+                        dataToExport = this.state.catatanMutu;
+                        break;
+                    case 'sasaran-mutu-page':
+                        headers = ['sasaran', 'target', 'des', 'jan', 'feb', 'mart', 'apr', 'mei', 'ket'];
+                        const sasaranData = this.state.sasaranMutu;
+                        const rencanaHeaders = ['rencana', 'pelaksana', 'waktu', 'keterangan'];
+                        const rencanaData = this.state.rencanaTindakan;
+
+                        const combinedCsv = "SASARAN MUTU\n" + convertToCsv(sasaranData, headers) + 
+                                            "\\n\\nRENCANA TINDAKAN\n" + convertToCsv(rencanaData, rencanaHeaders);
+                        this.downloadCsv(combinedCsv, 'sasaran_mutu_dan_rencana.csv');
+                        return; // Exit early as we manually created the CSV
+                    case 'daftar-inventaris-page':
+                        headers = ['type', 'nama', 'merk', 'noInv', 'kondisi', 'ket'];
+                        dataToExport = [...this.state.inventaris1, ...this.state.inventaris2];
+                        break;
+                    case 'data-pendukung':
+                        headers = ['key', 'url', 'date'];
+                        dataToExport = this.state.dataPendukung;
+                        break;
+                    // ... add other cases for each form
+                    default:
+                        this.showToast('Ekspor untuk formulir ini belum diimplementasikan.');
+                        return;
+                }
+                
+                if (dataToExport.length === 0) {
+                    this.showToast('Tidak ada data untuk diekspor.');
+                    return;
+                }
+
+                const csvContent = convertToCsv(dataToExport, headers);
+                this.downloadCsv(csvContent, filename);
+            },
+            
+            downloadCsv(csvContent, filename) {
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                this.ModalManager.close('export');
+            },
+
+            async handleImport(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                const formId = document.getElementById('import-form-select').value;
+                const reader = new FileReader();
+
+                reader.onload = async (e) => {
+                    const text = e.target.result;
+                    const rows = text.split('\\n').filter(row => row.trim() !== '');
+                    if (rows.length < 2) {
+                        this.showToast("File CSV kosong atau hanya berisi header.");
+                        return;
+                    }
+
+                    const headers = rows[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+                    const data = rows.slice(1).map(row => {
+                        const values = row.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+                        let obj = {};
+                        headers.forEach((header, index) => {
+                            obj[header] = values[index];
+                        });
+                        return obj;
+                    });
+                    
+                    try {
+                        let firebaseKey;
+                        let targetState;
+
+                        switch (formId) {
+                            case 'catatan-mutu-page': firebaseKey = 'catatanMutu'; targetState = this.state.catatanMutu; break;
+                            case 'sasaran-mutu-page': firebaseKey = 'sasaranMutu'; targetState = this.state.sasaranMutu; break;
+                            case 'rencana-tindakan': firebaseKey = 'rencanaTindakan'; targetState = this.state.rencanaTindakan; break;
+                            // ... Add all other cases
+                            default:
+                                this.showToast("Impor untuk formulir ini belum didukung.");
+                                return;
+                        }
+
+                        // For simplicity, this replaces existing data. You might want to merge instead.
+                        await this.saveDataToFirebase(firebaseKey, data);
+                        this.showToast(`Data berhasil diimpor ke ${formId}.`);
+                        this.ModalManager.close('import');
+
+                    } catch (error) {
+                        console.error("Import failed:", error);
+                        this.showToast("Gagal mengimpor data. Periksa format file CSV.");
+                    }
+                };
+
+                reader.readAsText(file);
+                event.target.value = ''; // Reset input for next import
             },
 
             setupPWA() {

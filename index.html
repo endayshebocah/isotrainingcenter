@@ -183,7 +183,7 @@
         .print-view-active .modal-overlay,
         .print-view-active #loading-overlay,
         .print-view-active #toast-notification,
-        .print-view-active .btn-3d,
+        .print-view-active .main-container .btn-3d, /* Selector yang lebih spesifik untuk menyembunyikan tombol konten */
         .print-view-active .back-btn,
         .print-view-active .add-row-toggle-btn,
         .print-view-active .module-btn,
@@ -2450,7 +2450,7 @@
 
                 const escapeCsvCell = (cell) => {
                     const strCell = String(cell === null || cell === undefined ? '' : cell);
-                    if (strCell.includes(',') || strCell.includes('"') || strCell.includes('\\n')) {
+                    if (strCell.includes(',') || strCell.includes('"') || strCell.includes('\n')) {
                         return `"${strCell.replace(/"/g, '""')}"`;
                     }
                     return strCell;
@@ -2458,7 +2458,7 @@
 
                 const convertToCsv = (data, headerRow) => {
                     const rows = data.map(obj => headerRow.map(key => escapeCsvCell(obj[key])).join(','));
-                    return [headerRow.join(','), ...rows].join('\\n');
+                    return [headerRow.join(','), ...rows].join('\n');
                 };
 
                 switch(formId) {
@@ -2473,7 +2473,7 @@
                         const rencanaData = this.state.rencanaTindakan;
 
                         const combinedCsv = "SASARAN MUTU\n" + convertToCsv(sasaranData, headers) + 
-                                            "\\n\\nRENCANA TINDAKAN\n" + convertToCsv(rencanaData, rencanaHeaders);
+                                            "\n\nRENCANA TINDAKAN\n" + convertToCsv(rencanaData, rencanaHeaders);
                         this.downloadCsv(combinedCsv, 'sasaran_mutu_dan_rencana.csv');
                         return; // Exit early as we manually created the CSV
                     case 'daftar-inventaris-page':
@@ -2521,7 +2521,7 @@
 
                 reader.onload = async (e) => {
                     const text = e.target.result;
-                    const rows = text.split('\\n').filter(row => row.trim() !== '');
+                    const rows = text.split('\n').filter(row => row.trim() !== '');
                     if (rows.length < 2) {
                         this.showToast("File CSV kosong atau hanya berisi header.");
                         return;
@@ -2578,42 +2578,13 @@
                 }
             },
             
-            // --- New Function for Web Share API ---
             setupShareFunction() {
                 const shareBtn = document.getElementById('share-now-btn');
                 if (shareBtn) {
-                    shareBtn.addEventListener('click', async () => {
-                        // Find the title of the active page
-                        const activePage = document.querySelector('.page-content.active');
-                        let title = 'Dokumen ISO';
-                        if (activePage) {
-                            const titleElement = activePage.querySelector('th[colspan="4"], th[colspan="6"], th[colspan="8"]');
-                            if (titleElement) {
-                                title = titleElement.textContent.trim().replace(/\s+/g, ' ');
-                            }
-                        }
-
-                        // Prepare the data to be shared
-                        const shareData = {
-                            title: title,
-                            text: `Berikut adalah dokumen ${title} dari Aplikasi ISO Training Center.`,
-                            url: window.location.href // Share the URL of the app
-                        };
-                        
-                        // Check if Web Share API is supported and can share the data
-                        if (navigator.share && navigator.canShare(shareData)) {
-                            try {
-                                await navigator.share(shareData);
-                                console.log('Document shared successfully');
-                            } catch (err) {
-                                console.error('Share failed:', err.message);
-                                this.showToast('Gagal membagikan. Browser Anda mungkin tidak mendukung fitur ini.');
-                            }
-                        } else {
-                            // Fallback for browsers that do not support Web Share API
-                            this.showToast('Fitur bagikan tidak didukung di browser ini.');
-                            // You could also implement a copy-to-clipboard fallback here.
-                        }
+                    shareBtn.addEventListener('click', () => {
+                        // Directly trigger the print dialog as the primary action
+                        // This avoids permission issues with Web Share API in iframes
+                        window.print();
                     });
                 }
             }

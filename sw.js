@@ -1,12 +1,13 @@
 // Nama cache untuk menyimpan aset aplikasi
-const CACHE_NAME = 'iso-app-cache-v2'; // Versi cache diperbarui
+const CACHE_NAME = 'iso-app-cache-v4'; // Versi cache dinaikkan untuk memicu update
 // Daftar URL yang akan di-cache saat service worker diinstal
 const urlsToCache = [
   '/',
   '/index.html',
-  'logo.png', // Logo baru
-  'logo-192.png', // Ikon baru
-  'logo-512.png', // Ikon baru
+  'manifest.json',
+  'logo.png',
+  'logo-192.png',
+  'logo-512.png',
   'https://cdn.tailwindcss.com',
   'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap'
 ];
@@ -21,6 +22,7 @@ self.addEventListener('install', event => {
         // Menambahkan semua URL dari 'urlsToCache' ke dalam cache
         return cache.addAll(urlsToCache);
       })
+      .then(() => self.skipWaiting()) // Memaksa service worker baru untuk aktif
   );
 });
 
@@ -38,44 +40,29 @@ self.addEventListener('activate', event => {
           }
         })
       );
-    })
+    }).then(() => self.clients.claim()) // Mengambil kontrol dari tab yang terbuka
   );
 });
 
-// Event 'fetch': Dipanggil setiap kali aplikasi membuat permintaan jaringan (mis. gambar, skrip, dll.)
+// Event 'fetch': Dipanggil setiap kali aplikasi membuat permintaan jaringan
+// Strategi: Coba jaringan dulu, jika gagal baru ambil dari cache.
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Jika permintaan ditemukan di cache, kembalikan dari cache
-        if (response) {
-          return response;
-        }
-
-        // Jika tidak, buat permintaan ke jaringan
-        return fetch(event.request).then(
-          networkResponse => {
-            // Periksa apakah respons valid sebelum di-cache
-            if (!networkResponse || networkResponse.status !== 200 || (networkResponse.type !== 'basic' && networkResponse.type !== 'cors')) {
-              return networkResponse;
-            }
-
-            // Duplikat respons karena stream hanya bisa dibaca sekali
-            const responseToCache = networkResponse.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                // Simpan respons ke dalam cache untuk penggunaan di masa depan
-                cache.put(event.request, responseToCache);
-              });
-
-            return networkResponse;
+    caches.open(CACHE_NAME).then(cache => {
+      return fetch(event.request)
+        .then(networkResponse => {
+          // Jika permintaan jaringan berhasil, perbarui cache
+          // Memperbolehkan menyimpan respons 'opaque' (untuk skrip dari domain lain seperti Firebase)
+          if (networkResponse.status === 200 || networkResponse.type === 'opaque') {
+             cache.put(event.request, networkResponse.clone());
           }
-        ).catch(error => {
-          console.error('Fetching failed:', error);
-          // Mungkin ingin memberikan fallback di sini jika diperlukan
+          return networkResponse;
+        })
+        .catch(() => {
+          // Jika permintaan jaringan gagal (misal, offline), coba ambil dari cache
+          return cache.match(event.request);
         });
-      })
+    })
   );
 });
 

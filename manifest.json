@@ -1,0 +1,22 @@
+{
+    "name": "ISO Training Center",
+    "short_name": "ISO App",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#f0f2f5",
+    "theme_color": "#0077c8",
+    "description": "Aplikasi Manajemen Dokumen Mutu ISO.",
+    "icons": [
+        {
+            "src": "logo-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "logo-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}
+

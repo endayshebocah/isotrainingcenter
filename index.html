@@ -769,8 +769,8 @@
                         <thead>
                             <tr><th colspan="14" class="p-2 text-left text-base font-bold">KOKUO EASTERN REFLEXOLOGY</th></tr>
                             <tr><th colspan="7" class="p-2 text-left text-xl font-bold">MATRIKS KOMPETENSI THERAPIST</th><th colspan="7" class="p-2 text-right text-base align-middle">FR-KK-114</th></tr>
-                            <tr class="bg-gray-100">
-                                <th class="p-1 text-center align-middle w-10">No</th><th class="p-1 text-center align-middle w-1/3">Kompetensi yg Diperlukan</th><th class="p-1 text-center align-middle w-24">STANDAR</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">0</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">1</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">2</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">3</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">4</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">5</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">6</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">7</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">8</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">9</th><th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true">10</th>
+                            <tr id="kompetensi-header-row" class="bg-gray-100">
+                                <!-- Headers will be populated by JS -->
                             </tr>
                         </thead>
                         <tbody id="matriks-kompetensi-body"></tbody>
@@ -1028,7 +1028,8 @@
                 catatanMutu: [], sasaranMutu: [], rencanaTindakan: [], sasaranMutuExtraData: {},
                 inventaris1: [], inventaris2: [], jadwalPerawatan: [],
                 ceklisPerawatan: { date: '', items: [] }, opportunity: [], analisaResiko: [],
-                matriksKompetensiData: { kompetensi: [] }, jadwalPelatihan: [],
+                matriksKompetensiData: { kompetensi: [], therapistNames: Array(11).fill('') }, 
+                jadwalPelatihan: [],
                 jadwalPelatihanExtraData: {}, dataPendukung: [], signatures: {},
                 tempImageSrc: null, currentImageKey: null,
             },
@@ -1073,7 +1074,6 @@
 
                 try {
                     await signInAnonymously(auth);
-                    console.log("Signed in anonymously");
                     this.setupFirebaseListeners();
                 } catch (error) {
                     console.error("Anonymous sign-in failed:", error);
@@ -1085,41 +1085,43 @@
             },
 
             cacheElements() {
-                 this.elements.loadingOverlay = document.getElementById('loading-overlay');
-                 this.elements.pages = document.querySelectorAll('.page-content');
-                this.elements.openAppBtn = document.getElementById('open-app-btn');
-                this.elements.topNav = document.getElementById('top-nav');
-                this.elements.sideNav = document.getElementById('side-nav');
-                this.elements.navOverlay = document.getElementById('nav-overlay');
-                this.elements.menuToggleBtn = document.getElementById('menu-toggle-btn');
-                this.elements.moduleList = document.getElementById('module-list');
-                this.elements.pageTitleNav = document.getElementById('page-title-nav');
-                this.elements.openRekapanBtnNav = document.getElementById('open-rekapan-btn-nav');
-                this.elements.openExportModalBtnNav = document.getElementById('open-export-modal-btn-nav');
-                this.elements.openImportModalBtnNav = document.getElementById('open-import-modal-btn-nav');
-                this.elements.openFormulirPendukungBtn = document.getElementById('open-formulir-pendukung-btn');
-                this.elements.openTanggalPendukungBtn = document.getElementById('open-tanggal-pendukung-btn');
-                this.elements.cameraUploadBtnCeklis = document.getElementById('camera-upload-btn-ceklis');
-                this.elements.signatureAreas = document.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]');
-                this.elements.tampilkanRekapanBtn = document.getElementById('tampilkan-rekapan-btn');
-                this.elements.formSelect = document.getElementById('form-select');
-                this.elements.moduleChoiceBtns = document.querySelectorAll('.module-choice-btn');
-                this.elements.signatureCanvas = document.getElementById('signature-canvas');
-                this.elements.clearSigBtn = document.getElementById('clear-sig-btn');
-                this.elements.saveSigBtn = document.getElementById('save-sig-btn');
-                this.elements.imageUploadInput = document.getElementById('image-upload-input');
-                this.elements.dataPendukungGrid = document.getElementById('data-pendukung-grid');
-                this.elements.imagePreviewArea = document.getElementById('image-preview-area');
-                this.elements.selectImageBtn = document.getElementById('select-image-btn');
-                this.elements.saveUploadedImageBtn = document.getElementById('save-uploaded-image-btn');
-                this.elements.imageActionPreview = document.getElementById('image-action-preview');
-                this.elements.viewImageBtn = document.getElementById('view-image-btn');
-                this.elements.deleteImageBtn = document.getElementById('delete-image-btn');
-                this.elements.fullscreenImage = document.getElementById('fullscreen-image');
-                this.elements.toast = document.getElementById('toast-notification');
-                this.elements.printInstructionsOverlay = document.getElementById('print-instructions-overlay');
-                this.elements.exitPrintModeBtn = document.getElementById('exit-print-mode-btn');
-                this.elements.closePrintInstructionsXBtn = document.getElementById('close-print-instructions-x-btn');
+                 this.elements = {
+                    loadingOverlay: document.getElementById('loading-overlay'),
+                    pages: document.querySelectorAll('.page-content'),
+                    openAppBtn: document.getElementById('open-app-btn'),
+                    topNav: document.getElementById('top-nav'),
+                    sideNav: document.getElementById('side-nav'),
+                    navOverlay: document.getElementById('nav-overlay'),
+                    menuToggleBtn: document.getElementById('menu-toggle-btn'),
+                    moduleList: document.getElementById('module-list'),
+                    pageTitleNav: document.getElementById('page-title-nav'),
+                    openRekapanBtnNav: document.getElementById('open-rekapan-btn-nav'),
+                    openExportModalBtnNav: document.getElementById('open-export-modal-btn-nav'),
+                    openImportModalBtnNav: document.getElementById('open-import-modal-btn-nav'),
+                    openFormulirPendukungBtn: document.getElementById('open-formulir-pendukung-btn'),
+                    openTanggalPendukungBtn: document.getElementById('open-tanggal-pendukung-btn'),
+                    cameraUploadBtnCeklis: document.getElementById('camera-upload-btn-ceklis'),
+                    signatureAreas: document.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]'),
+                    tampilkanRekapanBtn: document.getElementById('tampilkan-rekapan-btn'),
+                    formSelect: document.getElementById('form-select'),
+                    moduleChoiceBtns: document.querySelectorAll('.module-choice-btn'),
+                    signatureCanvas: document.getElementById('signature-canvas'),
+                    clearSigBtn: document.getElementById('clear-sig-btn'),
+                    saveSigBtn: document.getElementById('save-sig-btn'),
+                    imageUploadInput: document.getElementById('image-upload-input'),
+                    dataPendukungGrid: document.getElementById('data-pendukung-grid'),
+                    imagePreviewArea: document.getElementById('image-preview-area'),
+                    selectImageBtn: document.getElementById('select-image-btn'),
+                    saveUploadedImageBtn: document.getElementById('save-uploaded-image-btn'),
+                    imageActionPreview: document.getElementById('image-action-preview'),
+                    viewImageBtn: document.getElementById('view-image-btn'),
+                    deleteImageBtn: document.getElementById('delete-image-btn'),
+                    fullscreenImage: document.getElementById('fullscreen-image'),
+                    toast: document.getElementById('toast-notification'),
+                    printInstructionsOverlay: document.getElementById('print-instructions-overlay'),
+                    exitPrintModeBtn: document.getElementById('exit-print-mode-btn'),
+                    closePrintInstructionsXBtn: document.getElementById('close-print-instructions-x-btn'),
+                 };
             },
             
             showToast(message) {
@@ -1144,7 +1146,10 @@
                         this.state.ceklisPerawatan = data.ceklisPerawatan || { date: '', items: [] };
                         this.state.opportunity = data.opportunity || [];
                         this.state.analisaResiko = data.analisaResiko || [];
-                        this.state.matriksKompetensiData = data.matriksKompetensiData || { kompetensi: [] };
+                        this.state.matriksKompetensiData = data.matriksKompetensiData || { kompetensi: [], therapistNames: Array(11).fill('') };
+                        if (!this.state.matriksKompetensiData.therapistNames || this.state.matriksKompetensiData.therapistNames.length !== 11) {
+                            this.state.matriksKompetensiData.therapistNames = Array(11).fill('');
+                        }
                         this.state.jadwalPelatihan = data.jadwalPelatihan || [];
                         this.state.jadwalPelatihanExtraData = data.jadwalPelatihanExtraData || {};
                         this.state.dataPendukung = data.dataPendukung || [];
@@ -1171,7 +1176,7 @@
                     await setDoc(docRef, { [key]: data }, { merge: true });
                     this.showToast('Data berhasil disimpan ke cloud!');
                 } catch (error) {
-                    console.error("Error saving data to Firebase:", error);
+                    console.error("Error saving data:", error);
                     this.showToast('Gagal menyimpan data!');
                 }
             },
@@ -1185,11 +1190,7 @@
 
             recalculateNextIds() {
                 const getMaxId = (arr) => arr && arr.length > 0 ? Math.max(...arr.map(i => i.id || 0)) + 1 : 1;
-                const getMaxNo = (arr) => {
-                    if (!arr) return 1;
-                    const nos = arr.map(i => i.no).filter(Boolean);
-                    return nos.length > 0 ? Math.max(...nos) + 1 : 1;
-                }
+                const getMaxNo = (arr) => { if (!arr) return 1; const nos = arr.map(i => i.no).filter(Boolean); return nos.length > 0 ? Math.max(...nos) + 1 : 1; }
                 this.state.nextCatatanId = getMaxId(this.state.catatanMutu);
                 this.state.nextSasaranId = getMaxId(this.state.sasaranMutu);
                 this.state.nextRencanaId = getMaxId(this.state.rencanaTindakan);
@@ -1199,7 +1200,7 @@
                 this.state.nextOpportunityId = getMaxId(this.state.opportunity);
                 this.state.nextResikoId = getMaxId(this.state.analisaResiko);
                 this.state.nextPelatihanId = getMaxId(this.state.jadwalPelatihan);
-                if(!this.state.matriksKompetensiData) this.state.matriksKompetensiData = { kompetensi: [] };
+                if(!this.state.matriksKompetensiData) this.state.matriksKompetensiData = { kompetensi: [], therapistNames: Array(11).fill('') };
                 this.state.matriksKompetensiData.nextKompetensiId = getMaxId(this.state.matriksKompetensiData.kompetensi);
             },
 
@@ -1222,17 +1223,14 @@
                     { target: 'matriks-kompetensi-page', text: '8. Matriks Kompetensi' },
                     { target: 'jadwal-pelatihan-page', text: '9. Jadwal Pelatihan' },
                 ];
-
-                this.elements.moduleList.innerHTML = modules.map(m => `
-                    <li><a href="#" data-target="${m.target}" class="nav-link block w-full px-4 py-2 text-gray-700 rounded-md hover:bg-blue-100 hover:text-blue-700 transition-colors">${m.text}</a></li>
-                `).join('');
+                this.elements.moduleList.innerHTML = modules.map(m => `<li><a href="#" data-target="${m.target}" class="nav-link block w-full px-4 py-2 text-gray-700 rounded-md hover:bg-blue-100 hover:text-blue-700 transition-colors">${m.text}</a></li>`).join('');
                 this.elements.navLinks = this.elements.moduleList.querySelectorAll('.nav-link');
                 this.elements.actionNavLinks = document.querySelectorAll('.nav-link-action');
             },
 
             setupNavigation() {
                 const showPage = (pageId, title) => {
-                    this.elements.pages.forEach(page => page.classList.replace('active', 'hidden'));
+                    this.elements.pages.forEach(p => p.classList.replace('active', 'hidden'));
                     const targetPage = document.getElementById(pageId);
                     if (targetPage) {
                         targetPage.classList.replace('hidden', 'active');
@@ -1245,13 +1243,8 @@
                 this.showPage = showPage;
                 
                 const toggleNav = (open) => {
-                    if (open) {
-                        this.elements.sideNav.classList.add('open');
-                        this.elements.navOverlay.classList.add('open');
-                    } else {
-                        this.elements.sideNav.classList.remove('open');
-                        this.elements.navOverlay.classList.remove('open');
-                    }
+                    this.elements.sideNav.classList.toggle('open', open);
+                    this.elements.navOverlay.classList.toggle('open', open);
                 };
 
                 this.elements.openAppBtn.addEventListener('click', () => {
@@ -1259,26 +1252,14 @@
                     const firstModule = this.elements.navLinks[0];
                     this.showPage(firstModule.dataset.target, firstModule.textContent.trim());
                     if ('Notification' in window && Notification.permission === 'default') {
-                        Notification.requestPermission().then(permission => {
-                           this.showToast(permission === 'granted' ? 'Notifikasi pengingat telah diaktifkan!' : 'Anda tidak akan menerima pengingat otomatis.');
-                        });
+                        Notification.requestPermission().then(p => this.showToast(p === 'granted' ? 'Notifikasi diaktifkan!' : 'Notifikasi tidak diizinkan.'));
                     }
                 });
 
                 this.elements.menuToggleBtn.addEventListener('click', () => toggleNav(true));
                 this.elements.navOverlay.addEventListener('click', () => toggleNav(false));
 
-                const setupNavLinkListeners = (links) => {
-                     links.forEach(link => {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault();
-                            const target = e.currentTarget.dataset.target;
-                            const title = e.currentTarget.textContent.trim();
-                            this.showPage(target, title);
-                            toggleNav(false);
-                        });
-                    });
-                }
+                const setupNavLinkListeners = (links) => links.forEach(link => link.addEventListener('click', e => { e.preventDefault(); const t = e.currentTarget; this.showPage(t.dataset.target, t.textContent.trim()); toggleNav(false); }));
                 
                 setupNavLinkListeners(this.elements.navLinks);
                 setupNavLinkListeners(this.elements.actionNavLinks);
@@ -1299,132 +1280,124 @@
                 
                 if(this.elements.tampilkanRekapanBtn) {
                     this.elements.tampilkanRekapanBtn.addEventListener('click', () => {
-                        const selectedPage = this.elements.formSelect.value;
-                        if (selectedPage === 'ceklis-perawatan-page') {
-                            const start = document.getElementById('tanggal-mulai').value;
-                            const end = document.getElementById('tanggal-selesai').value;
-                            const checklistDateStr = this.state.ceklisPerawatan.date;
-
-                            if (!start || !end) { this.showToast('Silakan pilih rentang tanggal.'); return; }
-                            if (!checklistDateStr) { this.showToast('Tidak ada data Checklist Perawatan tersimpan dengan tanggal.'); return; }
-                            
-                            const startDate = new Date(start + 'T00:00:00'), endDate = new Date(end + 'T23:59:59'), checklistDate = new Date(checklistDateStr);
-                            if (checklistDate >= startDate && checklistDate <= endDate) {
-                                this.ModalManager.close('rekapan'); this.showPage(selectedPage, 'Checklist Perawatan');
-                            } else { this.showToast('Data tidak ditemukan untuk tanggal tersebut.'); }
-                        } else if (selectedPage) {
+                        const sel = this.elements.formSelect;
+                        const pageId = sel.value;
+                        if (pageId === 'ceklis-perawatan-page') {
+                            const start = document.getElementById('tanggal-mulai').value, end = document.getElementById('tanggal-selesai').value, dateStr = this.state.ceklisPerawatan.date;
+                            if (!start || !end) { this.showToast('Pilih rentang tanggal.'); return; }
+                            if (!dateStr) { this.showToast('Data checklist tidak punya tanggal.'); return; }
+                            const sDate = new Date(start+'T00:00'), eDate = new Date(end+'T23:59'), cDate = new Date(dateStr);
+                            if (cDate >= sDate && cDate <= eDate) { this.ModalManager.close('rekapan'); this.showPage(pageId, 'Checklist Perawatan'); } 
+                            else { this.showToast('Data tidak ditemukan.'); }
+                        } else if (pageId) {
                             this.ModalManager.close('rekapan');
-                            const selectedOption = this.elements.formSelect.options[this.elements.formSelect.selectedIndex];
-                            this.showPage(selectedPage, selectedOption.text);
+                            this.showPage(pageId, sel.options[sel.selectedIndex].text);
                         }
                     });
                 }
                 
                 if(this.elements.moduleChoiceBtns) this.elements.moduleChoiceBtns.forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        const targetPage = e.currentTarget.dataset.target;
+                        const t = e.currentTarget;
                         this.ModalManager.close('sasaranDataPendukung');
-                        this.showPage(targetPage, e.currentTarget.textContent.trim());
+                        this.showPage(t.dataset.target, t.textContent.trim());
                     });
                 });
             },
 
             setupSignaturePad() {
-                const canvas = this.elements.signatureCanvas; if (!canvas) return;
-                const ctx = canvas.getContext('2d'); let drawing = false;
-                const resizeCanvas = () => { const ratio = Math.max(window.devicePixelRatio || 1, 1), rect = canvas.getBoundingClientRect(); canvas.width = rect.width * ratio; canvas.height = rect.height * ratio; ctx.scale(ratio, ratio); };
-                const getEventPos = (event) => { const rect = canvas.getBoundingClientRect(), touch = event.touches && event.touches[0]; return { x: (touch ? touch.clientX : event.clientX) - rect.left, y: (touch ? touch.clientY : event.clientY) - rect.top }; };
-                const startDrawing = (e) => { drawing = true; const pos = getEventPos(e); ctx.beginPath(); ctx.moveTo(pos.x, pos.y); };
-                const draw = (e) => { if (!drawing) return; e.preventDefault(); const pos = getEventPos(e); ctx.lineTo(pos.x, pos.y); ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke(); };
-                const stopDrawing = () => { drawing = false; ctx.closePath(); };
-
-                this.elements.signatureAreas.forEach(area => area.addEventListener('click', (e) => { this.state.currentSignatureTarget = e.currentTarget; this.ModalManager.open('signature'); resizeCanvas(); ctx.clearRect(0, 0, canvas.width, canvas.height); }));
-                if (this.elements.clearSigBtn) this.elements.clearSigBtn.addEventListener('click', () => ctx.clearRect(0, 0, canvas.width, canvas.height));
-                if (this.elements.saveSigBtn) this.elements.saveSigBtn.addEventListener('click', () => { if (this.state.currentSignatureTarget) { const signatureData = canvas.toDataURL('image/png'), targetId = this.state.currentSignatureTarget.id; this.state.signatures[targetId] = signatureData; this.saveDataToFirebase('signatures', this.state.signatures); } this.ModalManager.close('signature'); });
-                
-                ['mousedown', 'touchstart'].forEach(evt => canvas.addEventListener(evt, startDrawing, { passive: false }));
-                ['mousemove', 'touchmove'].forEach(evt => canvas.addEventListener(evt, draw, { passive: false }));
-                ['mouseup', 'mouseleave', 'touchend'].forEach(evt => canvas.addEventListener(evt, stopDrawing));
+                const c = this.elements.signatureCanvas; if (!c) return;
+                const ctx = c.getContext('2d'); let drawing = false;
+                const resize = () => { const r = Math.max(window.devicePixelRatio||1,1), rect = c.getBoundingClientRect(); c.width = rect.width*r; c.height = rect.height*r; ctx.scale(r,r); };
+                const getPos = e => { const r=c.getBoundingClientRect(), t=e.touches&&e.touches[0]; return {x:(t?t.clientX:e.clientX)-r.left, y:(t?t.clientY:e.clientY)-r.top}; };
+                const start = e => { drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); };
+                const draw = e => { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.strokeStyle = '#000'; ctx.lineWidth = 2; ctx.stroke(); };
+                const stop = () => { drawing = false; ctx.closePath(); };
+                this.elements.signatureAreas.forEach(a => a.addEventListener('click', e => { this.state.currentSignatureTarget = e.currentTarget; this.ModalManager.open('signature'); resize(); ctx.clearRect(0, 0, c.width, c.height); }));
+                if (this.elements.clearSigBtn) this.elements.clearSigBtn.addEventListener('click', () => ctx.clearRect(0, 0, c.width, c.height));
+                if (this.elements.saveSigBtn) this.elements.saveSigBtn.addEventListener('click', () => { if (this.state.currentSignatureTarget) { const id = this.state.currentSignatureTarget.id; this.state.signatures[id] = c.toDataURL(); this.saveDataToFirebase('signatures', this.state.signatures); } this.ModalManager.close('signature'); });
+                ['mousedown', 'touchstart'].forEach(e => c.addEventListener(e, start, { passive: false }));
+                ['mousemove', 'touchmove'].forEach(e => c.addEventListener(e, draw, { passive: false }));
+                ['mouseup', 'mouseleave', 'touchend'].forEach(e => c.addEventListener(e, stop));
             },
             
             setupImageUpload() {
-                const renderDataPendukung = (imagesToShow) => {
-                    this.elements.dataPendukungGrid.innerHTML = '';
-                    if (!imagesToShow || imagesToShow.length === 0) { this.elements.dataPendukungGrid.innerHTML = '<p class="col-span-full text-center text-gray-500">Tidak ada data.</p>'; return; }
-                    imagesToShow.forEach(imageData => {
-                        const imgWrapper = document.createElement('div');
-                        imgWrapper.className = 'w-full h-32 bg-gray-200 rounded-lg overflow-hidden shadow cursor-pointer';
-                        imgWrapper.innerHTML = `<img src="${imageData.url}" class="w-full h-full object-cover">`;
-                        imgWrapper.addEventListener('click', () => { this.state.currentImageKey = imageData.key; this.elements.imageActionPreview.innerHTML = `<img src="${imageData.url}" class="w-full h-full object-contain">`; this.ModalManager.open('imageAction'); });
-                        this.elements.dataPendukungGrid.appendChild(imgWrapper);
-                    });
-                };
-                
-                if(this.elements.saveUploadedImageBtn) this.elements.saveUploadedImageBtn.addEventListener('click', async () => { if (this.state.tempImageSrc) { const imageKey = `pendukung/${new Date().toISOString()}.png`; const storageRef = ref(this.storage, imageKey); try { this.showToast('Mengunggah...'); const snapshot = await uploadString(storageRef, this.state.tempImageSrc, 'data_url'); const downloadURL = await getDownloadURL(snapshot.ref); this.state.dataPendukung.push({ key: imageKey, url: downloadURL, date: new Date().toISOString() }); await this.saveDataToFirebase('dataPendukung', this.state.dataPendukung); this.ModalManager.close('cameraUpload'); } catch (error) { console.error("Upload failed:", error); this.showToast('Gagal mengunggah.'); } } else { alert('Pilih gambar dahulu.'); } });
-                if(this.elements.viewImageBtn) this.elements.viewImageBtn.addEventListener('click', () => { const imageData = this.state.dataPendukung.find(item => item.key === this.state.currentImageKey); if (imageData) { this.elements.fullscreenImage.src = imageData.url; this.ModalManager.close('imageAction'); this.ModalManager.open('imageView'); } });
-                if(this.elements.deleteImageBtn) this.elements.deleteImageBtn.addEventListener('click', async () => { if (this.state.currentImageKey) { const imageKeyToDelete = this.state.currentImageKey; const storageRef = ref(this.storage, imageKeyToDelete); try { await deleteObject(storageRef); this.state.dataPendukung = this.state.dataPendukung.filter(item => item.key !== imageKeyToDelete); await this.saveDataToFirebase('dataPendukung', this.state.dataPendukung); this.ModalManager.close('imageAction'); this.showToast('Gambar dihapus.'); } catch (error) { if (error.code === 'storage/object-not-found') { this.state.dataPendukung = this.state.dataPendukung.filter(item => item.key !== imageKeyToDelete); await this.saveDataToFirebase('dataPendukung', this.state.dataPendukung); this.ModalManager.close('imageAction'); this.showToast('Gambar dihapus.'); } else { this.showToast('Gagal menghapus.'); } } } });
-                if(this.elements.openTanggalPendukungBtn) this.elements.openTanggalPendukungBtn.addEventListener('click', () => { document.getElementById('tanggal-selesai-pendukung').valueAsDate = new Date(); const oneMonthAgo = new Date(); oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1); document.getElementById('tanggal-mulai-pendukung').valueAsDate = oneMonthAgo; this.ModalManager.open('tanggalPendukung'); });
-                document.getElementById('tampilkan-pendukung-filtered-btn')?.addEventListener('click', () => { const start = document.getElementById('tanggal-mulai-pendukung').value, end = document.getElementById('tanggal-selesai-pendukung').value; const startDate = start ? new Date(start) : null, endDate = end ? new Date(end + 'T23:59:59') : null; const filteredData = this.state.dataPendukung.filter(item => { const itemDate = new Date(item.date); return (!startDate || itemDate >= startDate) && (!endDate || itemDate <= endDate); }); renderDataPendukung(filteredData); this.ModalManager.close('tanggalPendukung'); this.ModalManager.open('dataPendukung'); });
+                const renderData = (images) => { this.elements.dataPendukungGrid.innerHTML = !images||images.length===0 ? '<p class="col-span-full text-center text-gray-500">Tidak ada data.</p>' : images.map(d => `<div class="w-full h-32 bg-gray-200 rounded-lg overflow-hidden shadow cursor-pointer" data-key="${d.key}"><img src="${d.url}" class="w-full h-full object-cover"></div>`).join(''); };
+                this.elements.dataPendukungGrid.addEventListener('click', e => { const t = e.target.closest('div[data-key]'); if(t) { this.state.currentImageKey = t.dataset.key; const d = this.state.dataPendukung.find(i=>i.key===this.state.currentImageKey); this.elements.imageActionPreview.innerHTML = `<img src="${d.url}" class="w-full h-full object-contain">`; this.ModalManager.open('imageAction'); }});
+                if(this.elements.saveUploadedImageBtn) this.elements.saveUploadedImageBtn.addEventListener('click', async () => { if(this.state.tempImageSrc) { const key = `pendukung/${new Date().toISOString()}.png`, sRef = ref(this.storage, key); try { this.showToast('Mengunggah...'); const snap = await uploadString(sRef, this.state.tempImageSrc, 'data_url'); const url = await getDownloadURL(snap.ref); this.state.dataPendukung.push({ key, url, date: new Date().toISOString() }); await this.saveDataToFirebase('dataPendukung', this.state.dataPendukung); this.ModalManager.close('cameraUpload'); } catch (err) { this.showToast('Gagal unggah.'); } } });
+                if(this.elements.viewImageBtn) this.elements.viewImageBtn.addEventListener('click', () => { const d = this.state.dataPendukung.find(i => i.key === this.state.currentImageKey); if (d) { this.elements.fullscreenImage.src = d.url; this.ModalManager.close('imageAction'); this.ModalManager.open('imageView'); } });
+                if(this.elements.deleteImageBtn) this.elements.deleteImageBtn.addEventListener('click', async () => { if (this.state.currentImageKey) { const key = this.state.currentImageKey; try { await deleteObject(ref(this.storage, key)); } catch (err) { if (err.code !== 'storage/object-not-found') { this.showToast('Gagal hapus.'); return; }} this.state.dataPendukung = this.state.dataPendukung.filter(i => i.key !== key); await this.saveDataToFirebase('dataPendukung', this.state.dataPendukung); this.ModalManager.close('imageAction'); this.showToast('Gambar dihapus.'); } });
+                if(this.elements.openTanggalPendukungBtn) this.elements.openTanggalPendukungBtn.addEventListener('click', () => { document.getElementById('tanggal-selesai-pendukung').valueAsDate = new Date(); const monthAgo = new Date(); monthAgo.setMonth(monthAgo.getMonth() - 1); document.getElementById('tanggal-mulai-pendukung').valueAsDate = monthAgo; this.ModalManager.open('tanggalPendukung'); });
+                document.getElementById('tampilkan-pendukung-filtered-btn')?.addEventListener('click', () => { const s = document.getElementById('tanggal-mulai-pendukung').value, e = document.getElementById('tanggal-selesai-pendukung').value; const sD = s ? new Date(s) : null, eD = e ? new Date(e+'T23:59:59') : null; const filtered = this.state.dataPendukung.filter(i => { const iD = new Date(i.date); return (!sD || iD >= sD) && (!eD || iD <= eD); }); renderData(filtered); this.ModalManager.close('tanggalPendukung'); this.ModalManager.open('dataPendukung'); });
                 if(this.elements.cameraUploadBtnCeklis) this.elements.cameraUploadBtnCeklis.addEventListener('click', () => { this.state.tempImageSrc = null; this.elements.imagePreviewArea.innerHTML = 'Pratinjau Gambar'; this.elements.imageUploadInput.value = ''; this.ModalManager.open('cameraUpload'); });
                 if(this.elements.selectImageBtn) this.elements.selectImageBtn.addEventListener('click', () => this.elements.imageUploadInput.click());
-                if(this.elements.imageUploadInput) this.elements.imageUploadInput.addEventListener('change', (event) => { const file = event.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = (e) => { this.state.tempImageSrc = e.target.result; this.elements.imagePreviewArea.innerHTML = `<img src="${this.state.tempImageSrc}" class="w-full h-full object-contain">`; }; reader.readAsDataURL(file); });
+                if(this.elements.imageUploadInput) this.elements.imageUploadInput.addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = e => { this.state.tempImageSrc = e.target.result; this.elements.imagePreviewArea.innerHTML = `<img src="${this.state.tempImageSrc}" class="w-full h-full object-contain">`; }; r.readAsDataURL(f); });
             },
 
             checkAndTriggerMaintenanceNotification() {
                 try {
-                    const lastNotificationQuarter = localStorage.getItem('lastMaintenanceNotification'), currentQuarter = Math.floor(new Date().getMonth() / 3), currentYear = new Date().getFullYear(), quarterKey = `${currentYear}-Q${currentQuarter}`;
-                    if (lastNotificationQuarter !== quarterKey) { this.showMaintenanceNotification(); }
-                } catch (error) { console.warn("Could not access localStorage.", error); }
+                    const last = localStorage.getItem('lastMaintenanceNotification'), quarter = Math.floor(new Date().getMonth()/3), year = new Date().getFullYear(), key = `${year}-Q${quarter}`;
+                    if (last !== key) this.showMaintenanceNotification();
+                } catch (e) {}
             },
             
             showMaintenanceNotification() {
                 if (!('Notification' in window) || Notification.permission !== 'granted') return; 
                 const opts = { body: 'Waktunya memperbarui "Jadwal Perawatan Infrastruktur".', icon: 'logo-192.png', tag: 'maintenance-reminder' };
-                if ('serviceWorker' in navigator && navigator.serviceWorker.ready) { navigator.serviceWorker.ready.then(reg => { reg.showNotification('Pemberitahuan Jadwal Perawatan', opts); }); } else { new Notification('Pemberitahuan Jadwal Perawatan', opts); }
-                try { const currentQuarter = Math.floor(new Date().getMonth() / 3), currentYear = new Date().getFullYear(); localStorage.setItem('lastMaintenanceNotification', `${currentYear}-Q${currentQuarter}`); } catch (error) { console.warn("Could not set localStorage.", error); }
+                if ('serviceWorker' in navigator && navigator.serviceWorker.ready) navigator.serviceWorker.ready.then(reg => reg.showNotification('Pemberitahuan', opts));
+                else new Notification('Pemberitahuan', opts);
+                try { localStorage.setItem('lastMaintenanceNotification', `${new Date().getFullYear()}-Q${Math.floor(new Date().getMonth()/3)}`); } catch (e) {}
             },
 
             setupTableControls() {
-                document.querySelectorAll('.add-row-toggle-btn').forEach(button => { button.addEventListener('click', (e) => { e.stopPropagation(); document.querySelectorAll('.add-delete-controls').forEach(c => { if (c !== button.nextElementSibling) c.classList.add('hidden'); }); button.nextElementSibling.classList.toggle('hidden'); }); });
-                document.addEventListener('click', (e) => { if (!e.target.closest('.add-row-toggle-btn') && !e.target.closest('.add-delete-controls')) { document.querySelectorAll('.add-delete-controls').forEach(c => c.classList.add('hidden')); } });
+                document.body.addEventListener('click', e => {
+                    const toggleBtn = e.target.closest('.add-row-toggle-btn');
+                    if (toggleBtn) {
+                        e.stopPropagation();
+                        const controls = toggleBtn.nextElementSibling;
+                        const isHidden = controls.classList.contains('hidden');
+                        document.querySelectorAll('.add-delete-controls').forEach(c => c.classList.add('hidden'));
+                        if (isHidden) controls.classList.remove('hidden');
+                    } else if (!e.target.closest('.add-delete-controls')) {
+                        document.querySelectorAll('.add-delete-controls').forEach(c => c.classList.add('hidden'));
+                    }
+                });
             },
             
             createTableManager(config) {
                 const { tbody, dataKey, rowGenerator, newRowFactory, addBtnId, deleteBtnId } = config;
                 const addBtn = document.getElementById(addBtnId), deleteBtn = document.getElementById(deleteBtnId);
-                const getData = () => { let data = this.state; for (const key of dataKey.split('.')) { data = data[key]; if (data === undefined) return []; } return data; };
-                const render = () => { const data = getData(); tbody.innerHTML = ''; let counter = 1; if (!data || !Array.isArray(data)) return; data.forEach((item, index) => { if (item.type === 'header' && index > 0 && data[index-1].type === 'header') return; const row = document.createElement('tr'); row.dataset.index = index; row.className = 'hover:bg-gray-50'; row.innerHTML = rowGenerator(item, counter); tbody.appendChild(row); if(item.type !== 'header') counter++; }); };
-                const saveCellChange = (e) => { const cell = e.target, row = cell.closest('tr'); if (!row || row.dataset.index === undefined) return; const data = getData(), itemIndex = parseInt(row.dataset.index, 10), field = cell.dataset.field, newValue = cell.textContent; if (itemIndex >= 0 && itemIndex < data.length && field && data[itemIndex]) { if (field.startsWith('score-')) { const i = parseInt(field.split('-')[1], 10); if(data[itemIndex].scores) data[itemIndex].scores[i] = newValue; } else if (field.startsWith('bulan-')) { const i = parseInt(field.split('-')[1], 10); if(data[itemIndex].bulan) data[itemIndex].bulan[i] = newValue; } else if (field.startsWith('m') && field.includes('w')) { const mKey = `m${field[1]}`, wIdx = parseInt(field[3], 10) - 1; if (data[itemIndex][mKey]) data[itemIndex][mKey][wIdx] = newValue; } else { data[itemIndex][field] = newValue; } } };
+                const getData = () => { let d = this.state; for (const k of dataKey.split('.')) { d = d[k]; if (d===undefined) return []; } return d; };
+                const render = () => { const data = getData(); tbody.innerHTML = ''; let c = 1; if (!data || !Array.isArray(data)) return; data.forEach((item, i) => { if (item.type === 'header' && i > 0 && data[i-1].type === 'header') return; const row = tbody.insertRow(); row.dataset.index = i; row.className = 'hover:bg-gray-50'; row.innerHTML = rowGenerator(item, c); if(item.type !== 'header') c++; }); };
+                const saveCell = e => { const cell = e.target, row = cell.closest('tr'); if (!row || row.dataset.index === undefined) return; const data = getData(), i = parseInt(row.dataset.index, 10), f = cell.dataset.field, val = cell.textContent; if (i>=0 && i<data.length && f && data[i]) { if (f.startsWith('score-')) { const sIdx = parseInt(f.split('-')[1],10); if(data[i].scores) data[i].scores[sIdx] = val; } else if (f.startsWith('bulan-')) { const bIdx = parseInt(f.split('-')[1],10); if(data[i].bulan) data[i].bulan[bIdx] = val; } else if (f.startsWith('m')&&f.includes('w')) { const mK=`m${f[1]}`, wIdx=parseInt(f[3],10)-1; if(data[i][mK]) data[i][mK][wIdx]=val; } else { data[i][f] = val; } } };
                 if (addBtn) addBtn.addEventListener('click', () => { getData().push(newRowFactory()); render(); });
-                if (deleteBtn) { deleteBtn.addEventListener('click', () => { const data = getData(); if (data.length > 0) { let last = data[data.length - 1]; if(last.type === 'header' && data.length > 1 && data[data.length-2].type !== 'header') { for(let i = data.length-2; i>=0; i--) { if(data[i].type !== 'header') { data.splice(i, 1); break; } } } else { data.pop(); } } render(); }); }
-                tbody.addEventListener('focusout', saveCellChange);
+                if (deleteBtn) { deleteBtn.addEventListener('click', () => { const data = getData(); if (data.length > 0) { data.pop(); } render(); }); }
+                tbody.addEventListener('focusout', saveCell);
                 return { render };
             },
             
             setupTables() {
-                const createRow = (template, item, counter) => { const element = document.createElement('tr'); element.innerHTML = template(item, counter); return element.innerHTML; };
-                const r = (item, c, fields) => fields.map(f => `<td class="border p-2" contenteditable="true" data-field="${f.key}">${item[f.key] || ''}</td>`).join('');
-                
-                const createCatatanMutuRow = (item, c) => `<td>${c}</td>` + r(item, c, [{key:'nama'}, {key:'no'}, {key:'lokasi'}, {key:'masa'}, {key:'metode'}, {key:'media'}, {key:'penanggungJawab'}, {key:'keterangan'}]);
-                const createSasaranMutuRow = (item, c) => `<td class="text-center">${c}</td><td contenteditable="true" data-field="sasaran">${item.sasaran || ''}</td><td contenteditable="true" data-field="target">${item.target || ''}</td>` + ['des', 'jan', 'feb', 'mart', 'apr', 'mei'].map(m => `<td contenteditable="true" data-field="${m}">${item[m] || ''}</td>`).join('') + `<td contenteditable="true" data-field="ket">${item.ket || ''}</td>`;
-                const createRencanaTindakanRow = (item, c) => `<td class="text-center">${c}</td>` + r(item, c, [{key:'rencana'}, {key:'pelaksana'}, {key:'waktu'}, {key:'keterangan'}]);
-                const createInventarisRow = (item, c) => (item.type === 'header') ? `<td colspan="6" class="bg-gray-200 font-bold text-center">${item.nama || ''}</td>` : `<td class="text-center">${c}</td>` + r(item, c, [{key:'nama'}, {key:'merk'}, {key:'noInv'}, {key:'kondisi'}, {key:'ket'}]);
-                const createJadwalPerawatanRow = (item) => `<td contenteditable="true" data-field="no">${item.no||''}</td><td contenteditable="true" data-field="nama">${item.nama||''}</td>` + [1,2,3].map(m => [1,2,3,4].map(w => `<td class="vertical-text" contenteditable="true" data-field="m${m}w${w}">${(item[`m${m}`]&&item[`m${m}`][w-1])||''}</td>`).join('')).join('');
-                const createCeklisPerawatanRow = (item, c) => `<td class="text-center">${c}</td>` + r(item, c, [{key:'nama'}, {key:'check'}, {key:'ok'}, {key:'notok'}, {key:'ket'}]);
-                const createOpportunityRow = (item, c) => `<td class="text-center">${c}</td>` + r(item, c, [{key:'aspek'}, {key:'strategi'}, {key:'tindak'}, {key:'penanggung'}, {key:'dokumen'}]);
-                const createAnalisaResikoRow = (item, c) => `<td class="text-center">${c}</td>` + r(item, c, [{key:'aspek'}, {key:'risiko'}, {key:'konsekuensi'}, {key:'kemungkinan'}, {key:'keparahan'}, {key:'tingkat'}, {key:'pencegahan'}, {key:'penanggung'}, {key:'dokumen'}]);
-                const createMatriksKompetensiRow = (item, c) => `<td class="text-center">${c}</td><td contenteditable="true" data-field="nama">${item.nama||''}</td><td contenteditable="true" data-field="standar">${item.standar||''}</td>` + (item.scores||Array(11).fill('')).map((s,i) => `<td class="p-0"><div class="w-full h-8 border vertical-text flex items-center justify-center" contenteditable="true" data-field="score-${i}">${s}</div></td>`).join('');
-                const createJadwalPelatihanRow = (item, c) => `<td class="text-center">${c}</td>` + r(item,c,[{key:'nama'},{key:'pembawa'},{key:'peserta'}]) + (item.bulan||Array(12).fill('')).map((b,i) => `<td contenteditable="true" data-field="bulan-${i}">${b}</td>`).join('');
+                const createCatatanMutuRow = (item, c) => `<td>${c}</td><td>${item.nama||''}</td><td>${item.no||''}</td><td>${item.lokasi||''}</td><td>${item.masa||''}</td><td>${item.metode||''}</td><td>${item.media||''}</td><td>${item.penanggungJawab||''}</td><td>${item.keterangan||''}</td>`;
+                const createSasaranMutuRow = (item, c) => `<td class="text-center">${c}</td><td>${item.sasaran||''}</td><td>${item.target||''}</td>` + ['des','jan','feb','mart','apr','mei'].map(m=>`<td>${item[m]||''}</td>`).join('') + `<td>${item.ket||''}</td>`;
+                const createRencanaTindakanRow = (item, c) => `<td class="text-center">${c}</td><td>${item.rencana||''}</td><td>${item.pelaksana||''}</td><td>${item.waktu||''}</td><td>${item.keterangan||''}</td>`;
+                const createInventarisRow = (item, c) => (item.type === 'header') ? `<td colspan="6" class="bg-gray-200 font-bold text-center">${item.nama||''}</td>` : `<td class="text-center">${c}</td><td>${item.nama||''}</td><td>${item.merk||''}</td><td>${item.noInv||''}</td><td>${item.kondisi||''}</td><td>${item.ket||''}</td>`;
+                const createJadwalPerawatanRow = (item) => `<td>${item.no||''}</td><td>${item.nama||''}</td>` + [1,2,3].map(m => [1,2,3,4].map(w => `<td class="vertical-text">${(item[`m${m}`]&&item[`m${m}`][w-1])||''}</td>`).join('')).join('');
+                const createCeklisPerawatanRow = (item, c) => `<td class="text-center">${c}</td><td>${item.nama||''}</td><td>${item.check||''}</td><td>${item.ok||''}</td><td>${item.notok||''}</td><td>${item.ket||''}</td>`;
+                const createOpportunityRow = (item, c) => `<td class="text-center">${c}</td><td>${item.aspek||''}</td><td>${item.strategi||''}</td><td>${item.tindak||''}</td><td>${item.penanggung||''}</td><td>${item.dokumen||''}</td>`;
+                const createAnalisaResikoRow = (item, c) => `<td class="text-center">${c}</td><td>${item.aspek||''}</td><td>${item.risiko||''}</td><td>${item.konsekuensi||''}</td><td>${item.kemungkinan||''}</td><td>${item.keparahan||''}</td><td>${item.tingkat||''}</td><td>${item.pencegahan||''}</td><td>${item.penanggung||''}</td><td>${item.dokumen||''}</td>`;
+                const createMatriksKompetensiRow = (item, c) => `<td class="text-center">${c}</td><td>${item.nama||''}</td><td>${item.standar||''}</td>` + (item.scores||Array(11).fill('')).map((s,i) => `<td class="p-0"><div class="w-full h-8 border vertical-text flex items-center justify-center" contenteditable="true" data-field="score-${i}">${s}</div></td>`).join('');
+                const createJadwalPelatihanRow = (item, c) => `<td class="text-center">${c}</td><td>${item.nama||''}</td><td>${item.pembawa||''}</td><td>${item.peserta||''}</td>` + (item.bulan||Array(12).fill('')).map((b,i) => `<td>${b}</td>`).join('');
 
-                this.tableManagers['catatan-mutu-page'] = this.createTableManager({ tbody: document.getElementById('catatan-mutu-body'), dataKey: 'catatanMutu', rowGenerator: createCatatanMutuRow, addBtnId: 'add-row-catatan-btn', deleteBtnId: 'delete-row-catatan-btn', newRowFactory: () => ({ id: this.state.nextCatatanId++, nama: "", no: "", lokasi: "", masa: "", metode: "", media: "", penanggungJawab: "", keterangan: "" }), });
-                this.tableManagers['sasaran-mutu-page'] = { manager1: this.createTableManager({ tbody: document.getElementById('sasaran-mutu-body'), dataKey: 'sasaranMutu', rowGenerator: createSasaranMutuRow, addBtnId: 'add-sasaran-btn', deleteBtnId: 'delete-sasaran-btn', newRowFactory: () => ({ id: this.state.nextSasaranId++, sasaran: "", target: "", des:"", jan:"", feb:"", mart:"", apr:"", mei:"", ket: "" }), }), manager2: this.createTableManager({ tbody: document.getElementById('rencana-tindakan-body'), dataKey: 'rencanaTindakan', rowGenerator: createRencanaTindakanRow, addBtnId: 'add-rencana-btn', deleteBtnId: 'delete-rencana-btn', newRowFactory: () => ({ id: this.state.nextRencanaId++, rencana: "", pelaksana: "", waktu: "", keterangan: ""}), }), render: function() { const d = App.state.sasaranMutuExtraData; document.getElementById('sasaran-bagian').textContent = d.bagian||''; document.getElementById('sasaran-periode').textContent=d.periode||''; document.getElementById('dibuat-nama').textContent=d.dibuat||''; document.getElementById('disetujui-nama').textContent=d.disetujui||''; this.manager1.render(); this.manager2.render(); } };
-                this.tableManagers['daftar-inventaris-page'] = { manager1: this.createTableManager({ tbody: document.getElementById('inventaris-body-1'), dataKey: 'inventaris1', rowGenerator: createInventarisRow, addBtnId: 'add-row-inventaris-1-btn', deleteBtnId: 'delete-row-inventaris-1-btn', newRowFactory: () => ({ no: this.state.nextInventaris1No++, nama: '', merk: '', noInv: '', kondisi: '', ket: '' }), }), manager2: this.createTableManager({ tbody: document.getElementById('inventaris-body-2'), dataKey: 'inventaris2', rowGenerator: createInventarisRow, addBtnId: 'add-row-inventaris-2-btn', deleteBtnId: 'delete-row-inventaris-2-btn', newRowFactory: () => ({ no: this.state.nextInventaris2No++, nama: '', merk: '', noInv: '', kondisi: '', ket: '' }), }), render: function() { this.manager1.render(); this.manager2.render(); } };
-                this.tableManagers['jadwal-perawatan-page'] = this.createTableManager({ tbody: document.getElementById('jadwal-perawatan-body'), dataKey: 'jadwalPerawatan', rowGenerator: createJadwalPerawatanRow, addBtnId: 'add-row-jadwal-btn', deleteBtnId: 'delete-row-jadwal-btn', newRowFactory: () => ({ no: '', nama: '', m1:['','','',''], m2:['','','',''], m3:['','','',''] }), });
-                this.tableManagers['ceklis-perawatan-page'] = { manager: this.createTableManager({ tbody: document.getElementById('ceklis-perawatan-body'), dataKey: 'ceklisPerawatan.items', rowGenerator: createCeklisPerawatanRow, addBtnId: 'add-row-ceklis-btn', deleteBtnId: 'delete-row-ceklis-btn', newRowFactory: () => ({ id: App.state.nextCeklisId++, nama: '', check: '', ok: '', notok: '', ket: '' }), }), render: function() { document.getElementById('ceklis-tanggal').textContent = App.state.ceklisPerawatan.date || ''; this.manager.render(); } };
-                this.tableManagers['opportunity-page'] = this.createTableManager({ tbody: document.getElementById('opportunity-body'), dataKey: 'opportunity', rowGenerator: createOpportunityRow, addBtnId: 'add-row-opportunity-btn', deleteBtnId: 'delete-row-opportunity-btn', newRowFactory: () => ({ id: this.state.nextOpportunityId++, aspek: '', strategi: '', tindak: '', penanggung: '', dokumen: ''}), });
-                this.tableManagers['analisa-resiko-page'] = this.createTableManager({ tbody: document.getElementById('analisa-resiko-body'), dataKey: 'analisaResiko', rowGenerator: createAnalisaResikoRow, addBtnId: 'add-row-resiko-btn', deleteBtnId: 'delete-row-resiko-btn', newRowFactory: () => ({ id: this.state.nextResikoId++, aspek: '', risiko: '', konsekuensi: '', kemungkinan: '', keparahan: '', tingkat: '', pencegahan: '', penanggung: '', dokumen: ''}), });
-                this.tableManagers['matriks-kompetensi-page'] = this.createTableManager({ tbody: document.getElementById('matriks-kompetensi-body'), dataKey: 'matriksKompetensiData.kompetensi', rowGenerator: createMatriksKompetensiRow, addBtnId: 'add-row-kompetensi-btn', deleteBtnId: 'delete-row-kompetensi-btn', newRowFactory: () => ({ id: this.state.matriksKompetensiData.nextKompetensiId++, nama: "", standar: "", scores: Array(11).fill('') }) });
-                this.tableManagers['jadwal-pelatihan-page'] = { manager: this.createTableManager({ tbody: document.getElementById('jadwal-pelatihan-body'), dataKey: 'jadwalPelatihan', rowGenerator: createJadwalPelatihanRow, addBtnId: 'add-row-pelatihan-btn', deleteBtnId: 'delete-row-pelatihan-btn', newRowFactory: () => ({ id: this.state.nextPelatihanId++, nama: '', pembawa: '', peserta: '', bulan: Array(12).fill('') }), }), render: function() { const d = App.state.jadwalPelatihanExtraData; document.getElementById('pelatihan-tahun').textContent = d.tahun||''; document.getElementById('disiapkan-nama-pelatihan').textContent=d.disiapkanNama||''; document.getElementById('disetujui-nama-pelatihan').textContent=d.disetujuiNama||''; document.getElementById('validasi-pelatihan').textContent=d.validasi||'Validasi Therapist yg sudah diatas 3 bulan'; this.manager.render(); } };
+                this.tableManagers['catatan-mutu-page'] = this.createTableManager({ tbody: document.getElementById('catatan-mutu-body'), dataKey: 'catatanMutu', rowGenerator: (i,c)=>createCatatanMutuRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-catatan-btn', deleteBtnId: 'delete-row-catatan-btn', newRowFactory: () => ({ id: this.state.nextCatatanId++, nama: "", no: "", lokasi: "", masa: "", metode: "", media: "", penanggungJawab: "", keterangan: "" }), });
+                this.tableManagers['sasaran-mutu-page'] = { manager1: this.createTableManager({ tbody: document.getElementById('sasaran-mutu-body'), dataKey: 'sasaranMutu', rowGenerator: (i,c)=>createSasaranMutuRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-sasaran-btn', deleteBtnId: 'delete-sasaran-btn', newRowFactory: () => ({ id: this.state.nextSasaranId++, sasaran: "", target: "", des:"", jan:"", feb:"", mart:"", apr:"", mei:"", ket: "" }), }), manager2: this.createTableManager({ tbody: document.getElementById('rencana-tindakan-body'), dataKey: 'rencanaTindakan', rowGenerator: (i,c)=>createRencanaTindakanRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-rencana-btn', deleteBtnId: 'delete-rencana-btn', newRowFactory: () => ({ id: this.state.nextRencanaId++, rencana: "", pelaksana: "", waktu: "", keterangan: ""}), }), render: function() { const d = App.state.sasaranMutuExtraData; document.getElementById('sasaran-bagian').textContent = d.bagian||''; document.getElementById('sasaran-periode').textContent=d.periode||''; document.getElementById('dibuat-nama').textContent=d.dibuat||''; document.getElementById('disetujui-nama').textContent=d.disetujui||''; this.manager1.render(); this.manager2.render(); } };
+                this.tableManagers['daftar-inventaris-page'] = { manager1: this.createTableManager({ tbody: document.getElementById('inventaris-body-1'), dataKey: 'inventaris1', rowGenerator: (i,c)=>createInventarisRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-inventaris-1-btn', deleteBtnId: 'delete-row-inventaris-1-btn', newRowFactory: () => ({ no: this.state.nextInventaris1No++, nama: '', merk: '', noInv: '', kondisi: '', ket: '' }), }), manager2: this.createTableManager({ tbody: document.getElementById('inventaris-body-2'), dataKey: 'inventaris2', rowGenerator: (i,c)=>createInventarisRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-inventaris-2-btn', deleteBtnId: 'delete-row-inventaris-2-btn', newRowFactory: () => ({ no: this.state.nextInventaris2No++, nama: '', merk: '', noInv: '', kondisi: '', ket: '' }), }), render: function() { this.manager1.render(); this.manager2.render(); } };
+                this.tableManagers['jadwal-perawatan-page'] = this.createTableManager({ tbody: document.getElementById('jadwal-perawatan-body'), dataKey: 'jadwalPerawatan', rowGenerator: (i,c)=>createJadwalPerawatanRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-jadwal-btn', deleteBtnId: 'delete-row-jadwal-btn', newRowFactory: () => ({ no: '', nama: '', m1:['','','',''], m2:['','','',''], m3:['','','',''] }), });
+                this.tableManagers['ceklis-perawatan-page'] = { manager: this.createTableManager({ tbody: document.getElementById('ceklis-perawatan-body'), dataKey: 'ceklisPerawatan.items', rowGenerator: (i,c)=>createCeklisPerawatanRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-ceklis-btn', deleteBtnId: 'delete-row-ceklis-btn', newRowFactory: () => ({ id: App.state.nextCeklisId++, nama: '', check: '', ok: '', notok: '', ket: '' }), }), render: function() { document.getElementById('ceklis-tanggal').textContent = App.state.ceklisPerawatan.date || ''; this.manager.render(); } };
+                this.tableManagers['opportunity-page'] = this.createTableManager({ tbody: document.getElementById('opportunity-body'), dataKey: 'opportunity', rowGenerator: (i,c)=>createOpportunityRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-opportunity-btn', deleteBtnId: 'delete-row-opportunity-btn', newRowFactory: () => ({ id: this.state.nextOpportunityId++, aspek: '', strategi: '', tindak: '', penanggung: '', dokumen: ''}), });
+                this.tableManagers['analisa-resiko-page'] = this.createTableManager({ tbody: document.getElementById('analisa-resiko-body'), dataKey: 'analisaResiko', rowGenerator: (i,c)=>createAnalisaResikoRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-resiko-btn', deleteBtnId: 'delete-row-resiko-btn', newRowFactory: () => ({ id: this.state.nextResikoId++, aspek: '', risiko: '', konsekuensi: '', kemungkinan: '', keparahan: '', tingkat: '', pencegahan: '', penanggung: '', dokumen: ''}), });
+                this.tableManagers['matriks-kompetensi-page'] = { bodyManager: this.createTableManager({ tbody: document.getElementById('matriks-kompetensi-body'), dataKey: 'matriksKompetensiData.kompetensi', rowGenerator: (i,c)=>createMatriksKompetensiRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-kompetensi-btn', deleteBtnId: 'delete-row-kompetensi-btn', newRowFactory: () => ({ id: App.state.matriksKompetensiData.nextKompetensiId++, nama: "", standar: "", scores: Array(11).fill('') }) }), render: function() { const headerRow = document.getElementById('kompetensi-header-row'); const names = App.state.matriksKompetensiData.therapistNames || Array(11).fill(''); const staticHeaders = `<th class="p-1 text-center align-middle w-10">No</th><th class="p-1 text-center align-middle w-1/3">Kompetensi yg Diperlukan</th><th class="p-1 text-center align-middle w-24">STANDAR</th>`; const dynamicHeaders = names.map((name, i) => `<th class="p-1 text-center align-middle w-6 vertical-text" contenteditable="true" data-field="therapist-${i}">${name || i}</th>`).join(''); headerRow.innerHTML = staticHeaders + dynamicHeaders; this.bodyManager.render(); }, setupHeaderSaving: function() { document.getElementById('kompetensi-header-row').addEventListener('focusout', e => { const cell = e.target, field = cell.dataset.field; if (field && field.startsWith('therapist-')) { App.state.matriksKompetensiData.therapistNames[parseInt(field.split('-')[1], 10)] = cell.textContent; } }); } };
+                this.tableManagers['matriks-kompetensi-page'].setupHeaderSaving();
+                this.tableManagers['jadwal-pelatihan-page'] = { manager: this.createTableManager({ tbody: document.getElementById('jadwal-pelatihan-body'), dataKey: 'jadwalPelatihan', rowGenerator: (i,c)=>createJadwalPelatihanRow(i,c).replaceAll('td>','td contenteditable="true">'), addBtnId: 'add-row-pelatihan-btn', deleteBtnId: 'delete-row-pelatihan-btn', newRowFactory: () => ({ id: this.state.nextPelatihanId++, nama: '', pembawa: '', peserta: '', bulan: Array(12).fill('') }), }), render: function() { const d = App.state.jadwalPelatihanExtraData; document.getElementById('pelatihan-tahun').textContent = d.tahun||''; document.getElementById('disiapkan-nama-pelatihan').textContent=d.disiapkanNama||''; document.getElementById('disetujui-nama-pelatihan').textContent=d.disetujuiNama||''; document.getElementById('validasi-pelatihan').textContent=d.validasi||'Validasi Therapist yg sudah diatas 3 bulan'; this.manager.render(); } };
 
                 document.getElementById('save-catatan-btn').addEventListener('click', () => this.saveDataToFirebase('catatanMutu', this.state.catatanMutu));
                 document.getElementById('save-sasaran-btn').addEventListener('click', () => { const d = this.state.sasaranMutuExtraData; d.bagian = document.getElementById('sasaran-bagian').textContent; d.periode=document.getElementById('sasaran-periode').textContent; d.dibuat=document.getElementById('dibuat-nama').textContent; d.disetujui=document.getElementById('disetujui-nama').textContent; this.saveDataToFirebase('sasaranMutu', this.state.sasaranMutu); this.saveDataToFirebase('rencanaTindakan', this.state.rencanaTindakan); this.saveDataToFirebase('sasaranMutuExtraData', d); });
@@ -1438,10 +1411,17 @@
             },
 
             setupPrintButtons() {
-                document.querySelectorAll('.print-btn').forEach(button => { button.addEventListener('click', () => { const isMobile = /Mobi|Android/i.test(navigator.userAgent); if (isMobile) { document.body.classList.add('print-view-active'); this.elements.printInstructionsOverlay.classList.remove('hidden'); } else { window.print(); } }); });
-                const closePrintOverlay = () => { document.body.classList.remove('print-view-active'); this.elements.printInstructionsOverlay.classList.add('hidden'); };
-                if (this.elements.exitPrintModeBtn) this.elements.exitPrintModeBtn.addEventListener('click', closePrintOverlay);
-                if (this.elements.closePrintInstructionsXBtn) this.elements.closePrintInstructionsXBtn.addEventListener('click', closePrintOverlay);
+                document.body.addEventListener('click', (e) => {
+                    if (e.target.closest('.print-btn')) {
+                         document.body.classList.add('print-view-active');
+                         setTimeout(() => {
+                            window.print();
+                         }, 100);
+                    }
+                });
+                window.addEventListener('afterprint', () => {
+                     document.body.classList.remove('print-view-active');
+                });
             },
             
             setupImportExport() {
@@ -1457,7 +1437,7 @@
                 const escapeCsv = (cell) => { const str = String(cell==null?'':cell); return str.includes(',')||str.includes('"')||str.includes('\n') ? `"${str.replace(/"/g,'""')}"` : str; };
                 const toCsv = (data, h) => [h.join(','), ...data.map(obj => h.map(key => escapeCsv(obj[key])).join(','))].join('\n');
                 switch(formId) {
-                    case 'catatan-mutu-page': headers = ['nama', 'no', 'lokasi', 'masa', 'metode', 'media', 'penanggungJawab', 'keterangan']; dataToExport = this.state.catatanMutu; break;
+                    case 'catatan-mutu-page': headers = ['nama','no','lokasi','masa','metode','media','penanggungJawab','keterangan']; dataToExport = this.state.catatanMutu; break;
                     case 'sasaran-mutu-page': const sasaranCsv = toCsv(this.state.sasaranMutu, ['sasaran','target','des','jan','feb','mart','apr','mei','ket']); const rencanaCsv = toCsv(this.state.rencanaTindakan, ['rencana','pelaksana','waktu','keterangan']); this.downloadCsv("SASARAN MUTU\n" + sasaranCsv + "\n\nRENCANA TINDAKAN\n" + rencanaCsv, 'sasaran_mutu_dan_rencana.csv'); return;
                     case 'daftar-inventaris-page': headers = ['type','nama','merk','noInv','kondisi','ket']; dataToExport = [...this.state.inventaris1,...this.state.inventaris2]; break;
                     case 'data-pendukung': headers=['key','url','date']; dataToExport=this.state.dataPendukung; break;
@@ -1503,7 +1483,7 @@
             setupShareFunction() { if(document.getElementById('share-now-btn')) document.getElementById('share-now-btn').addEventListener('click', () => window.print()); }
         };
 
-        document.addEventListener('DOMContentLoaded', () => { App.init(); App.setupShareFunction(); });
+        document.addEventListener('DOMContentLoaded', () => { App.init(); });
 
     </script>
 </body>

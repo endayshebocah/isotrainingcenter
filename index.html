@@ -21,7 +21,8 @@
         }
         .main-container {
             min-height: 100vh;
-            padding-top: 60px; /* Space for the fixed header */
+            padding: 1rem; /* Replaces p-4 class */
+            padding-top: calc(60px + 1rem); /* Space for fixed header + padding */
         }
         .btn-3d {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -293,6 +294,11 @@
     
     <nav id="nav-drawer" class="fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-[999] transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
         <div class="p-4 border-b">
+            <p class="text-sm font-medium text-gray-500">Devisi Aktif:</p>
+            <h2 id="current-devisi-name" class="text-lg font-bold text-gray-800 truncate">Loading...</h2>
+            <button id="manage-devisi-btn" class="text-sm text-blue-600 hover:underline mt-1">Ganti/Kelola Devisi</button>
+        </div>
+        <div class="p-4 border-b">
              <h2 class="text-xl font-bold text-gray-800">Pilih Modul</h2>
         </div>
         
@@ -303,6 +309,7 @@
         <a href="#" id="nav-opportunity-resiko" class="nav-link">5. Opportunity & Resiko</a>
         <a href="#" id="nav-rekapan" class="nav-link font-semibold text-indigo-600">Riwayat & Rekapan Data</a>
         <a href="#" id="nav-import" class="nav-link font-semibold text-orange-600">Impor dari CSV</a>
+        <a href="#" id="nav-delete" class="nav-link font-semibold text-red-600">Hapus Berkas Tersimpan</a>
     </nav>
     <div id="nav-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[998] hidden"></div>
     
@@ -312,10 +319,10 @@
         <p class="text-gray-600">Sinkronisasi data...</p>
     </div>
 
-    <div class="main-container p-4">
+    <div class="main-container">
         <div id="history-banner" class="hidden"></div>
         
-        <div id="landing-page" class="page-content active w-full max-w-md mx-auto pt-16">
+        <div id="landing-page" class="page-content active w-full max-w-md mx-auto">
             <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
                 <img src="logo.png" alt="Logo Aplikasi" class="h-20 mx-auto mb-6">
                 <h1 class="text-2xl font-bold text-gray-800 mb-2">ISO Training Center</h1>
@@ -328,38 +335,38 @@
         
         
         <div id="catatan-mutu-page" class="page-content hidden w-full max-w-7xl mx-auto">
-             <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+             <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table id="catatan-mutu-table" class="text-sm form-border">
+                    <table id="catatan-mutu-table" class="text-sm">
                         <thead>
                             <tr>
-                                <th colspan="3" rowspan="2" class="p-2 text-center align-middle">
+                                <th colspan="2" rowspan="2" class="p-2 text-center align-middle">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th colspan="4" class="p-2 text-center text-lg font-bold align-bottom">DAFTAR CATATAN MUTU</th>
+                                <th colspan="5" class="p-2 text-center text-lg font-bold align-bottom" contenteditable="true">DAFTAR CATATAN MUTU</th>
                                 <th colspan="2" rowspan="2" class="p-0 align-top">
                                     <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-05</td></tr>
-                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-05</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
                                     </table>
                                 </th>
                             </tr>
                             <tr>
-                                <th colspan="4" class="p-2 text-center font-semibold">Bagian : Training Center</th>
+                                <th colspan="5" class="p-2 text-center font-semibold" contenteditable="true">Bagian : Training Center</th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs">
                                 <th rowspan="2" class="p-2 align-middle text-center w-12">No.</th>
-                                <th rowspan="2" class="p-2 align-middle w-1/4">Nama Catatan Mutu</th>
-                                <th rowspan="2" class="p-2 align-middle w-32">No. Catatan Mutu</th>
-                                <th colspan="4" class="p-2 text-center">Penyimpanan</th>
-                                <th rowspan="2" class="p-2 align-middle w-40">Penanggung Jawab</th>
-                                <th rowspan="2" class="p-2 align-middle">Keterangan</th>
+                                <th rowspan="2" class="p-2 align-middle w-1/4" contenteditable="true">Nama Catatan Mutu</th>
+                                <th rowspan="2" class="p-2 align-middle w-32" contenteditable="true">No. Catatan Mutu</th>
+                                <th colspan="4" class="p-2 text-center" contenteditable="true">Penyimpanan</th>
+                                <th rowspan="2" class="p-2 align-middle w-40" contenteditable="true">Penanggung Jawab</th>
+                                <th rowspan="2" class="p-2 align-middle" contenteditable="true">Keterangan</th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs">
-                                <th class="p-2 w-24">Lokasi</th>
-                                <th class="p-2 w-24">Masa</th>
-                                <th class="p-2 w-24">Metode</th>
-                                <th class="p-2 w-24">Media</th>
+                                <th class="p-2 w-24" contenteditable="true">Lokasi</th>
+                                <th class="p-2 w-24" contenteditable="true">Masa</th>
+                                <th class="p-2 w-24" contenteditable="true">Metode</th>
+                                <th class="p-2 w-24" contenteditable="true">Media</th>
                             </tr>
                         </thead>
                         <tbody id="catatan-mutu-body" class="text-gray-700">
@@ -388,23 +395,36 @@
                 </div>
                  <p class="text-center mt-4 text-sm text-gray-500">Tips: Geser tabel ke samping untuk melihat semua kolom.</p>
             </div>
+            <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="catatanMutu-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="catatanMutu-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="catatanMutu-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="catatanMutu-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         
         <div id="sasaran-mutu-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                  <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                              <tr>
                                 <th rowspan="2" colspan="2" class="p-2 text-center align-middle">
                                      <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th colspan="6" class="p-2 text-center text-lg font-bold align-middle">PEMANTAUAN SASARAN MUTU</th>
+                                <th colspan="6" class="p-2 text-center text-lg font-bold align-middle" contenteditable="true">PEMANTAUAN SASARAN MUTU</th>
                                 <th colspan="2" rowspan="2" class="p-0 align-top">
                                     <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-11</td></tr>
-                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-11</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
                                     </table>
                                 </th>
                             </tr>
@@ -418,10 +438,10 @@
                             </tr>
                              <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th rowspan="2" class="p-2 align-middle w-12">No.</th>
-                                <th rowspan="2" class="p-2 align-middle w-1/3">Sasaran Mutu</th>
-                                <th rowspan="2" class="p-2 align-middle w-32">Target</th>
-                                <th colspan="6" class="p-2">Pencapaian Bulan</th>
-                                <th rowspan="2" class="p-2 align-middle">Keterangan</th>
+                                <th rowspan="2" class="p-2 align-middle w-1/3" contenteditable="true">Sasaran Mutu</th>
+                                <th rowspan="2" class="p-2 align-middle w-32" contenteditable="true">Target</th>
+                                <th colspan="6" class="p-2" contenteditable="true">Pencapaian Bulan</th>
+                                <th rowspan="2" class="p-2 align-middle" contenteditable="true">Keterangan</th>
                             </tr>
                              <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-2 w-16" contenteditable="true">Des</th>
@@ -458,14 +478,14 @@
                 </div>
                 
                  <div class="table-container mt-8">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-2 w-12">No.</th>
-                                <th class="p-2 w-1/3">Rencana Tindakan</th>
-                                <th class="p-2 w-48">Pelaksana</th>
-                                <th class="p-2 w-48">Waktu</th>
-                                <th class="p-2">Keterangan</th>
+                                <th class="p-2 w-1/3" contenteditable="true">Rencana Tindakan</th>
+                                <th class="p-2 w-48" contenteditable="true">Pelaksana</th>
+                                <th class="p-2 w-48" contenteditable="true">Waktu</th>
+                                <th class="p-2" contenteditable="true">Keterangan</th>
                             </tr>
                         </thead>
                          <tbody id="rencana-tindakan-body" class="text-gray-700">
@@ -496,13 +516,26 @@
                 <div class="flex justify-around mt-12 text-center text-sm">
                     <div>
                         <p class="mb-2">Dibuat Oleh</p>
-                        <div id="dibuat-oleh-signature" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="dibuat-oleh-signature" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="dibuat-nama" class="font-bold underline cursor-pointer" contenteditable="true"></p>
                     </div>
                     <div>
                         <p class="mb-2">Disetujui Oleh</p>
-                        <div id="disetujui-oleh-signature" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="disetujui-oleh-signature" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="disetujui-nama" class="font-bold underline cursor-pointer" contenteditable="true"></p>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="sasaranMutu-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="sasaranMutu-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="sasaranMutu-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="sasaranMutu-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
                     </div>
                 </div>
             </div>
@@ -510,21 +543,21 @@
 
         
         <div id="daftar-inventaris-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full space-y-12">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full space-y-12 form-border">
                 
                 <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                             <tr>
                                 <th rowspan="2" colspan="2" class="p-2 text-center align-middle">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
-                                    <div class="mt-1 font-normal text-xs"><strong>Cabang:</strong> Training Center</div>
+                                    <div class="mt-1 font-normal text-xs" contenteditable="true"><strong>Cabang:</strong> Training Center</div>
                                 </th>
-                                <th rowspan="2" colspan="3" class="p-2 text-center text-lg font-bold align-middle">DAFTAR INVENTARIS</th>
+                                <th rowspan="2" colspan="3" class="p-2 text-center text-lg font-bold align-middle" contenteditable="true">DAFTAR INVENTARIS</th>
                                 <th rowspan="2" colspan="1" class="p-0 align-top">
                                     <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-21</td></tr>
-                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-21</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
                                     </table>
                                 </th>
                             </tr>
@@ -532,11 +565,11 @@
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-2 w-12">No</th>
-                                <th class="p-2 w-1/3">Nama Infrastruktur</th>
-                                <th class="p-2 w-48">Merk</th>
-                                <th class="p-2 w-32">No. Inventaris</th>
-                                <th class="p-2 w-24">Kondisi</th>
-                                <th class="p-2">Keterangan</th>
+                                <th class="p-2 w-1/3" contenteditable="true">Nama Infrastruktur</th>
+                                <th class="p-2 w-48" contenteditable="true">Merk</th>
+                                <th class="p-2 w-32" contenteditable="true">No. Inventaris</th>
+                                <th class="p-2 w-24" contenteditable="true">Kondisi</th>
+                                <th class="p-2" contenteditable="true">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody id="inventaris-body-1" class="text-gray-700"></tbody>
@@ -565,18 +598,18 @@
 
                 
                 <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                            <tr>
                                 <th rowspan="2" colspan="2" class="p-2 text-center align-middle">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
-                                    <div class="mt-1 font-normal text-xs"><strong>Cabang:</strong> Training Center</div>
+                                    <div class="mt-1 font-normal text-xs" contenteditable="true"><strong>Cabang:</strong> Training Center</div>
                                 </th>
-                                <th rowspan="2" colspan="3" class="p-2 text-center text-lg font-bold align-middle">DAFTAR INVENTARIS</th>
+                                <th rowspan="2" colspan="3" class="p-2 text-center text-lg font-bold align-middle" contenteditable="true">DAFTAR INVENTARIS</th>
                                 <th rowspan="2" colspan="1" class="p-0 align-top">
                                      <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-21</td></tr>
-                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-21</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
                                     </table>
                                 </th>
                             </tr>
@@ -584,11 +617,11 @@
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-2 w-12">No</th>
-                                <th class="p-2 w-1/3">Nama Infrastruktur</th>
-                                <th class="p-2 w-48">Merk</th>
-                                <th class="p-2 w-32">No. Inventaris</th>
-                                <th class="p-2 w-24">Kondisi</th>
-                                <th class="p-2">Keterangan</th>
+                                <th class="p-2 w-1/3" contenteditable="true">Nama Infrastruktur</th>
+                                <th class="p-2 w-48" contenteditable="true">Merk</th>
+                                <th class="p-2 w-32" contenteditable="true">No. Inventaris</th>
+                                <th class="p-2 w-24" contenteditable="true">Kondisi</th>
+                                <th class="p-2" contenteditable="true">Keterangan</th>
                             </tr>
                         </thead>
                         <tbody id="inventaris-body-2" class="text-gray-700"></tbody>
@@ -615,32 +648,45 @@
                     </table>
                 </div>
             </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="daftarInventaris-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="daftarInventaris-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="daftarInventaris-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="daftarInventaris-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         
         <div id="jadwal-perawatan-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table class="text-sm text-center form-border">
+                    <table class="text-sm text-center">
                         <thead>
                             <tr>
-                                <th rowspan="2" colspan="2" class="p-1">
+                                <th rowspan="2" colspan="1" class="p-1">
                                      <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th colspan="8" class="p-2 text-lg font-bold align-middle">JADWAL PERAWATAN INFRASTRUKTUR</th>
+                                <th colspan="9" class="p-2 text-lg font-bold align-middle" contenteditable="true">JADWAL PERAWATAN INFRASTRUKTUR</th>
                                 <th colspan="4" rowspan="2" class="p-0 align-top">
                                     <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-22</td></tr>
-                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-22</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
                                     </table>
                                 </th>
                             </tr>
                             <tr>
-                                <th colspan="8" class="p-1 font-semibold">BULAN: <span contenteditable="true">Juni 2023 s/d Agustus 2023</span></th>
+                                <th colspan="9" class="p-1 font-semibold">BULAN: <span contenteditable="true">Juni 2023 s/d Agustus 2023</span></th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs">
-                                <th rowspan="2" class="p-1 align-middle w-32">No. Insfrastruktur</th>
-                                <th rowspan="2" class="p-1 align-middle w-1/4">Nama Insfrastruktur</th>
+                                <th rowspan="2" class="p-1 align-middle w-32" contenteditable="true">No. Insfrastruktur</th>
+                                <th rowspan="2" class="p-1 align-middle w-1/4" contenteditable="true">Nama Insfrastruktur</th>
                                 <th colspan="4" class="p-1" contenteditable="true">Bulan: September 2023</th>
                                 <th colspan="4" class="p-1" contenteditable="true">Bulan: Oktober 2023</th>
                                 <th colspan="4" class="p-1" contenteditable="true">Bulan: November 2023</th>
@@ -675,11 +721,29 @@
                     </table>
                 </div>
 
-                <div class="flex justify-start mt-12 text-center text-sm">
+                <div class="flex justify-around mt-12 text-center text-sm">
                     <div>
                         <p class="mb-2">Dibuat Oleh</p>
-                        <div id="dibuat-oleh-signature-jadwal" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="dibuat-oleh-signature-jadwal" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="dibuat-nama-jadwal" class="font-bold underline cursor-pointer" contenteditable="true"></p>
+                    </div>
+                    <div>
+                        <p class="mb-2">Disetujui Oleh</p>
+                        <div id="disetujui-oleh-signature-jadwal" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
+                        <p id="disetujui-nama-jadwal" class="font-bold underline cursor-pointer" contenteditable="true"></p>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="jadwalPerawatan-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="jadwalPerawatan-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="jadwalPerawatan-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="jadwalPerawatan-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
                     </div>
                 </div>
             </div>
@@ -687,19 +751,19 @@
 
         
         <div id="ceklis-perawatan-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                             <tr>
                                 <th rowspan="2" colspan="2" class="p-1">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th colspan="3" class="p-2 text-lg font-bold align-middle">CHECKLIST PERAWATAN</th>
+                                <th colspan="3" class="p-2 text-lg font-bold align-middle" contenteditable="true">CHECKLIST PERAWATAN</th>
                                 <th colspan="1" rowspan="2" class="p-0 align-top">
                                      <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-23</td></tr>
-                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-23</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
                                     </table>
                                 </th>
                             </tr>
@@ -708,17 +772,17 @@
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-1 w-12">NO</th>
-                                <th class="p-1 w-1/4">NAMA DAN NO. MESIN/ALAT</th>
-                                <th class="p-1 w-1/3">CHECK POINT</th>
-                                <th colspan="2" class="p-1">KONDISI</th>
-                                <th class="p-1">KETERANGAN (Informasi atau Perbaikan)</th>
+                                <th class="p-1 w-1/4" contenteditable="true">NAMA DAN NO. MESIN/ALAT</th>
+                                <th class="p-1 w-1/3" contenteditable="true">CHECK POINT</th>
+                                <th colspan="2" class="p-1" contenteditable="true">KONDISI</th>
+                                <th class="p-1" contenteditable="true">KETERANGAN (Informasi atau Perbaikan)</th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-1"></th>
                                 <th class="p-1"></th>
                                 <th class="p-1"></th>
-                                <th class="p-1 w-16">O.K</th>
-                                <th class="p-1 w-20">NOT O.K</th>
+                                <th class="p-1 w-16" contenteditable="true">O.K</th>
+                                <th class="p-1 w-20" contenteditable="true">NOT O.K</th>
                                 <th class="p-1"></th>
                             </tr>
                         </thead>
@@ -749,14 +813,27 @@
                 <div class="flex justify-between mt-12 text-center text-sm">
                     <div>
                         <p class="mb-2">Dilaporkan oleh</p>
-                        <div id="dilaporkan-oleh-signature-ceklis" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="dilaporkan-oleh-signature-ceklis" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="dilaporkan-nama-ceklis" class="font-bold underline cursor-pointer" contenteditable="true">Oman</p>
                         <p contenteditable="true" class="text-gray-600">Teknisi</p>
                     </div>
                      <div>
                         <p class="mb-2">Mengetahui,</p>
-                        <div id="mengetahui-signature-ceklis" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="mengetahui-signature-ceklis" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="mengetahui-nama-ceklis" class="font-bold underline cursor-pointer" contenteditable="true"></p>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="ceklisPerawatan-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="ceklisPerawatan-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="ceklisPerawatan-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="ceklisPerawatan-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
                     </div>
                 </div>
             </div>
@@ -764,15 +841,15 @@
 
         
         <div id="opportunity-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                              <tr>
                                 <th class="p-2 align-middle text-center" colspan="2">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th class="p-2 align-middle text-center text-lg font-bold" colspan="2">
+                                <th class="p-2 align-middle text-center text-lg font-bold" colspan="2" contenteditable="true">
                                     Kokuo Eastern Reflexology <br> Tabel Opportunity
                                 </th>
                                 <th class="p-0 align-top" colspan="2">
@@ -780,11 +857,11 @@
                                          <tbody>
                                              <tr>
                                                 <td class="font-bold border-r border-b p-1 text-left">No. Dokumen</td>
-                                                <td class="border-b p-1 text-left">FR-KK-55</td>
+                                                <td class="border-b p-1 text-left" contenteditable="true">FR-KK-55</td>
                                              </tr>
                                              <tr>
                                                 <td class="font-bold border-r border-b p-1 text-left">Status Revisi</td>
-                                                <td class="border-b p-1 text-left">00</td>
+                                                <td class="border-b p-1 text-left" contenteditable="true">00</td>
                                              </tr>
                                              <tr>
                                                 <td class="font-bold border-r border-b p-1 text-left">Tgl. Terbit</td>
@@ -805,11 +882,11 @@
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-2 w-12">No</th>
-                                <th class="p-2 w-1/4">Aspek Opportunity</th>
-                                <th class="p-2 w-1/4">Strategi untuk Meraih Opportunity</th>
-                                <th class="p-2 w-1/4">Tindak Lanjut</th>
-                                <th class="p-2 w-40">Penanggung Jawab</th>
-                                <th class="p-2 w-40">Dokumen Terkait</th>
+                                <th class="p-2 w-1/4" contenteditable="true">Aspek Opportunity</th>
+                                <th class="p-2 w-1/4" contenteditable="true">Strategi untuk Meraih Opportunity</th>
+                                <th class="p-2 w-1/4" contenteditable="true">Tindak Lanjut</th>
+                                <th class="p-2 w-40" contenteditable="true">Penanggung Jawab</th>
+                                <th class="p-2 w-40" contenteditable="true">Dokumen Terkait</th>
                             </tr>
                         </thead>
                         <tbody id="opportunity-body" class="text-gray-700"></tbody>
@@ -842,19 +919,32 @@
                     </table>
                 </div>
             </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="opportunity-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="opportunity-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="opportunity-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="opportunity-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         
         <div id="analisa-resiko-page" class="page-content hidden w-full max-w-7xl mx-auto">
-             <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+             <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                            <tr>
                                 <th colspan="2" class="p-2 align-middle text-center">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th colspan="6" class="p-2 align-middle text-center text-lg font-bold">
+                                <th colspan="6" class="p-2 align-middle text-center text-lg font-bold" contenteditable="true">
                                     Kokuo Eastern Reflexology <br> Analisa Resiko
                                 </th>
                                 <th colspan="2" class="p-0 align-top">
@@ -862,11 +952,11 @@
                                          <tbody>
                                              <tr>
                                                 <td class="font-bold border-r border-b p-1 text-left">No. Dokumen</td>
-                                                <td class="border-b p-1 text-left">FR-KK-54</td>
+                                                <td class="border-b p-1 text-left" contenteditable="true">FR-KK-54</td>
                                              </tr>
                                              <tr>
                                                 <td class="font-bold border-r border-b p-1 text-left">Status Revisi</td>
-                                                <td class="border-b p-1 text-left">00</td>
+                                                <td class="border-b p-1 text-left" contenteditable="true">00</td>
                                              </tr>
                                              <tr>
                                                 <td class="font-bold border-r border-b p-1 text-left">Tgl. Terbit</td>
@@ -888,18 +978,18 @@
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th rowspan="2" class="p-1 align-middle w-10">No</th>
-                                <th rowspan="2" class="p-1 align-middle w-1/6">Aspek / Tahapan Proses</th>
-                                <th rowspan="2" class="p-1 align-middle w-1/6">Risiko yang Bisa Terjadi</th>
-                                <th rowspan="2" class="p-1 align-middle w-1/6">Konsekuensi Risiko</th>
-                                <th colspan="3" class="p-1">Analisa Kuantitatif</th>
-                                <th rowspan="2" class="p-1 align-middle w-1/6">Pencegahan</th>
-                                <th rowspan="2" class="p-1 align-middle w-32">Penanggung Jawab</th>
-                                <th rowspan="2" class="p-1 align-middle w-32">Dokumen Terkait</th>
+                                <th rowspan="2" class="p-1 align-middle w-1/6" contenteditable="true">Aspek / Tahapan Proses</th>
+                                <th rowspan="2" class="p-1 align-middle w-1/6" contenteditable="true">Risiko yang Bisa Terjadi</th>
+                                <th rowspan="2" class="p-1 align-middle w-1/6" contenteditable="true">Konsekuensi Risiko</th>
+                                <th colspan="3" class="p-1" contenteditable="true">Analisa Kuantitatif</th>
+                                <th rowspan="2" class="p-1 align-middle w-1/6" contenteditable="true">Pencegahan</th>
+                                <th rowspan="2" class="p-1 align-middle w-32" contenteditable="true">Penanggung Jawab</th>
+                                <th rowspan="2" class="p-1 align-middle w-32" contenteditable="true">Dokumen Terkait</th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
-                                <th class="p-1 w-28">Tingkat Kemungkinan (A)</th>
-                                <th class="p-1 w-28">Tingkat Keparahan (B)</th>
-                                <th class="p-1 w-28">Tingkat Risiko (A x B)</th>
+                                <th class="p-1 w-28" contenteditable="true">Tingkat Kemungkinan (A)</th>
+                                <th class="p-1 w-28" contenteditable="true">Tingkat Keparahan (B)</th>
+                                <th class="p-1 w-28" contenteditable="true">Tingkat Risiko (A x B)</th>
                             </tr>
                         </thead>
                         <tbody id="analisa-resiko-body" class="text-gray-700"></tbody>
@@ -953,27 +1043,40 @@
                     </table>
                 </div>
              </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="analisaResiko-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="analisaResiko-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="analisaResiko-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="analisaResiko-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         
         <div id="matriks-kompetensi-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table id="matriks-kompetensi-table" class="text-xs form-border">
+                    <table id="matriks-kompetensi-table" class="text-xs">
                         <thead>
                             <tr>
-                                <th colspan="14" class="p-2 text-left text-base font-bold">
+                                <th colspan="14" class="p-2 text-left text-base font-bold" contenteditable="true">
                                     KOKUO EASTERN REFLEXOLOGY
                                 </th>
                             </tr>
                             <tr>
-                                <th colspan="7" class="p-2 text-left text-xl font-bold">MATRIKS KOMPETENSI THERAPIST</th>
-                                <th colspan="7" class="p-2 text-right text-base align-middle">FR-KK-114</th>
+                                <th colspan="7" class="p-2 text-left text-xl font-bold" contenteditable="true">MATRIKS KOMPETENSI THERAPIST</th>
+                                <th colspan="7" class="p-2 text-right text-base align-middle" contenteditable="true">FR-KK-114</th>
                             </tr>
                             <tr class="bg-gray-100 text-center">
                                 <th class="p-1 align-middle w-10">No</th>
-                                <th class="p-1 align-middle w-1/3">Kompetensi yg Diperlukan</th>
-                                <th class="p-1 align-middle w-24">STANDAR</th>
+                                <th class="p-1 align-middle w-1/3" contenteditable="true">Kompetensi yg Diperlukan</th>
+                                <th class="p-1 align-middle w-24" contenteditable="true">STANDAR</th>
                                 <th class="p-1 align-middle w-12 vertical-text" contenteditable="true">Peserta 1</th>
                                 <th class="p-1 align-middle w-12 vertical-text" contenteditable="true">Peserta 2</th>
                                 <th class="p-1 align-middle w-12 vertical-text" contenteditable="true">Peserta 3</th>
@@ -1011,10 +1114,10 @@
                     </table>
                 </div>
 
-                <div class="mt-4 p-2 border border-black">
+                <div class="mt-4 p-2 border-2 border-black">
                     <strong>Keterangan :</strong>
                     <div class="flex justify-between items-start mt-2">
-                        <table class="text-xs">
+                        <table class="border-2 border-black">
                             <tr><td class="pr-4">Sangat Mampu</td> <td class="border border-black text-center p-1 w-8">4</td></tr>
                             <tr><td class="pr-4">Mampu secara mandiri</td> <td class="border border-black text-center p-1 w-8">3</td></tr>
                             <tr><td class="pr-4">Mampu tetapi harus didampingi/diawasi</td> <td class="border border-black text-center p-1 w-8">2</td></tr>
@@ -1022,8 +1125,21 @@
                         </table>
                         <div class="text-xs ml-4">
                             <strong>Tgl. Evaluasi:</strong>
-                            <div class="border border-black p-1 mt-1 w-48 h-20" contenteditable="true"></div>
+                            <div class="border-2 border-black p-1 mt-1 w-48 h-20" contenteditable="true"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="matriksKompetensi-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="matriksKompetensi-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="matriksKompetensi-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="matriksKompetensi-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
                     </div>
                 </div>
             </div>
@@ -1031,29 +1147,29 @@
 
         
         <div id="jadwal-pelatihan-page" class="page-content hidden w-full max-w-7xl mx-auto">
-            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
                 <div class="table-container">
-                    <table class="text-sm form-border">
+                    <table class="text-sm">
                         <thead>
                             <tr>
-                                <th class="p-2 text-center align-middle" colspan="5">
+                                <th class="p-2 text-center align-middle" colspan="2">
                                     <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
                                 </th>
-                                <th class="p-2 text-center text-lg font-bold align-middle" colspan="7">JADWAL PELATIHAN</th>
+                                <th class="p-2 text-center text-lg font-bold align-middle" colspan="10" contenteditable="true">JADWAL PELATIHAN</th>
                                 <th class="p-0 align-top" colspan="4">
                                      <table class="w-full h-full text-xs">
-                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1">FR-KK-27</td></tr>
-                                        <tr><td class="font-bold border-r border-b p-1">Revisi</td><td class="border-b p-1">00</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-27</td></tr>
+                                        <tr><td class="font-bold border-r border-b p-1">Revisi</td><td class="border-b p-1" contenteditable="true">00</td></tr>
                                         <tr><td class="font-bold border-r p-1">Tahun</td><td contenteditable="true" class="p-1" id="pelatihan-tahun"></td></tr>
                                     </table>
                                 </th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th class="p-1 w-12">NO</th>
-                                <th class="p-1 w-1/5">NAMA PELATIHAN</th>
-                                <th class="p-1 w-1/5">PEMBAWA PELATIHAN</th>
-                                <th class="p-1 w-1/5">PESERTA PELATIHAN</th>
-                                <th colspan="12" class="p-1">BULAN</th>
+                                <th class="p-1 w-1/5" contenteditable="true">NAMA PELATIHAN</th>
+                                <th class="p-1 w-1/5" contenteditable="true">PEMBAWA PELATIHAN</th>
+                                <th class="p-1 w-1/5" contenteditable="true">PESERTA PELATIHAN</th>
+                                <th colspan="12" class="p-1" contenteditable="true">BULAN</th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
                                 <th></th><th></th><th></th><th></th>
@@ -1090,17 +1206,30 @@
                 <div class="flex justify-around mt-12 text-center text-sm">
                     <div>
                         <p class="mb-2">Disiapkan oleh:</p>
-                        <div id="disiapkan-oleh-signature-pelatihan" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="disiapkan-oleh-signature-pelatihan" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="disiapkan-nama-pelatihan" class="font-bold underline cursor-pointer" contenteditable="true"></p>
                     </div>
                     <div>
                         <p class="mb-2">Disetujui oleh:</p>
-                        <div id="disetujui-oleh-signature-pelatihan" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400">Area TTD</div>
+                        <div id="disetujui-oleh-signature-pelatihan" class="h-16 w-48 bg-gray-50 border rounded-md mb-2 flex items-center justify-center text-gray-400 cursor-pointer">Area TTD</div>
                         <p id="disetujui-nama-pelatihan" class="font-bold underline cursor-pointer" contenteditable="true"></p>
                     </div>
                 </div>
                 <div class="mt-4 text-sm px-4">
                     <p id="validasi-pelatihan" contenteditable="true">Validasi Therapist yg sudah diatas 3 bulan</p>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="jadwalPelatihan-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="jadwalPelatihan-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="jadwalPelatihan-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="jadwalPelatihan-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1230,6 +1359,72 @@
             </div>
         </div>
     </div>
+
+    
+    <div id="delete-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="height: auto; max-height: 90vh;">
+            <h3 class="text-xl font-bold mb-6 text-center">Hapus Berkas Riwayat</h3>
+            <div class="space-y-4">
+                <div>
+                    <label for="delete-form-select" class="block text-sm font-medium text-gray-700">1. Pilih Formulir</label>
+                    <select id="delete-form-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                        <option value="catatanMutu">Daftar Catatan Mutu</option>
+                        <option value="sasaranMutu">Sasaran Mutu</option>
+                        <option value="daftarInventaris">Daftar Inventaris</option>
+                        <option value="jadwalPerawatan">Jadwal Perawatan</option>
+                        <option value="ceklisPerawatan">Checklist Perawatan</option>
+                        <option value="opportunity">Tabel Opportunity</option>
+                        <option value="analisaResiko">Analisa Resiko</option>
+                        <option value="matriksKompetensi">Matriks Kompetensi</option>
+                        <option value="jadwalPelatihan">Jadwal Pelatihan</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="delete-tanggal-mulai" class="block text-sm font-medium text-gray-700">2. Tanggal Mulai (Opsional)</label>
+                    <input type="date" id="delete-tanggal-mulai" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <div>
+                    <label for="delete-tanggal-selesai" class="block text-sm font-medium text-gray-700">3. Tanggal Selesai (Opsional)</label>
+                    <input type="date" id="delete-tanggal-selesai" class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+                <p class="text-xs text-gray-500">Jika tanggal tidak diisi, semua riwayat untuk formulir yang dipilih akan dihapus.</p>
+            </div>
+            <div class="flex justify-between items-center mt-8">
+                <button id="close-delete-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
+                <button id="hapus-data-btn" class="btn-3d bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg">Hapus Data</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="confirm-delete-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 400px;">
+            <h3 class="text-lg font-bold text-gray-800">Konfirmasi Penghapusan</h3>
+            <p id="confirm-delete-message" class="text-gray-600 my-4">Apakah Anda yakin ingin menghapus data ini secara permanen? Tindakan ini tidak dapat dibatalkan.</p>
+            <div class="flex justify-end space-x-4 mt-4">
+                <button id="cancel-delete-btn" class="btn-3d bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg">Batal</button>
+                <button id="confirm-delete-action-btn" class="btn-3d bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="devisi-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 500px;">
+            <h3 class="text-xl font-bold mb-4">Kelola Devisi</h3>
+            <div id="devisi-list" class="space-y-2 mb-4 max-h-60 overflow-y-auto"></div>
+            <div class="mt-4 border-t pt-4">
+                <h4 class="font-semibold mb-2">Tambah Devisi Baru</h4>
+                <div class="flex space-x-2">
+                    <input type="text" id="new-devisi-input" placeholder="Nama Devisi Baru" class="flex-grow px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <button id="add-devisi-btn" class="btn-3d bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">Tambah</button>
+                </div>
+            </div>
+            <div class="flex justify-center mt-6">
+                 <button id="close-devisi-modal-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
+            </div>
+        </div>
+    </div>
+
     
     <div id="toast-notification" class="toast"></div>
 
@@ -1237,7 +1432,7 @@
 
 <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-        import { getFirestore, collection, doc, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, getDocs, where, Timestamp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
+        import { getFirestore, collection, doc, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, getDocs, where, Timestamp, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
         
         // Initialize Firebase
@@ -1256,20 +1451,17 @@
         
         const App = {
             state: {
-                currentFormKey: null,
-                isHistoryView: false,
-                catatanMutu: [],
-                sasaranMutu: [],
-                rencanaTindakan: [],
-                sasaranMutuExtraData: {},
-                daftarInventaris: { inventaris1: [], inventaris2: [] },
-                jadwalPerawatan: { perawatan: [], signatures: {}, metadata: {} },
-                ceklisPerawatan: { items: [], signatures: {}, date: '' },
-                opportunity: [],
-                analisaResiko: [],
-                matriksKompetensi: { kompetensi: [] },
-                jadwalPelatihan: { pelatihan: [], extraData: {} },
-                signatures: {},
+                currentFormKey: null, isHistoryView: false, currentSignatureKey: null, deleteParams: {}, 
+                devisis: [], activeDevisiId: null, activeDevisiName: 'Loading...', unsubscribeListeners: [],
+                catatanMutu: { items: [], auditNotes: { audit: '', auditor: '' } },
+                sasaranMutu: [], rencanaTindakan: [], sasaranMutuExtraData: {},
+                daftarInventaris: { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' } },
+                jadwalPerawatan: { perawatan: [], signatures: {}, extraData: {}, auditNotes: { audit: '', auditor: '' } },
+                ceklisPerawatan: { items: [], signatures: {}, date: '', auditNotes: { audit: '', auditor: '' } },
+                opportunity: { items: [], auditNotes: { audit: '', auditor: '' } },
+                analisaResiko: { items: [], auditNotes: { audit: '', auditor: '' } },
+                matriksKompetensi: { kompetensi: [], auditNotes: { audit: '', auditor: '' } },
+                jadwalPelatihan: { pelatihan: [], extraData: {} }, signatures: {},
             },
             elements: {},
             
@@ -1277,38 +1469,30 @@
                 modals: {},
                 init() {
                     this.modals = {
-                        rekapan: document.getElementById('rekapan-modal'),
-                        import: document.getElementById('import-modal'),
-                        historyList: document.getElementById('history-list-modal'),
-                        opportunityResiko: document.getElementById('opportunity-resiko-modal'),
-                        sasaranDataPendukung: document.getElementById('sasaran-data-pendukung-modal'),
-                        signature: document.getElementById('signature-modal'),
+                        rekapan: document.getElementById('rekapan-modal'), import: document.getElementById('import-modal'), historyList: document.getElementById('history-list-modal'),
+                        opportunityResiko: document.getElementById('opportunity-resiko-modal'), sasaranDataPendukung: document.getElementById('sasaran-data-pendukung-modal'),
+                        signature: document.getElementById('signature-modal'), delete: document.getElementById('delete-modal'), confirmDelete: document.getElementById('confirm-delete-modal'),
+                        devisi: document.getElementById('devisi-modal'),
                     };
                 },
                 open(id) { this.modals[id]?.classList.remove('hidden'); },
                 close(id) { this.modals[id]?.classList.add('hidden'); }
             },
 
-            tableManagers: {},
-            db,
+            tableManagers: {}, db,
 
             async init() {
-                this.cacheElements();
-                this.ModalManager.init();
-                this.setupHeaderNav();
-                this.setupModalEventListeners();
-                this.setupSignaturePad();
-                this.setupTableControls();
-                this.setupPWA();
-                this.setupImportFeature();
+                this.cacheElements(); this.ModalManager.init();
+                this.setupHeaderNav(); this.setupModalEventListeners();
+                this.setupSignaturePad(); this.setupTableControls();
+                this.setupPWA(); this.setupImportFeature(); this.setupDeleteFeature();
                 
                 try {
-                    await signInAnonymously(auth);
-                    console.log("Signed in anonymously");
-                    this.setupAllFormListeners();
+                    await signInAnonymously(auth); console.log("Signed in anonymously");
+                    await this.setupDevisiManagement();
                 } catch (error) {
-                    console.error("Anonymous sign-in failed:", error);
-                    this.showToast("Gagal mengautentikasi ke server.");
+                    console.error("Authentication or Devisi setup failed:", error);
+                    this.showToast("Gagal mengautentikasi atau memuat data devisi.");
                     this.elements.loadingOverlay.style.display = 'none';
                 }
                 
@@ -1316,66 +1500,85 @@
             },
 
             cacheElements() {
-                 this.elements.loadingOverlay = document.getElementById('loading-overlay');
-                 this.elements.pages = document.querySelectorAll('.page-content');
-                 this.elements.openAppBtn = document.getElementById('open-app-btn');
-                 this.elements.header = document.getElementById('app-header');
-                 this.elements.headerTitle = document.getElementById('header-title');
-                 this.elements.headerActions = document.getElementById('header-actions');
-                 this.elements.hamburgerBtn = document.getElementById('hamburger-btn');
-                 this.elements.navDrawer = document.getElementById('nav-drawer');
-                 this.elements.navOverlay = document.getElementById('nav-overlay');
-                 this.elements.navLinks = document.querySelectorAll('#nav-drawer .nav-link');
-                 this.elements.signatureCanvas = document.getElementById('signature-canvas');
-                 this.elements.clearSigBtn = document.getElementById('clear-sig-btn');
-                 this.elements.saveSigBtn = document.getElementById('save-sig-btn');
-                 this.elements.toast = document.getElementById('toast-notification');
+                 this.elements.loadingOverlay = document.getElementById('loading-overlay'); this.elements.pages = document.querySelectorAll('.page-content');
+                 this.elements.openAppBtn = document.getElementById('open-app-btn'); this.elements.header = document.getElementById('app-header');
+                 this.elements.headerTitle = document.getElementById('header-title'); this.elements.headerActions = document.getElementById('header-actions');
+                 this.elements.hamburgerBtn = document.getElementById('hamburger-btn'); this.elements.navDrawer = document.getElementById('nav-drawer');
+                 this.elements.navOverlay = document.getElementById('nav-overlay'); this.elements.navLinks = document.querySelectorAll('#nav-drawer .nav-link');
+                 this.elements.signatureCanvas = document.getElementById('signature-canvas'); this.elements.clearSigBtn = document.getElementById('clear-sig-btn');
+                 this.elements.saveSigBtn = document.getElementById('save-sig-btn'); this.elements.toast = document.getElementById('toast-notification');
                  this.elements.signatureAreas = document.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]');
-                 this.elements.tampilkanRekapanBtn = document.getElementById('tampilkan-rekapan-btn');
-                 this.elements.historyFormSelect = document.getElementById('history-form-select');
-                 this.elements.moduleChoiceBtns = document.querySelectorAll('.module-choice-btn');
-                 this.elements.historyBanner = document.getElementById('history-banner');
+                 this.elements.tampilkanRekapanBtn = document.getElementById('tampilkan-rekapan-btn'); this.elements.historyFormSelect = document.getElementById('history-form-select');
+                 this.elements.moduleChoiceBtns = document.querySelectorAll('.module-choice-btn'); this.elements.historyBanner = document.getElementById('history-banner');
+                 this.elements.currentDevisiName = document.getElementById('current-devisi-name');
             },
             
             showToast(message, duration = 3000) {
                 if (!this.elements.toast) return;
                 this.elements.toast.textContent = message;
                 this.elements.toast.classList.add('show');
-                setTimeout(() => {
-                    this.elements.toast.classList.remove('show');
-                }, duration);
+                setTimeout(() => { this.elements.toast.classList.remove('show'); }, duration);
             },
             
             setupAllFormListeners() {
+                this.state.unsubscribeListeners.forEach(unsub => unsub()); this.state.unsubscribeListeners = [];
+                if (!this.state.activeDevisiId) {
+                    console.warn("Cannot setup form listeners without an active devisi.");
+                    return;
+                }
                 const formKeys = ['catatanMutu', 'sasaranMutu', 'daftarInventaris', 'jadwalPerawatan', 'ceklisPerawatan', 'opportunity', 'analisaResiko', 'matriksKompetensi', 'jadwalPelatihan'];
                 formKeys.forEach(key => this.setupFormListener(key));
                 setTimeout(() => this.elements.loadingOverlay.style.display = 'none', 1500);
             },
 
             setupFormListener(formKey) {
-                const q = query(collection(this.db, `${formKey}History`), orderBy('timestamp', 'desc'), limit(1));
-                onSnapshot(q, (querySnapshot) => {
+                const collectionRef = this.getActiveCollectionRef(formKey);
+                const q = query(collectionRef, orderBy('timestamp', 'desc'), limit(1));
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    this.resetFormData(formKey); // Reset before loading
                     if (!querySnapshot.empty) {
                         const latestDoc = querySnapshot.docs[0];
                         this.loadDataIntoState(formKey, latestDoc.data().data);
-                        if(this.state.currentFormKey === formKey && !this.state.isHistoryView) {
-                           this.renderCurrentPage();
-                        }
                     } else {
-                        console.log(`No history found for ${formKey}. Using initial state.`);
-                        if(this.state.currentFormKey === formKey) {
-                           this.renderCurrentPage();
-                        }
+                        console.log(`No history found for ${formKey} in this devisi.`);
+                    }
+                    if(this.state.currentFormKey === formKey && !this.state.isHistoryView) {
+                       this.renderCurrentPage();
                     }
                 }, (error) => {
                     console.error(`Error listening to ${formKey} history:`, error);
                     this.showToast(`Gagal memuat data ${formKey}.`);
                 });
+                this.state.unsubscribeListeners.push(unsubscribe);
+            },
+            
+            resetFormData(formKey) {
+                switch(formKey) {
+                    case 'catatanMutu': this.state.catatanMutu = { items: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'sasaranMutu': 
+                        this.state.sasaranMutu = []; this.state.rencanaTindakan = []; 
+                        this.state.sasaranMutuExtraData = {}; this.state.signatures = {}; break;
+                    case 'daftarInventaris': this.state.daftarInventaris = { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'jadwalPerawatan': this.state.jadwalPerawatan = { perawatan: [], signatures: {}, extraData: {}, auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'ceklisPerawatan': this.state.ceklisPerawatan = { items: [], signatures: {}, date: '', auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'opportunity': this.state.opportunity = { items: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'analisaResiko': this.state.analisaResiko = { items: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'matriksKompetensi': this.state.matriksKompetensi = { kompetensi: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'jadwalPelatihan': this.state.jadwalPelatihan = { pelatihan: [], extraData: {}, signatures: {} }; break;
+                }
+            },
+            
+            getActiveCollectionRef(formKey) {
+                if (!this.state.activeDevisiId) throw new Error("No active devisi set.");
+                return collection(db, 'devisi', this.state.activeDevisiId, `${formKey}History`);
             },
             
             loadDataIntoState(formKey, data) {
                  switch(formKey) {
-                    case 'catatanMutu': this.state.catatanMutu = data || []; break;
+                    case 'catatanMutu': 
+                        this.state.catatanMutu.items = data.items || [];
+                        this.state.catatanMutu.auditNotes = data.auditNotes || { audit: '', auditor: '' };
+                        break;
                     case 'sasaranMutu':
                         this.state.sasaranMutu = data.sasaranMutu || [];
                         this.state.rencanaTindakan = data.rencanaTindakan || [];
@@ -1385,19 +1588,32 @@
                     case 'daftarInventaris':
                         this.state.daftarInventaris.inventaris1 = data.inventaris1 || [];
                         this.state.daftarInventaris.inventaris2 = data.inventaris2 || [];
+                        this.state.daftarInventaris.auditNotes = data.auditNotes || { audit: '', auditor: '' };
                         break;
                     case 'jadwalPerawatan':
                         this.state.jadwalPerawatan.perawatan = data.perawatan || [];
                         this.state.signatures = {...this.state.signatures, ...data.signatures};
+                        this.state.jadwalPerawatan.extraData = data.extraData || {};
+                        this.state.jadwalPerawatan.auditNotes = data.auditNotes || { audit: '', auditor: '' };
                         break;
                     case 'ceklisPerawatan':
                         this.state.ceklisPerawatan.items = data.items || [];
                         this.state.ceklisPerawatan.date = data.date || '';
                         this.state.signatures = {...this.state.signatures, ...data.signatures};
+                        this.state.ceklisPerawatan.auditNotes = data.auditNotes || { audit: '', auditor: '' };
                         break;
-                    case 'opportunity': this.state.opportunity = data || []; break;
-                    case 'analisaResiko': this.state.analisaResiko = data || []; break;
-                    case 'matriksKompetensi': this.state.matriksKompetensi.kompetensi = data.kompetensi || []; break;
+                    case 'opportunity': 
+                        this.state.opportunity.items = data.items || [];
+                        this.state.opportunity.auditNotes = data.auditNotes || { audit: '', auditor: '' };
+                        break;
+                    case 'analisaResiko': 
+                        this.state.analisaResiko.items = data.items || [];
+                        this.state.analisaResiko.auditNotes = data.auditNotes || { audit: '', auditor: '' };
+                        break;
+                    case 'matriksKompetensi': 
+                        this.state.matriksKompetensi.kompetensi = data.kompetensi || [];
+                        this.state.matriksKompetensi.auditNotes = data.auditNotes || { audit: '', auditor: '' };
+                        break;
                     case 'jadwalPelatihan':
                         this.state.jadwalPelatihan.pelatihan = data.pelatihan || [];
                         this.state.jadwalPelatihan.extraData = data.extraData || {};
@@ -1410,8 +1626,18 @@
                 let dataToSave = {};
                 this.showToast('Menyimpan...', 1500);
 
+                const getAuditNotes = (key) => ({
+                    audit: document.getElementById(`${key}-catatan-audit`)?.textContent || '',
+                    auditor: document.getElementById(`${key}-catatan-auditor`)?.textContent || '',
+                });
+
                 switch(formKey) {
-                    case 'catatanMutu': dataToSave = this.state.catatanMutu; break;
+                    case 'catatanMutu': 
+                        dataToSave = { 
+                            items: this.state.catatanMutu.items, 
+                            auditNotes: getAuditNotes(formKey) 
+                        }; 
+                        break;
                     case 'sasaranMutu':
                         dataToSave = {
                             sasaranMutu: this.state.sasaranMutu,
@@ -1421,32 +1647,59 @@
                                 periode: document.getElementById('sasaran-periode').textContent,
                                 dibuat: document.getElementById('dibuat-nama').textContent,
                                 disetujui: document.getElementById('disetujui-nama').textContent,
+                                catatanAudit: document.getElementById('sasaranMutu-catatan-audit').textContent,
+                                catatanAuditor: document.getElementById('sasaranMutu-catatan-auditor').textContent,
                             },
-                            signatures: { 
-                                'dibuat-oleh-signature': this.state.signatures['dibuat-oleh-signature'] || null, 
-                                'disetujui-oleh-signature': this.state.signatures['disetujui-oleh-signature'] || null 
-                            }
-                        }; break;
-                    case 'daftarInventaris': dataToSave = this.state.daftarInventaris; break;
+                            signatures: { 'dibuat-oleh-signature': this.state.signatures['dibuat-oleh-signature'], 'disetujui-oleh-signature': this.state.signatures['disetujui-oleh-signature'] }
+                        }; 
+                        break;
+                    case 'daftarInventaris': 
+                        dataToSave = {
+                            inventaris1: this.state.daftarInventaris.inventaris1,
+                            inventaris2: this.state.daftarInventaris.inventaris2,
+                            auditNotes: getAuditNotes(formKey)
+                        };
+                        break;
                     case 'jadwalPerawatan':
                         dataToSave = {
                             perawatan: this.state.jadwalPerawatan.perawatan,
                             signatures: { 
-                                'dibuat-oleh-signature-jadwal': this.state.signatures['dibuat-oleh-signature-jadwal'] || null 
-                            }
-                        }; break;
+                                'dibuat-oleh-signature-jadwal': this.state.signatures['dibuat-oleh-signature-jadwal'],
+                                'disetujui-oleh-signature-jadwal': this.state.signatures['disetujui-oleh-signature-jadwal']
+                            },
+                            extraData: {
+                                dibuatNama: document.getElementById('dibuat-nama-jadwal').textContent,
+                                disetujuiNama: document.getElementById('disetujui-nama-jadwal').textContent
+                            },
+                            auditNotes: getAuditNotes(formKey)
+                        }; 
+                        break;
                     case 'ceklisPerawatan':
                         dataToSave = {
                             items: this.state.ceklisPerawatan.items,
                             date: document.getElementById('ceklis-tanggal').textContent,
-                            signatures: { 
-                                'dilaporkan-oleh-signature-ceklis': this.state.signatures['dilaporkan-oleh-signature-ceklis'] || null, 
-                                'mengetahui-signature-ceklis': this.state.signatures['mengetahui-signature-ceklis'] || null 
-                            }
-                        }; break;
-                    case 'opportunity': dataToSave = this.state.opportunity; break;
-                    case 'analisaResiko': dataToSave = this.state.analisaResiko; break;
-                    case 'matriksKompetensi': dataToSave = this.state.matriksKompetensi; break;
+                            signatures: { 'dilaporkan-oleh-signature-ceklis': this.state.signatures['dilaporkan-oleh-signature-ceklis'], 'mengetahui-signature-ceklis': this.state.signatures['mengetahui-signature-ceklis'] },
+                            auditNotes: getAuditNotes(formKey)
+                        }; 
+                        break;
+                    case 'opportunity': 
+                        dataToSave = {
+                            items: this.state.opportunity.items,
+                            auditNotes: getAuditNotes(formKey)
+                        }; 
+                        break;
+                    case 'analisaResiko': 
+                        dataToSave = {
+                            items: this.state.analisaResiko.items,
+                            auditNotes: getAuditNotes(formKey)
+                        }; 
+                        break;
+                    case 'matriksKompetensi': 
+                        dataToSave = {
+                            kompetensi: this.state.matriksKompetensi.kompetensi,
+                            auditNotes: getAuditNotes(formKey)
+                        }; 
+                        break;
                     case 'jadwalPelatihan':
                         dataToSave = {
                             pelatihan: this.state.jadwalPelatihan.pelatihan,
@@ -1454,18 +1707,18 @@
                                 tahun: document.getElementById('pelatihan-tahun').textContent,
                                 disiapkanNama: document.getElementById('disiapkan-nama-pelatihan').textContent,
                                 disetujuiNama: document.getElementById('disetujui-nama-pelatihan').textContent,
-                                validasi: document.getElementById('validasi-pelatihan').textContent
+                                validasi: document.getElementById('validasi-pelatihan').textContent,
+                                catatanAudit: document.getElementById('jadwalPelatihan-catatan-audit').textContent,
+                                catatanAuditor: document.getElementById('jadwalPelatihan-catatan-auditor').textContent,
                             },
-                            signatures: { 
-                                'disiapkan-oleh-signature-pelatihan': this.state.signatures['disiapkan-oleh-signature-pelatihan'] || null, 
-                                'disetujui-oleh-signature-pelatihan': this.state.signatures['disetujui-oleh-signature-pelatihan'] || null 
-                            }
-                        }; break;
+                            signatures: { 'disiapkan-oleh-signature-pelatihan': this.state.signatures['disiapkan-oleh-signature-pelatihan'], 'disetujui-oleh-signature-pelatihan': this.state.signatures['disetujui-oleh-signature-pelatihan'] }
+                        }; 
+                        break;
                     default: this.showToast('Gagal: Jenis formulir tidak dikenal.'); return;
                 }
                 
                 try {
-                    const historyCollectionRef = collection(db, `${formKey}History`);
+                    const historyCollectionRef = this.getActiveCollectionRef(formKey);
                     await addDoc(historyCollectionRef, { timestamp: serverTimestamp(), data: dataToSave });
                     this.showToast('Versi baru berhasil disimpan!');
                     this.state.isHistoryView = false;
@@ -1489,7 +1742,12 @@
             renderSignatures() {
                 this.elements.signatureAreas.forEach(area => {
                     const sigData = this.state.signatures[area.id];
-                    area.innerHTML = sigData ? `<img src="${sigData}" alt="Tanda Tangan" class="mx-auto h-full object-contain">` : 'Area TTD';
+                    if (sigData) {
+                         area.innerHTML = `<img src="${sigData}" alt="Tanda Tangan" class="mx-auto h-full object-contain">`;
+                    } else {
+                        area.innerHTML = 'Area TTD';
+                        area.classList.add('text-gray-400', 'flex', 'items-center', 'justify-center');
+                    }
                 });
             },
 
@@ -1529,6 +1787,7 @@
                         if (id === 'nav-opportunity-resiko') this.ModalManager.open('opportunityResiko');
                         if (id === 'nav-rekapan') this.ModalManager.open('rekapan');
                         if (id === 'nav-import') this.ModalManager.open('import');
+                        if (id === 'nav-delete') this.ModalManager.open('delete');
 
                         toggleNav();
                     });
@@ -1542,6 +1801,9 @@
                 document.getElementById('close-sasaran-data-pendukung-modal-btn').addEventListener('click', () => this.ModalManager.close('sasaranDataPendukung'));
                 document.getElementById('close-sig-btn').addEventListener('click', () => this.ModalManager.close('signature'));
                 document.getElementById('close-import-btn').addEventListener('click', () => this.ModalManager.close('import'));
+                document.getElementById('close-delete-btn').addEventListener('click', () => this.ModalManager.close('delete'));
+                document.getElementById('cancel-delete-btn').addEventListener('click', () => this.ModalManager.close('confirmDelete'));
+                document.getElementById('close-devisi-modal-btn').addEventListener('click', () => this.ModalManager.close('devisi'));
 
                 this.elements.tampilkanRekapanBtn.addEventListener('click', () => {
                     const selectedFormKey = this.elements.historyFormSelect.value;
@@ -1571,7 +1833,7 @@
                 container.innerHTML = `<div class="flex justify-center items-center h-full"><div class="spinner"></div></div>`;
                 this.ModalManager.open('historyList');
 
-                const historyCollectionRef = collection(db, `${formKey}History`);
+                const historyCollectionRef = this.getActiveCollectionRef(formKey);
                 let constraints = [orderBy('timestamp', 'desc')];
                 if(startDateStr) constraints.push(where('timestamp', '>=', Timestamp.fromDate(new Date(startDateStr))));
                 if(endDateStr) constraints.push(where('timestamp', '<=', Timestamp.fromDate(new Date(endDateStr + 'T23:59:59'))));
@@ -1624,6 +1886,11 @@
                 
                 activePage.querySelectorAll('[contenteditable="true"], [contenteditable="false"]').forEach(el => el.setAttribute('contenteditable', !isReadOnly));
                 activePage.querySelectorAll('.add-row-toggle-btn').forEach(btn => btn.style.display = isReadOnly ? 'none' : 'inline-flex');
+                
+                // Also toggle cursor style on signature areas
+                activePage.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]').forEach(area => {
+                    area.style.cursor = isReadOnly ? 'default' : 'pointer';
+                });
             },
 
             getFormPageId(formKey) {
@@ -1676,7 +1943,6 @@
                 }
             },
             
-            // FIX: Add the missing function here
             createTableManager(config) {
                 const { tbody, dataKey, rowGenerator, newRowFactory, addBtnId, deleteBtnId } = config;
                 const addBtn = document.getElementById(addBtnId);
@@ -1777,106 +2043,99 @@
                 const canvas = this.elements.signatureCanvas;
                 const ctx = canvas.getContext('2d');
                 let drawing = false;
-                let currentSignatureId = null;
+                let lastX = 0;
+                let lastY = 0;
 
                 const resizeCanvas = () => {
                     const ratio = Math.max(window.devicePixelRatio || 1, 1);
                     canvas.width = canvas.offsetWidth * ratio;
                     canvas.height = canvas.offsetHeight * ratio;
                     canvas.getContext('2d').scale(ratio, ratio);
-                    ctx.strokeStyle = "#222222";
-                    ctx.lineWidth = 2;
-                    ctx.lineCap = "round";
-                    ctx.lineJoin = "round";
                 };
 
-                const getPos = (e) => {
+                const getEventPos = (e) => {
                     const rect = canvas.getBoundingClientRect();
-                    const evt = e.touches ? e.touches[0] : e;
+                    const event = e.touches ? e.touches[0] : e;
                     return {
-                        x: evt.clientX - rect.left,
-                        y: evt.clientY - rect.top
+                        x: event.clientX - rect.left,
+                        y: event.clientY - rect.top
                     };
                 };
 
                 const startDrawing = (e) => {
                     e.preventDefault();
                     drawing = true;
-                    const pos = getPos(e);
-                    ctx.beginPath();
-                    ctx.moveTo(pos.x, pos.y);
+                    const pos = getEventPos(e);
+                    [lastX, lastY] = [pos.x, pos.y];
                 };
 
                 const draw = (e) => {
                     e.preventDefault();
                     if (!drawing) return;
-                    const pos = getPos(e);
+                    const pos = getEventPos(e);
+                    ctx.beginPath();
+                    ctx.moveTo(lastX, lastY);
                     ctx.lineTo(pos.x, pos.y);
+                    ctx.strokeStyle = '#000';
+                    ctx.lineWidth = 2;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
                     ctx.stroke();
+                    [lastX, lastY] = [pos.x, pos.y];
                 };
-
-                const stopDrawing = () => {
-                    if (drawing) {
-                        ctx.closePath();
-                        drawing = false;
-                    }
-                };
+                
+                const stopDrawing = () => { drawing = false; };
                 
                 canvas.addEventListener('mousedown', startDrawing);
                 canvas.addEventListener('mousemove', draw);
                 canvas.addEventListener('mouseup', stopDrawing);
-                canvas.addEventListener('mouseout', stopDrawing);
+                canvas.addEventListener('mouseleave', stopDrawing);
+                
                 canvas.addEventListener('touchstart', startDrawing);
                 canvas.addEventListener('touchmove', draw);
                 canvas.addEventListener('touchend', stopDrawing);
 
-                const clearCanvas = () => {
-                     const ratio = Math.max(window.devicePixelRatio || 1, 1);
-                     ctx.clearRect(0, 0, canvas.width / ratio, canvas.height / ratio);
-                };
-                
-                window.addEventListener('resize', resizeCanvas);
-
                 this.elements.signatureAreas.forEach(area => {
                     area.addEventListener('click', () => {
-                        if (this.state.isHistoryView) {
-                            this.showToast("Tidak bisa mengubah tanda tangan dalam mode riwayat.");
-                            return;
-                        }
-                        currentSignatureId = area.id;
-                        clearCanvas();
+                        if (this.state.isHistoryView) return;
+                        this.state.currentSignatureKey = area.id;
                         this.ModalManager.open('signature');
-                        setTimeout(resizeCanvas, 50);
+                        setTimeout(() => { // ensure modal is visible before resizing
+                            resizeCanvas();
+                            ctx.clearRect(0, 0, canvas.width, canvas.height);
+                        }, 100);
                     });
                 });
-
-                this.elements.clearSigBtn.addEventListener('click', clearCanvas);
                 
-                this.elements.saveSigBtn.addEventListener('click', () => {
-                    if (!currentSignatureId) return;
-                    const blank = document.createElement('canvas');
-                    blank.width = canvas.width;
-                    blank.height = canvas.height;
-                    if (canvas.toDataURL() == blank.toDataURL()) {
-                         this.showToast("Tanda tangan tidak boleh kosong.", 2000);
-                         return;
-                    }
+                this.elements.clearSigBtn.addEventListener('click', () => {
+                     ctx.clearRect(0, 0, canvas.width, canvas.height);
+                });
 
+                this.elements.saveSigBtn.addEventListener('click', () => {
+                    if (!this.state.currentSignatureKey) return;
                     const dataUrl = canvas.toDataURL('image/png');
-                    this.state.signatures[currentSignatureId] = dataUrl;
+                    this.state.signatures[this.state.currentSignatureKey] = dataUrl;
                     this.renderSignatures();
                     this.ModalManager.close('signature');
-                    currentSignatureId = null;
+                    this.state.currentSignatureKey = null;
                 });
             },
 
             setupTables() {
-                this.tableManagers['catatan-mutu-page'] = this.createTableManager({
-                    tbody: document.getElementById('catatan-mutu-body'), dataKey: 'catatanMutu',
-                    rowGenerator: (item, counter) => `<td class="border p-2 text-center">${counter}</td><td class="border p-2" contenteditable="true" data-field="nama">${item.nama || ''}</td><td class="border p-2" contenteditable="true" data-field="no">${item.no || ''}</td><td class="border p-2" contenteditable="true" data-field="lokasi">${item.lokasi || ''}</td><td class="border p-2" contenteditable="true" data-field="masa">${item.masa || ''}</td><td class="border p-2" contenteditable="true" data-field="metode">${item.metode || ''}</td><td class="border p-2" contenteditable="true" data-field="media">${item.media || ''}</td><td class="border p-2" contenteditable="true" data-field="penanggungJawab">${item.penanggungJawab || ''}</td><td class="border p-2" contenteditable="true" data-field="keterangan">${item.keterangan || ''}</td>`,
-                    addBtnId: 'add-row-catatan-btn', deleteBtnId: 'delete-row-catatan-btn',
-                    newRowFactory: () => ({ nama: "", no: "", lokasi: "", masa: "", metode: "", media: "", penanggungJawab: "", keterangan: "" }),
-                });
+                this.tableManagers['catatan-mutu-page'] = {
+                     manager: this.createTableManager({
+                        tbody: document.getElementById('catatan-mutu-body'), dataKey: 'catatanMutu.items',
+                        rowGenerator: (item, counter) => `<td class="border p-2 text-center">${counter}</td><td class="border p-2" contenteditable="true" data-field="nama">${item.nama || ''}</td><td class="border p-2" contenteditable="true" data-field="no">${item.no || ''}</td><td class="border p-2" contenteditable="true" data-field="lokasi">${item.lokasi || ''}</td><td class="border p-2" contenteditable="true" data-field="masa">${item.masa || ''}</td><td class="border p-2" contenteditable="true" data-field="metode">${item.metode || ''}</td><td class="border p-2" contenteditable="true" data-field="media">${item.media || ''}</td><td class="border p-2" contenteditable="true" data-field="penanggungJawab">${item.penanggungJawab || ''}</td><td class="border p-2" contenteditable="true" data-field="keterangan">${item.keterangan || ''}</td>`,
+                        addBtnId: 'add-row-catatan-btn', deleteBtnId: 'delete-row-catatan-btn',
+                        newRowFactory: () => ({ nama: "", no: "", lokasi: "", masa: "", metode: "", media: "", penanggungJawab: "", keterangan: "" }),
+                    }),
+                    render: function() {
+                        this.manager.render();
+                        const auditNotes = App.state.catatanMutu.auditNotes || {};
+                        document.getElementById('catatanMutu-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('catatanMutu-catatan-auditor').textContent = auditNotes.auditor || '';
+                    }
+                };
 
                 this.tableManagers['sasaran-mutu-page'] = {
                     manager1: this.createTableManager({
@@ -1892,10 +2151,13 @@
                         newRowFactory: () => ({ rencana: "", pelaksana: "", waktu: "", keterangan: ""}),
                     }),
                     render: function() { 
-                        document.getElementById('sasaran-bagian').textContent = App.state.sasaranMutuExtraData.bagian || '';
-                        document.getElementById('sasaran-periode').textContent = App.state.sasaranMutuExtraData.periode || '';
-                        document.getElementById('dibuat-nama').textContent = App.state.sasaranMutuExtraData.dibuat || '';
-                        document.getElementById('disetujui-nama').textContent = App.state.sasaranMutuExtraData.disetujui || '';
+                        const extraData = App.state.sasaranMutuExtraData || {};
+                        document.getElementById('sasaran-bagian').textContent = extraData.bagian || '';
+                        document.getElementById('sasaran-periode').textContent = extraData.periode || '';
+                        document.getElementById('dibuat-nama').textContent = extraData.dibuat || '';
+                        document.getElementById('disetujui-nama').textContent = extraData.disetujui || '';
+                        document.getElementById('sasaranMutu-catatan-audit').textContent = extraData.catatanAudit || '';
+                        document.getElementById('sasaranMutu-catatan-auditor').textContent = extraData.catatanAuditor || '';
                         this.manager1.render(); this.manager2.render(); 
                     }
                 };
@@ -1913,15 +2175,31 @@
                         addBtnId: 'add-row-inventaris-2-btn', deleteBtnId: 'delete-row-inventaris-2-btn',
                         newRowFactory: () => ({ nama: '', merk: '', noInv: '', kondisi: '', ket: '' }),
                     }),
-                    render: function() { this.manager1.render(); this.manager2.render(); }
+                    render: function() { 
+                        this.manager1.render(); this.manager2.render(); 
+                        const auditNotes = App.state.daftarInventaris.auditNotes || {};
+                        document.getElementById('daftarInventaris-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('daftarInventaris-catatan-auditor').textContent = auditNotes.auditor || '';
+                    }
                 };
 
-                 this.tableManagers['jadwal-perawatan-page'] = this.createTableManager({
-                    tbody: document.getElementById('jadwal-perawatan-body'), dataKey: 'jadwalPerawatan.perawatan',
-                    rowGenerator: (item) => `<td class="border p-1" contenteditable="true" data-field="no">${item.no || ''}</td><td class="border p-1" contenteditable="true" data-field="nama">${item.nama || ''}</td>${[1,2,3].map(m => [1,2,3,4].map(w => `<td class="border p-1 text-center vertical-text" contenteditable="true" data-field="m${m}w${w}">${(item[`m${m}`] && item[`m${m}`][w-1]) || ''}</td>`).join('')).join('')}`,
-                    addBtnId: 'add-row-jadwal-btn', deleteBtnId: 'delete-row-jadwal-btn',
-                    newRowFactory: () => ({ no: '', nama: '', m1:['','','',''], m2:['','','',''], m3:['','','',''] }),
-                });
+                 this.tableManagers['jadwal-perawatan-page'] = {
+                     manager: this.createTableManager({
+                        tbody: document.getElementById('jadwal-perawatan-body'), dataKey: 'jadwalPerawatan.perawatan',
+                        rowGenerator: (item) => `<td class="border p-1" contenteditable="true" data-field="no">${item.no || ''}</td><td class="border p-1" contenteditable="true" data-field="nama">${item.nama || ''}</td>${[1,2,3].map(m => [1,2,3,4].map(w => `<td class="border p-1 text-center vertical-text" contenteditable="true" data-field="m${m}w${w}">${(item[`m${m}`] && item[`m${m}`][w-1]) || ''}</td>`).join('')).join('')}`,
+                        addBtnId: 'add-row-jadwal-btn', deleteBtnId: 'delete-row-jadwal-btn',
+                        newRowFactory: () => ({ no: '', nama: '', m1:['','','',''], m2:['','','',''], m3:['','','',''] }),
+                    }),
+                    render: function() {
+                        this.manager.render();
+                        const extraData = App.state.jadwalPerawatan.extraData || {};
+                        document.getElementById('dibuat-nama-jadwal').textContent = extraData.dibuatNama || '';
+                        document.getElementById('disetujui-nama-jadwal').textContent = extraData.disetujuiNama || '';
+                        const auditNotes = App.state.jadwalPerawatan.auditNotes || {};
+                        document.getElementById('jadwalPerawatan-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('jadwalPerawatan-catatan-auditor').textContent = auditNotes.auditor || '';
+                    }
+                };
 
                 this.tableManagers['ceklis-perawatan-page'] = {
                      manager: this.createTableManager({
@@ -1933,22 +2211,42 @@
                     render: function() {
                         document.getElementById('ceklis-tanggal').textContent = App.state.ceklisPerawatan.date || '';
                         this.manager.render();
+                        const auditNotes = App.state.ceklisPerawatan.auditNotes || {};
+                        document.getElementById('ceklisPerawatan-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('ceklisPerawatan-catatan-auditor').textContent = auditNotes.auditor || '';
                     }
                 };
 
-                this.tableManagers['opportunity-page'] = this.createTableManager({
-                    tbody: document.getElementById('opportunity-body'), dataKey: 'opportunity',
-                    rowGenerator: (item, counter) => `<td class="p-2 text-center">${counter}</td><td class="p-2" contenteditable="true" data-field="aspek">${item.aspek || ''}</td><td class="p-2" contenteditable="true" data-field="strategi">${item.strategi || ''}</td><td class="p-2" contenteditable="true" data-field="tindak">${item.tindak || ''}</td><td class="p-2" contenteditable="true" data-field="penanggung">${item.penanggung || ''}</td><td class="p-2" contenteditable="true" data-field="dokumen">${item.dokumen || ''}</td>`,
-                    addBtnId: 'add-row-opportunity-btn', deleteBtnId: 'delete-row-opportunity-btn',
-                    newRowFactory: () => ({ aspek: '', strategi: '', tindak: '', penanggung: '', dokumen: ''}),
-                });
+                this.tableManagers['opportunity-page'] = {
+                    manager: this.createTableManager({
+                        tbody: document.getElementById('opportunity-body'), dataKey: 'opportunity.items',
+                        rowGenerator: (item, counter) => `<td class="p-2 text-center">${counter}</td><td class="p-2" contenteditable="true" data-field="aspek">${item.aspek || ''}</td><td class="p-2" contenteditable="true" data-field="strategi">${item.strategi || ''}</td><td class="p-2" contenteditable="true" data-field="tindak">${item.tindak || ''}</td><td class="p-2" contenteditable="true" data-field="penanggung">${item.penanggung || ''}</td><td class="p-2" contenteditable="true" data-field="dokumen">${item.dokumen || ''}</td>`,
+                        addBtnId: 'add-row-opportunity-btn', deleteBtnId: 'delete-row-opportunity-btn',
+                        newRowFactory: () => ({ aspek: '', strategi: '', tindak: '', penanggung: '', dokumen: ''}),
+                    }),
+                    render: function() {
+                        this.manager.render();
+                        const auditNotes = App.state.opportunity.auditNotes || {};
+                        document.getElementById('opportunity-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('opportunity-catatan-auditor').textContent = auditNotes.auditor || '';
+                    }
+                };
 
-                this.tableManagers['analisa-resiko-page'] = this.createTableManager({
-                    tbody: document.getElementById('analisa-resiko-body'), dataKey: 'analisaResiko',
-                    rowGenerator: (item, counter) => `<td class="p-1 text-center">${counter}</td><td class="p-1" contenteditable="true" data-field="aspek">${item.aspek || ''}</td><td class="p-1" contenteditable="true" data-field="risiko">${item.risiko || ''}</td><td class="p-1" contenteditable="true" data-field="konsekuensi">${item.konsekuensi || ''}</td><td class="p-1" contenteditable="true" data-field="kemungkinan">${item.kemungkinan || ''}</td><td class="p-1" contenteditable="true" data-field="keparahan">${item.keparahan || ''}</td><td class="p-1" contenteditable="true" data-field="tingkat">${item.tingkat || ''}</td><td class="p-1" contenteditable="true" data-field="pencegahan">${item.pencegahan || ''}</td><td class="p-1" contenteditable="true" data-field="penanggung">${item.penanggung || ''}</td><td class="p-1" contenteditable="true" data-field="dokumen">${item.dokumen || ''}</td>`,
-                    addBtnId: 'add-row-resiko-btn', deleteBtnId: 'delete-row-resiko-btn',
-                    newRowFactory: () => ({ aspek: '', risiko: '', konsekuensi: '', kemungkinan: '', keparahan: '', tingkat: '', pencegahan: '', penanggung: '', dokumen: ''}),
-                });
+
+                this.tableManagers['analisa-resiko-page'] = {
+                    manager: this.createTableManager({
+                        tbody: document.getElementById('analisa-resiko-body'), dataKey: 'analisaResiko.items',
+                        rowGenerator: (item, counter) => `<td class="p-1 text-center">${counter}</td><td class="p-1" contenteditable="true" data-field="aspek">${item.aspek || ''}</td><td class="p-1" contenteditable="true" data-field="risiko">${item.risiko || ''}</td><td class="p-1" contenteditable="true" data-field="konsekuensi">${item.konsekuensi || ''}</td><td class="p-1" contenteditable="true" data-field="kemungkinan">${item.kemungkinan || ''}</td><td class="p-1" contenteditable="true" data-field="keparahan">${item.keparahan || ''}</td><td class="p-1" contenteditable="true" data-field="tingkat">${item.tingkat || ''}</td><td class="p-1" contenteditable="true" data-field="pencegahan">${item.pencegahan || ''}</td><td class="p-1" contenteditable="true" data-field="penanggung">${item.penanggung || ''}</td><td class="p-1" contenteditable="true" data-field="dokumen">${item.dokumen || ''}</td>`,
+                        addBtnId: 'add-row-resiko-btn', deleteBtnId: 'delete-row-resiko-btn',
+                        newRowFactory: () => ({ aspek: '', risiko: '', konsekuensi: '', kemungkinan: '', keparahan: '', tingkat: '', pencegahan: '', penanggung: '', dokumen: ''}),
+                    }),
+                     render: function() {
+                        this.manager.render();
+                        const auditNotes = App.state.analisaResiko.auditNotes || {};
+                        document.getElementById('analisaResiko-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('analisaResiko-catatan-auditor').textContent = auditNotes.auditor || '';
+                    }
+                };
                 
                 this.tableManagers['matriks-kompetensi-page'] = {
                     manager: this.createTableManager({
@@ -1998,6 +2296,10 @@
                         });
                         averageRow.innerHTML = averageHtml;
                         tfoot.prepend(averageRow);
+                        
+                        const auditNotes = App.state.matriksKompetensi.auditNotes || {};
+                        document.getElementById('matriksKompetensi-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('matriksKompetensi-catatan-auditor').textContent = auditNotes.auditor || '';
                     }
                 };
 
@@ -2009,11 +2311,13 @@
                         newRowFactory: () => ({ nama: '', pembawa: '', peserta: '', bulan: Array(12).fill('') }),
                     }),
                     render: function() {
-                        const extraData = App.state.jadwalPelatihan.extraData;
+                        const extraData = App.state.jadwalPelatihan.extraData || {};
                         document.getElementById('pelatihan-tahun').textContent = extraData.tahun || '';
                         document.getElementById('disiapkan-nama-pelatihan').textContent = extraData.disiapkanNama || '';
                         document.getElementById('disetujui-nama-pelatihan').textContent = extraData.disetujuiNama || '';
                         document.getElementById('validasi-pelatihan').textContent = extraData.validasi || 'Validasi Therapist yg sudah diatas 3 bulan';
+                        document.getElementById('jadwalPelatihan-catatan-audit').textContent = extraData.catatanAudit || '';
+                        document.getElementById('jadwalPelatihan-catatan-auditor').textContent = extraData.catatanAuditor || '';
                         this.manager.render();
                     }
                 };
@@ -2061,10 +2365,8 @@
                             dataToSave = this.parseSimpleCsv(text);
                         }
                         
-                        await addDoc(collection(db, `${formKey}History`), {
-                            timestamp: serverTimestamp(),
-                            data: dataToSave,
-                            source: 'import'
+                        await addDoc(this.getActiveCollectionRef(formKey), {
+                            timestamp: serverTimestamp(), data: dataToSave, source: 'import'
                         });
                         
                         this.showToast(`Data berhasil diimpor ke ${formKey}.`);
@@ -2123,6 +2425,198 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+            },
+            
+            setupDeleteFeature() {
+                const hapusDataBtn = document.getElementById('hapus-data-btn');
+                const confirmDeleteBtn = document.getElementById('confirm-delete-action-btn');
+
+                hapusDataBtn.addEventListener('click', () => {
+                    const formKey = document.getElementById('delete-form-select').value;
+                    const startDate = document.getElementById('delete-tanggal-mulai').value;
+                    const endDate = document.getElementById('delete-tanggal-selesai').value;
+                    this.state.deleteParams = { formKey, startDate, endDate };
+                    this.ModalManager.open('confirmDelete');
+                });
+                
+                confirmDeleteBtn.addEventListener('click', () => {
+                    const { formKey, startDate, endDate } = this.state.deleteParams;
+                    this.performDelete(formKey, startDate, endDate);
+                    this.state.deleteParams = {};
+                });
+            },
+
+            async performDelete(formKey, startDateStr, endDateStr) {
+                this.ModalManager.close('delete');
+                this.ModalManager.close('confirmDelete');
+                this.showToast('Menghapus data...', 2000);
+
+                const historyCollectionRef = this.getActiveCollectionRef(formKey);
+                let constraints = [];
+                if (startDateStr) constraints.push(where('timestamp', '>=', Timestamp.fromDate(new Date(startDateStr))));
+                if (endDateStr) constraints.push(where('timestamp', '<=', Timestamp.fromDate(new Date(endDateStr + 'T23:59:59'))));
+                
+                const q = query(historyCollectionRef, ...constraints);
+                
+                try {
+                    const querySnapshot = await getDocs(q);
+                    if (querySnapshot.empty) {
+                        this.showToast('Tidak ada data riwayat yang ditemukan untuk dihapus.');
+                        return;
+                    }
+
+                    const deletePromises = [];
+                    querySnapshot.forEach(doc => {
+                        deletePromises.push(deleteDoc(doc.ref));
+                    });
+
+                    await Promise.all(deletePromises);
+                    this.showToast(`${querySnapshot.size} berkas riwayat berhasil dihapus permanen.`);
+                    
+                } catch (error) {
+                    console.error("Error deleting documents:", error);
+                    this.showToast(`Gagal menghapus data: ${error.message}`);
+                }
+            },
+
+            async setupDevisiManagement() {
+                document.getElementById('manage-devisi-btn').addEventListener('click', () => this.ModalManager.open('devisi'));
+                document.getElementById('add-devisi-btn').addEventListener('click', () => this.addDevisi());
+                await this.loadDevisis();
+            },
+
+            async loadDevisis() {
+                const devisiCollectionRef = collection(db, 'devisiList');
+                try {
+                    const snapshot = await getDocs(query(devisiCollectionRef, orderBy('name')));
+                    if (snapshot.empty) {
+                        await this.createInitialDevisi();
+                        return;
+                    }
+                    this.state.devisis = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                    
+                    let lastActiveId = localStorage.getItem('activeDevisiId');
+                    const activeDevisi = this.state.devisis.find(d => d.id === lastActiveId) || this.state.devisis[0];
+
+                    this.state.activeDevisiId = activeDevisi.id;
+                    this.state.activeDevisiName = activeDevisi.name;
+                    localStorage.setItem('activeDevisiId', activeDevisi.id);
+
+                    this.renderDevisiUI();
+                    this.setupAllFormListeners();
+
+                } catch (e) { console.error("Could not load devisis", e); }
+            },
+            
+            async createInitialDevisi() {
+                 try {
+                    const docRef = await addDoc(collection(db, 'devisiList'), { name: 'ISO Training Center' });
+                    // To handle migration of old data to the new structure
+                    await this.migrateOldDataToDevisi(docRef.id);
+                    await this.loadDevisis(); // Reload to set the state correctly
+                 } catch (e) { console.error("Could not create initial devisi", e); }
+            },
+            
+            async migrateOldDataToDevisi(devisiId) {
+                console.log(`Starting migration of old data to new devisi: ${devisiId}`);
+                const formKeys = ['catatanMutu', 'sasaranMutu', 'daftarInventaris', 'jadwalPerawatan', 'ceklisPerawatan', 'opportunity', 'analisaResiko', 'matriksKompetensi', 'jadwalPelatihan'];
+                
+                for (const formKey of formKeys) {
+                    try {
+                        const oldCollectionRef = collection(db, `${formKey}History`);
+                        const oldDocsSnapshot = await getDocs(oldCollectionRef);
+                        
+                        if (!oldDocsSnapshot.empty) {
+                            console.log(`Found ${oldDocsSnapshot.size} documents in old '${formKey}History' to migrate.`);
+                            const newCollectionRef = collection(db, 'devisi', devisiId, `${formKey}History`);
+                            const writePromises = [];
+                            oldDocsSnapshot.forEach(docToMigrate => {
+                                writePromises.push(addDoc(newCollectionRef, docToMigrate.data()));
+                            });
+                            await Promise.all(writePromises);
+                            console.log(`Successfully migrated data for ${formKey}.`);
+                        }
+                    } catch (error) {
+                        // It's okay if the old collection doesn't exist.
+                        if (error.code !== 'permission-denied' && error.code !== 'unimplemented') {
+                             console.warn(`Could not migrate data for ${formKey}. Maybe it didn't exist? Error:`, error);
+                        }
+                    }
+                }
+            },
+
+            renderDevisiUI() {
+                this.elements.currentDevisiName.textContent = this.state.activeDevisiName;
+                const listEl = document.getElementById('devisi-list');
+                listEl.innerHTML = '';
+                this.state.devisis.forEach(devisi => {
+                    const item = document.createElement('div');
+                    item.className = `flex justify-between items-center p-2 rounded-md ${devisi.id === this.state.activeDevisiId ? 'bg-blue-100' : 'hover:bg-gray-100'}`;
+                    item.innerHTML = `
+                        <span class="font-medium cursor-pointer flex-grow">${devisi.name}</span>
+                        <button data-action="edit" class="text-sm text-blue-500 hover:underline p-1">Edit</button>
+                        <button data-action="delete" class="text-sm text-red-500 hover:underline p-1">Hapus</button>
+                    `;
+                    item.querySelector('span').addEventListener('click', () => this.switchDevisi(devisi.id, devisi.name));
+                    item.querySelector('[data-action="edit"]').addEventListener('click', () => this.editDevisi(devisi.id, devisi.name));
+                    item.querySelector('[data-action="delete"]').addEventListener('click', () => this.deleteDevisi(devisi.id, devisi.name));
+                    listEl.appendChild(item);
+                });
+            },
+
+            async switchDevisi(devisiId, devisiName) {
+                if (devisiId === this.state.activeDevisiId) {
+                    this.ModalManager.close('devisi');
+                    return;
+                }
+                this.elements.loadingOverlay.style.display = 'flex';
+                this.ModalManager.close('devisi');
+                
+                localStorage.setItem('activeDevisiId', devisiId);
+                this.state.activeDevisiId = devisiId;
+                this.state.activeDevisiName = devisiName;
+
+                this.renderDevisiUI();
+                this.setupAllFormListeners(); // This will detach old listeners and attach new ones
+                
+                // Show the current page, or default to the first form
+                const formToDisplay = this.state.currentFormKey || 'catatanMutu';
+                this.showPage(formToDisplay);
+            },
+
+            async addDevisi() {
+                const input = document.getElementById('new-devisi-input');
+                const name = input.value.trim();
+                if (!name) return;
+                try {
+                    await addDoc(collection(db, 'devisiList'), { name });
+                    input.value = '';
+                    await this.loadDevisis(); // Reload and re-render the list
+                } catch(e) { console.error("Error adding devisi:", e); this.showToast("Gagal menambah devisi."); }
+            },
+
+            async editDevisi(id, oldName) {
+                const newName = prompt("Masukkan nama baru untuk devisi:", oldName);
+                if (newName && newName.trim() !== '' && newName !== oldName) {
+                    try {
+                        await updateDoc(doc(db, 'devisiList', id), { name: newName.trim() });
+                        await this.loadDevisis();
+                    } catch (e) { console.error("Error updating devisi:", e); this.showToast("Gagal mengedit devisi."); }
+                }
+            },
+            
+            async deleteDevisi(id, name) {
+                if (this.state.devisis.length <= 1) {
+                    this.showToast("Tidak bisa menghapus satu-satunya devisi."); return;
+                }
+                const confirmMsg = `Apakah Anda yakin ingin menghapus devisi "${name}"? Tindakan ini tidak akan menghapus data formulirnya, tetapi data tersebut tidak akan bisa diakses lagi.`;
+                if (confirm(confirmMsg)) {
+                    try {
+                        await deleteDoc(doc(db, 'devisiList', id));
+                        localStorage.removeItem('activeDevisiId'); // Force re-selection
+                        await this.loadDevisis();
+                    } catch (e) { console.error("Error deleting devisi:", e); this.showToast("Gagal menghapus devisi."); }
+                }
             },
             
             setupPWA() {

@@ -286,7 +286,7 @@
             </button>
             <h1 id="header-title" class="text-md sm:text-lg font-bold text-gray-800 truncate">ISO Training Center</h1>
         </div>
-        <div id="header-actions" class="flex items-center space-x-2">
+        <div id="header-actions" class="flex items-center space-x-2 mr-2">
             
         </div>
     </header>
@@ -294,12 +294,7 @@
     
     <nav id="nav-drawer" class="fixed top-0 left-0 h-full w-72 bg-white shadow-lg z-[999] transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
         <div class="p-4 border-b">
-            <p class="text-sm font-medium text-gray-500">Devisi Aktif:</p>
-            <h2 id="current-devisi-name" class="text-lg font-bold text-gray-800 truncate">Loading...</h2>
-            <button id="manage-devisi-btn" class="text-sm text-blue-600 hover:underline mt-1">Ganti/Kelola Devisi</button>
-        </div>
-        <div class="p-4 border-b">
-             <h2 class="text-xl font-bold text-gray-800">Pilih Modul</h2>
+             <h2 class="text-xl font-bold text-gray-800">Menu Utama</h2>
         </div>
         
         <a href="#" class="nav-link" data-form-key="catatanMutu">1. Daftar Catatan Mutu</a>
@@ -308,7 +303,6 @@
         <a href="#" class="nav-link" data-form-key="jadwalPerawatan">4. Jadwal Perawatan</a>
         <a href="#" id="nav-opportunity-resiko" class="nav-link">5. Opportunity & Resiko</a>
         <a href="#" id="nav-rekapan" class="nav-link font-semibold text-indigo-600">Riwayat & Rekapan Data</a>
-        <a href="#" id="nav-import" class="nav-link font-semibold text-orange-600">Impor dari CSV</a>
         <a href="#" id="nav-delete" class="nav-link font-semibold text-red-600">Hapus Berkas Tersimpan</a>
     </nav>
     <div id="nav-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-[998] hidden"></div>
@@ -1283,36 +1277,6 @@
         </div>
     </div>
     
-    <div id="import-modal" class="modal-overlay hidden">
-        <div class="modal-content" style="height: auto; max-height: 90vh;">
-            <h3 class="text-xl font-bold mb-4 text-center">Impor Data dari CSV</h3>
-            <div class="space-y-4 text-sm">
-                <p><strong>Langkah 1:</strong> Pilih formulir tujuan data yang akan diimpor.</p>
-                <select id="import-form-select" class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-                     <option value="catatanMutu">Daftar Catatan Mutu</option>
-                     <option value="sasaranMutu">Sasaran Mutu (+ Rencana)</option>
-                     <option value="daftarInventaris">Daftar Inventaris</option>
-                     <option value="jadwalPerawatan">Jadwal Perawatan</option>
-                     <option value="ceklisPerawatan">Checklist Perawatan</option>
-                     <option value="opportunity">Tabel Opportunity</option>
-                     <option value="analisaResiko">Analisa Resiko</option>
-                     <option value="matriksKompetensi">Matriks Kompetensi</option>
-                     <option value="jadwalPelatihan">Jadwal Pelatihan</option>
-                </select>
-                <p class="mt-4"><strong>Langkah 2:</strong> Unduh template untuk memastikan format data Anda benar.</p>
-                <button id="download-template-btn" class="w-full btn-3d bg-gray-600 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-lg">Download Template</button>
-                <p class="mt-4"><strong>Langkah 3:</strong> Setelah mengisi template, unggah file CSV Anda.</p>
-                <button id="import-file-btn" class="w-full btn-3d bg-orange-600 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded-lg">Impor Sekarang</button>
-            </div>
-            <div class="flex justify-center items-center mt-8">
-                <button id="close-import-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
-            </div>
-            <input type="file" id="csv-import-input" class="hidden" accept=".csv">
-        </div>
-    </div>
-
-
-    
     <div id="history-list-modal" class="modal-overlay hidden">
         <div class="modal-content" style="max-width: 600px; max-height: 90vh;">
             <h3 id="history-list-title" class="text-xl font-bold mb-4 text-center">Riwayat Tersimpan</h3>
@@ -1406,25 +1370,6 @@
             </div>
         </div>
     </div>
-
-    
-    <div id="devisi-modal" class="modal-overlay hidden">
-        <div class="modal-content" style="max-width: 500px;">
-            <h3 class="text-xl font-bold mb-4">Kelola Devisi</h3>
-            <div id="devisi-list" class="space-y-2 mb-4 max-h-60 overflow-y-auto"></div>
-            <div class="mt-4 border-t pt-4">
-                <h4 class="font-semibold mb-2">Tambah Devisi Baru</h4>
-                <div class="flex space-x-2">
-                    <input type="text" id="new-devisi-input" placeholder="Nama Devisi Baru" class="flex-grow px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <button id="add-devisi-btn" class="btn-3d bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg">Tambah</button>
-                </div>
-            </div>
-            <div class="flex justify-center mt-6">
-                 <button id="close-devisi-modal-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
-            </div>
-        </div>
-    </div>
-
     
     <div id="toast-notification" class="toast"></div>
 
@@ -1451,8 +1396,8 @@
         
         const App = {
             state: {
-                currentFormKey: null, isHistoryView: false, currentSignatureKey: null, deleteParams: {}, 
-                devisis: [], activeDevisiId: null, activeDevisiName: 'Loading...', unsubscribeListeners: [],
+                currentFormKey: 'catatanMutu', isHistoryView: false, currentSignatureKey: null, deleteParams: {}, 
+                unsubscribeListeners: [],
                 catatanMutu: { items: [], auditNotes: { audit: '', auditor: '' } },
                 sasaranMutu: [], rencanaTindakan: [], sasaranMutuExtraData: {},
                 daftarInventaris: { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' } },
@@ -1469,10 +1414,9 @@
                 modals: {},
                 init() {
                     this.modals = {
-                        rekapan: document.getElementById('rekapan-modal'), import: document.getElementById('import-modal'), historyList: document.getElementById('history-list-modal'),
+                        rekapan: document.getElementById('rekapan-modal'), historyList: document.getElementById('history-list-modal'),
                         opportunityResiko: document.getElementById('opportunity-resiko-modal'), sasaranDataPendukung: document.getElementById('sasaran-data-pendukung-modal'),
                         signature: document.getElementById('signature-modal'), delete: document.getElementById('delete-modal'), confirmDelete: document.getElementById('confirm-delete-modal'),
-                        devisi: document.getElementById('devisi-modal'),
                     };
                 },
                 open(id) { this.modals[id]?.classList.remove('hidden'); },
@@ -1485,14 +1429,14 @@
                 this.cacheElements(); this.ModalManager.init();
                 this.setupHeaderNav(); this.setupModalEventListeners();
                 this.setupSignaturePad(); this.setupTableControls();
-                this.setupPWA(); this.setupImportFeature(); this.setupDeleteFeature();
+                this.setupPWA(); this.setupDeleteFeature();
                 
                 try {
                     await signInAnonymously(auth); console.log("Signed in anonymously");
-                    await this.setupDevisiManagement();
+                    this.setupAllFormListeners();
                 } catch (error) {
-                    console.error("Authentication or Devisi setup failed:", error);
-                    this.showToast("Gagal mengautentikasi atau memuat data devisi.");
+                    console.error("Authentication or setup failed:", error);
+                    this.showToast("Gagal mengautentikasi aplikasi.");
                     this.elements.loadingOverlay.style.display = 'none';
                 }
                 
@@ -1510,7 +1454,6 @@
                  this.elements.signatureAreas = document.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]');
                  this.elements.tampilkanRekapanBtn = document.getElementById('tampilkan-rekapan-btn'); this.elements.historyFormSelect = document.getElementById('history-form-select');
                  this.elements.moduleChoiceBtns = document.querySelectorAll('.module-choice-btn'); this.elements.historyBanner = document.getElementById('history-banner');
-                 this.elements.currentDevisiName = document.getElementById('current-devisi-name');
             },
             
             showToast(message, duration = 3000) {
@@ -1522,10 +1465,6 @@
             
             setupAllFormListeners() {
                 this.state.unsubscribeListeners.forEach(unsub => unsub()); this.state.unsubscribeListeners = [];
-                if (!this.state.activeDevisiId) {
-                    console.warn("Cannot setup form listeners without an active devisi.");
-                    return;
-                }
                 const formKeys = ['catatanMutu', 'sasaranMutu', 'daftarInventaris', 'jadwalPerawatan', 'ceklisPerawatan', 'opportunity', 'analisaResiko', 'matriksKompetensi', 'jadwalPelatihan'];
                 formKeys.forEach(key => this.setupFormListener(key));
                 setTimeout(() => this.elements.loadingOverlay.style.display = 'none', 1500);
@@ -1540,7 +1479,7 @@
                         const latestDoc = querySnapshot.docs[0];
                         this.loadDataIntoState(formKey, latestDoc.data().data);
                     } else {
-                        console.log(`No history found for ${formKey} in this devisi.`);
+                        console.log(`No history found for ${formKey} for this user/devisi.`);
                     }
                     if(this.state.currentFormKey === formKey && !this.state.isHistoryView) {
                        this.renderCurrentPage();
@@ -1569,8 +1508,7 @@
             },
             
             getActiveCollectionRef(formKey) {
-                if (!this.state.activeDevisiId) throw new Error("No active devisi set.");
-                return collection(db, 'devisi', this.state.activeDevisiId, `${formKey}History`);
+                return collection(db, 'isoAppData', formKey, 'history');
             },
             
             loadDataIntoState(formKey, data) {
@@ -1753,6 +1691,7 @@
 
             showPage(formKey) {
                 if (!formKey) return;
+                
                 this.state.currentFormKey = formKey;
                 this.state.isHistoryView = false;
                 
@@ -1775,7 +1714,11 @@
                 const toggleNav = () => document.body.classList.toggle('nav-open');
                 this.elements.hamburgerBtn.addEventListener('click', toggleNav);
                 this.elements.navOverlay.addEventListener('click', toggleNav);
-                this.elements.openAppBtn.addEventListener('click', () => this.showPage('catatanMutu'));
+                
+                this.elements.openAppBtn.addEventListener('click', () => {
+                     this.showPage(this.state.currentFormKey);
+                });
+                
 
                 this.elements.navLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
@@ -1786,7 +1729,6 @@
                         const id = e.currentTarget.id;
                         if (id === 'nav-opportunity-resiko') this.ModalManager.open('opportunityResiko');
                         if (id === 'nav-rekapan') this.ModalManager.open('rekapan');
-                        if (id === 'nav-import') this.ModalManager.open('import');
                         if (id === 'nav-delete') this.ModalManager.open('delete');
 
                         toggleNav();
@@ -1800,10 +1742,8 @@
                 document.getElementById('close-opportunity-resiko-modal-btn').addEventListener('click', () => this.ModalManager.close('opportunityResiko'));
                 document.getElementById('close-sasaran-data-pendukung-modal-btn').addEventListener('click', () => this.ModalManager.close('sasaranDataPendukung'));
                 document.getElementById('close-sig-btn').addEventListener('click', () => this.ModalManager.close('signature'));
-                document.getElementById('close-import-btn').addEventListener('click', () => this.ModalManager.close('import'));
                 document.getElementById('close-delete-btn').addEventListener('click', () => this.ModalManager.close('delete'));
                 document.getElementById('cancel-delete-btn').addEventListener('click', () => this.ModalManager.close('confirmDelete'));
-                document.getElementById('close-devisi-modal-btn').addEventListener('click', () => this.ModalManager.close('devisi'));
 
                 this.elements.tampilkanRekapanBtn.addEventListener('click', () => {
                     const selectedFormKey = this.elements.historyFormSelect.value;
@@ -1880,6 +1820,7 @@
             },
 
             setFormReadOnly(isReadOnly) {
+                if (!this.state.currentFormKey) return;
                 const pageId = this.getFormPageId(this.state.currentFormKey);
                 const activePage = document.getElementById(pageId);
                 if (!activePage) return;
@@ -1906,13 +1847,13 @@
                 document.body.classList.add('print-view-active');
                 await new Promise(resolve => setTimeout(resolve, 100));
                 window.print();
-                // Cleanup for desktop after print dialog is closed
+                
                 const afterPrint = () => {
                     document.body.classList.remove('print-view-active');
                     window.removeEventListener('afterprint', afterPrint);
                 };
                 window.addEventListener('afterprint', afterPrint);
-                setTimeout(() => { // Fallback cleanup
+                setTimeout(() => { 
                    if(document.body.classList.contains('print-view-active')) {
                        document.body.classList.remove('print-view-active');
                    }
@@ -1984,12 +1925,23 @@
                     const newValue = cell.textContent;
 
                     if (itemIndex >= 0 && itemIndex < data.length && field && data[itemIndex]) {
+                        const maintenanceMatch = field.match(/^m(\d)w(\d)$/);
+
                         if (field.startsWith('score-')) {
                             const scoreIndex = parseInt(field.split('-')[1], 10);
                             if(data[itemIndex].scores) data[itemIndex].scores[scoreIndex] = newValue;
                         } else if (field.startsWith('bulan-')) {
                             const bulanIndex = parseInt(field.split('-')[1], 10);
                              if(data[itemIndex].bulan) data[itemIndex].bulan[bulanIndex] = newValue;
+                        } else if (maintenanceMatch) {
+                            const monthIndex = parseInt(maintenanceMatch[1], 10);
+                            const weekIndex = parseInt(maintenanceMatch[2], 10) - 1;
+                            const monthKey = `m${monthIndex}`;
+                            if (data[itemIndex][monthKey] && Array.isArray(data[itemIndex][monthKey])) {
+                                if (weekIndex >= 0 && weekIndex < data[itemIndex][monthKey].length) {
+                                    data[itemIndex][monthKey][weekIndex] = newValue;
+                                }
+                            }
                         } else {
                             data[itemIndex][field] = newValue;
                         }
@@ -2100,7 +2052,7 @@
                         if (this.state.isHistoryView) return;
                         this.state.currentSignatureKey = area.id;
                         this.ModalManager.open('signature');
-                        setTimeout(() => { // ensure modal is visible before resizing
+                        setTimeout(() => { 
                             resizeCanvas();
                             ctx.clearRect(0, 0, canvas.width, canvas.height);
                         }, 100);
@@ -2257,7 +2209,6 @@
                     }),
                     render: function() {
                         this.manager.render();
-                        const table = document.getElementById('matriks-kompetensi-table');
                         const data = App.state.matriksKompetensi.kompetensi;
                         
                         let tfoot = document.getElementById('matriks-kompetensi-foot');
@@ -2322,110 +2273,6 @@
                     }
                 };
             },
-
-            setupImportFeature() {
-                 const importFormSelect = document.getElementById('import-form-select');
-                 const downloadTemplateBtn = document.getElementById('download-template-btn');
-                 const importFileBtn = document.getElementById('import-file-btn');
-                 const csvImportInput = document.getElementById('csv-import-input');
-
-                 downloadTemplateBtn.addEventListener('click', () => this.handleTemplateDownload(importFormSelect.value));
-                 importFileBtn.addEventListener('click', () => csvImportInput.click());
-                 csvImportInput.addEventListener('change', (e) => this.handleImport(e, importFormSelect.value));
-            },
-
-            handleTemplateDownload(formKey) {
-                const headersMap = {
-                    catatanMutu: ['nama', 'no', 'lokasi', 'masa', 'metode', 'media', 'penanggungJawab', 'keterangan'],
-                    sasaranMutu: ['sasaran', 'target', 'des', 'jan', 'feb', 'mart', 'apr', 'mei', 'ket', 'IS_RENCANA', 'rencana', 'pelaksana', 'waktu', 'keterangan_rencana'],
-                    daftarInventaris: ['inventaris_table', 'nama', 'merk', 'noInv', 'kondisi', 'ket'],
-                    //... add other templates
-                };
-                const headers = headersMap[formKey];
-                if (!headers) {
-                    this.showToast('Template untuk formulir ini tidak tersedia.');
-                    return;
-                }
-                const csvContent = headers.join(',');
-                this.downloadCsv(csvContent, `template_${formKey}.csv`);
-            },
-            
-            async handleImport(event, formKey) {
-                const file = event.target.files[0];
-                if (!file) return;
-
-                const reader = new FileReader();
-                reader.onload = async (e) => {
-                    const text = e.target.result;
-                    try {
-                        let dataToSave;
-                        if (formKey === 'sasaranMutu') {
-                            dataToSave = this.parseSasaranMutuCsv(text);
-                        } else {
-                            dataToSave = this.parseSimpleCsv(text);
-                        }
-                        
-                        await addDoc(this.getActiveCollectionRef(formKey), {
-                            timestamp: serverTimestamp(), data: dataToSave, source: 'import'
-                        });
-                        
-                        this.showToast(`Data berhasil diimpor ke ${formKey}.`);
-                        this.ModalManager.close('import');
-
-                    } catch (error) {
-                        console.error("Import failed:", error);
-                        this.showToast(`Gagal mengimpor: ${error.message}`);
-                    }
-                };
-                reader.readAsText(file);
-                event.target.value = '';
-            },
-
-            parseSimpleCsv(text) {
-                const rows = text.split('\n').filter(row => row.trim() !== '');
-                if (rows.length < 2) throw new Error("File CSV kosong atau hanya berisi header.");
-                const headers = rows[0].split(',').map(h => h.trim());
-                return rows.slice(1).map(row => {
-                    const values = row.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-                    let obj = {};
-                    headers.forEach((header, index) => obj[header] = values[index]);
-                    return obj;
-                });
-            },
-
-            parseSasaranMutuCsv(text) {
-                const rows = text.split('\n');
-                const headers = rows[0].split(',').map(h => h.trim());
-                const data = { sasaranMutu: [], rencanaTindakan: [], extraData: {}, signatures: {} };
-                rows.slice(1).forEach(rowStr => {
-                    if (!rowStr.trim()) return;
-                    const values = rowStr.split(',').map(v => v.trim());
-                    let rowObj = {};
-                    headers.forEach((h, i) => rowObj[h] = values[i]);
-
-                    if (rowObj.IS_RENCANA === 'TRUE') {
-                        data.rencanaTindakan.push({
-                            rencana: rowObj.rencana, pelaksana: rowObj.pelaksana, waktu: rowObj.waktu, keterangan: rowObj.keterangan_rencana
-                        });
-                    } else {
-                        data.sasaranMutu.push({
-                            sasaran: rowObj.sasaran, target: rowObj.target, des: rowObj.des, jan: rowObj.jan, feb: rowObj.feb, mart: rowObj.mart, apr: rowObj.apr, mei: rowObj.mei, ket: rowObj.ket
-                        });
-                    }
-                });
-                return data;
-            },
-
-            downloadCsv(csvContent, filename) {
-                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-                const link = document.createElement("a");
-                const url = URL.createObjectURL(blob);
-                link.setAttribute("href", url);
-                link.setAttribute("download", filename);
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            },
             
             setupDeleteFeature() {
                 const hapusDataBtn = document.getElementById('hapus-data-btn');
@@ -2478,146 +2325,6 @@
                     this.showToast(`Gagal menghapus data: ${error.message}`);
                 }
             },
-
-            async setupDevisiManagement() {
-                document.getElementById('manage-devisi-btn').addEventListener('click', () => this.ModalManager.open('devisi'));
-                document.getElementById('add-devisi-btn').addEventListener('click', () => this.addDevisi());
-                await this.loadDevisis();
-            },
-
-            async loadDevisis() {
-                const devisiCollectionRef = collection(db, 'devisiList');
-                try {
-                    const snapshot = await getDocs(query(devisiCollectionRef, orderBy('name')));
-                    if (snapshot.empty) {
-                        await this.createInitialDevisi();
-                        return;
-                    }
-                    this.state.devisis = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                    
-                    let lastActiveId = localStorage.getItem('activeDevisiId');
-                    const activeDevisi = this.state.devisis.find(d => d.id === lastActiveId) || this.state.devisis[0];
-
-                    this.state.activeDevisiId = activeDevisi.id;
-                    this.state.activeDevisiName = activeDevisi.name;
-                    localStorage.setItem('activeDevisiId', activeDevisi.id);
-
-                    this.renderDevisiUI();
-                    this.setupAllFormListeners();
-
-                } catch (e) { console.error("Could not load devisis", e); }
-            },
-            
-            async createInitialDevisi() {
-                 try {
-                    const docRef = await addDoc(collection(db, 'devisiList'), { name: 'ISO Training Center' });
-                    // To handle migration of old data to the new structure
-                    await this.migrateOldDataToDevisi(docRef.id);
-                    await this.loadDevisis(); // Reload to set the state correctly
-                 } catch (e) { console.error("Could not create initial devisi", e); }
-            },
-            
-            async migrateOldDataToDevisi(devisiId) {
-                console.log(`Starting migration of old data to new devisi: ${devisiId}`);
-                const formKeys = ['catatanMutu', 'sasaranMutu', 'daftarInventaris', 'jadwalPerawatan', 'ceklisPerawatan', 'opportunity', 'analisaResiko', 'matriksKompetensi', 'jadwalPelatihan'];
-                
-                for (const formKey of formKeys) {
-                    try {
-                        const oldCollectionRef = collection(db, `${formKey}History`);
-                        const oldDocsSnapshot = await getDocs(oldCollectionRef);
-                        
-                        if (!oldDocsSnapshot.empty) {
-                            console.log(`Found ${oldDocsSnapshot.size} documents in old '${formKey}History' to migrate.`);
-                            const newCollectionRef = collection(db, 'devisi', devisiId, `${formKey}History`);
-                            const writePromises = [];
-                            oldDocsSnapshot.forEach(docToMigrate => {
-                                writePromises.push(addDoc(newCollectionRef, docToMigrate.data()));
-                            });
-                            await Promise.all(writePromises);
-                            console.log(`Successfully migrated data for ${formKey}.`);
-                        }
-                    } catch (error) {
-                        // It's okay if the old collection doesn't exist.
-                        if (error.code !== 'permission-denied' && error.code !== 'unimplemented') {
-                             console.warn(`Could not migrate data for ${formKey}. Maybe it didn't exist? Error:`, error);
-                        }
-                    }
-                }
-            },
-
-            renderDevisiUI() {
-                this.elements.currentDevisiName.textContent = this.state.activeDevisiName;
-                const listEl = document.getElementById('devisi-list');
-                listEl.innerHTML = '';
-                this.state.devisis.forEach(devisi => {
-                    const item = document.createElement('div');
-                    item.className = `flex justify-between items-center p-2 rounded-md ${devisi.id === this.state.activeDevisiId ? 'bg-blue-100' : 'hover:bg-gray-100'}`;
-                    item.innerHTML = `
-                        <span class="font-medium cursor-pointer flex-grow">${devisi.name}</span>
-                        <button data-action="edit" class="text-sm text-blue-500 hover:underline p-1">Edit</button>
-                        <button data-action="delete" class="text-sm text-red-500 hover:underline p-1">Hapus</button>
-                    `;
-                    item.querySelector('span').addEventListener('click', () => this.switchDevisi(devisi.id, devisi.name));
-                    item.querySelector('[data-action="edit"]').addEventListener('click', () => this.editDevisi(devisi.id, devisi.name));
-                    item.querySelector('[data-action="delete"]').addEventListener('click', () => this.deleteDevisi(devisi.id, devisi.name));
-                    listEl.appendChild(item);
-                });
-            },
-
-            async switchDevisi(devisiId, devisiName) {
-                if (devisiId === this.state.activeDevisiId) {
-                    this.ModalManager.close('devisi');
-                    return;
-                }
-                this.elements.loadingOverlay.style.display = 'flex';
-                this.ModalManager.close('devisi');
-                
-                localStorage.setItem('activeDevisiId', devisiId);
-                this.state.activeDevisiId = devisiId;
-                this.state.activeDevisiName = devisiName;
-
-                this.renderDevisiUI();
-                this.setupAllFormListeners(); // This will detach old listeners and attach new ones
-                
-                // Show the current page, or default to the first form
-                const formToDisplay = this.state.currentFormKey || 'catatanMutu';
-                this.showPage(formToDisplay);
-            },
-
-            async addDevisi() {
-                const input = document.getElementById('new-devisi-input');
-                const name = input.value.trim();
-                if (!name) return;
-                try {
-                    await addDoc(collection(db, 'devisiList'), { name });
-                    input.value = '';
-                    await this.loadDevisis(); // Reload and re-render the list
-                } catch(e) { console.error("Error adding devisi:", e); this.showToast("Gagal menambah devisi."); }
-            },
-
-            async editDevisi(id, oldName) {
-                const newName = prompt("Masukkan nama baru untuk devisi:", oldName);
-                if (newName && newName.trim() !== '' && newName !== oldName) {
-                    try {
-                        await updateDoc(doc(db, 'devisiList', id), { name: newName.trim() });
-                        await this.loadDevisis();
-                    } catch (e) { console.error("Error updating devisi:", e); this.showToast("Gagal mengedit devisi."); }
-                }
-            },
-            
-            async deleteDevisi(id, name) {
-                if (this.state.devisis.length <= 1) {
-                    this.showToast("Tidak bisa menghapus satu-satunya devisi."); return;
-                }
-                const confirmMsg = `Apakah Anda yakin ingin menghapus devisi "${name}"? Tindakan ini tidak akan menghapus data formulirnya, tetapi data tersebut tidak akan bisa diakses lagi.`;
-                if (confirm(confirmMsg)) {
-                    try {
-                        await deleteDoc(doc(db, 'devisiList', id));
-                        localStorage.removeItem('activeDevisiId'); // Force re-selection
-                        await this.loadDevisis();
-                    } catch (e) { console.error("Error deleting devisi:", e); this.showToast("Gagal menghapus devisi."); }
-                }
-            },
             
             setupPWA() {
                 if ('serviceWorker' in navigator) {
@@ -2633,4 +2340,6 @@
     </script>
 </body>
 </html>
+
+
 

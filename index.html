@@ -207,6 +207,10 @@
             text-align: center;
             font-size: 0.875rem;
             border: 1px solid #fde68a; /* yellow-200 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
         }
 
         /* Print Mode Styles */
@@ -302,6 +306,7 @@
         <a href="#" class="nav-link" data-form-key="daftarInventaris">3. Daftar Inventaris</a>
         <a href="#" class="nav-link" data-form-key="jadwalPerawatan">4. Jadwal Perawatan</a>
         <a href="#" id="nav-opportunity-resiko" class="nav-link">5. Opportunity & Resiko</a>
+        <a href="#" class="nav-link" data-form-key="daftarHadir">6. Daftar Hadir</a>
         <a href="#" id="nav-rekapan" class="nav-link font-semibold text-indigo-600">Riwayat & Rekapan Data</a>
         <a href="#" id="nav-delete" class="nav-link font-semibold text-red-600">Hapus Berkas Tersimpan</a>
     </nav>
@@ -686,9 +691,9 @@
                                 <th colspan="4" class="p-1" contenteditable="true">Bulan: November 2023</th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs">
-                                <th class="p-1 w-10">1</th><th class="p-1 w-10">2</th><th class="p-1 w-10">3</th><th class="p-1 w-10">4</th>
-                                <th class="p-1 w-10">1</th><th class="p-1 w-10">2</th><th class="p-1 w-10">3</th><th class="p-1 w-10">4</th>
-                                <th class="p-1 w-10">1</th><th class="p-1 w-10">2</th><th class="p-1 w-10">3</th><th class="p-1 w-10">4</th>
+                                <th class="p-1 w-10" contenteditable="true">1</th><th class="p-1 w-10" contenteditable="true">2</th><th class="p-1 w-10" contenteditable="true">3</th><th class="p-1 w-10" contenteditable="true">4</th>
+                                <th class="p-1 w-10" contenteditable="true">1</th><th class="p-1 w-10" contenteditable="true">2</th><th class="p-1 w-10" contenteditable="true">3</th><th class="p-1 w-10" contenteditable="true">4</th>
+                                <th class="p-1 w-10" contenteditable="true">1</th><th class="p-1 w-10" contenteditable="true">2</th><th class="p-1 w-10" contenteditable="true">3</th><th class="p-1 w-10" contenteditable="true">4</th>
                             </tr>
                         </thead>
                         <tbody id="jadwal-perawatan-body" class="text-gray-700"></tbody>
@@ -966,8 +971,8 @@
                             </tr>
                             <tr>
                                 <th colspan="10" class="p-2 text-left font-semibold">
-                                     Proses: <span contenteditable="true" class="font-normal"></span>
-                                     <span class="ml-8">Tanggal Dibuat: <span contenteditable="true" class="font-normal"></span></span>
+                                     Proses: <span id="resiko-proses" contenteditable="true" class="font-normal"></span>
+                                     <span class="ml-8">Tanggal Dibuat: <span id="resiko-tanggal" contenteditable="true" class="font-normal"></span></span>
                                 </th>
                             </tr>
                             <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
@@ -1227,6 +1232,81 @@
                 </div>
             </div>
         </div>
+
+        
+        <div id="daftar-hadir-page" class="page-content hidden w-full max-w-7xl mx-auto">
+            <div class="bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full form-border">
+                <div class="table-container">
+                    <table id="daftar-hadir-table" class="text-sm">
+                        <thead>
+                            <tr>
+                                <th rowspan="2" class="p-2 text-center align-middle">
+                                    <img src="logo.png" alt="Logo Aplikasi" class="h-12 mx-auto">
+                                </th>
+                                <th colspan="3" class="p-2 text-center text-lg font-bold align-middle" contenteditable="true">DAFTAR HADIR</th>
+                                <th colspan="1" class="p-0 align-top">
+                                    <table class="w-full h-full text-xs">
+                                        <tr><td class="font-bold border-r border-b p-1">No. Form</td><td class="border-b p-1" contenteditable="true">FR-KK-59</td></tr>
+                                        <tr><td class="font-bold border-r p-1">Revisi</td><td class="p-1" contenteditable="true">00</td></tr>
+                                    </table>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="4" class="p-1 text-left">
+                                    <div class="space-y-1">
+                                        <p><strong>Tanggal:</strong> <span id="hadir-tanggal" contenteditable="true"></span></p>
+                                        <p><strong>Tempat:</strong> <span id="hadir-tempat" contenteditable="true"></span></p>
+                                        <p><strong>Trainer / Terapis:</strong> <span id="hadir-trainer" contenteditable="true"></span></p>
+                                    </div>
+                                </th>
+                            </tr>
+                            <tr class="bg-gray-100 text-gray-600 uppercase text-xs text-center">
+                                <th class="p-2 w-12">No.</th>
+                                <th class="p-2 w-1/3" contenteditable="true">Nama</th>
+                                <th class="p-2 w-48" contenteditable="true">Jam Hadir</th>
+                                <th class="p-2 w-48" contenteditable="true">Paraf</th>
+                                <th class="p-2" contenteditable="true">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="daftar-hadir-body" class="text-gray-700">
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td class="p-2 text-center">
+                                    <div class="relative inline-block">
+                                        <button class="add-row-toggle-btn btn-3d bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold p-2 rounded-full flex items-center justify-center mx-auto">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
+                                        </button>
+                                        <div class="add-delete-controls hidden" id="controls-hadir">
+                                            <button id="add-row-hadir-btn" class="p-2 rounded-full hover:bg-gray-100 text-green-600">
+                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                                            </button>
+                                            <button id="delete-row-hadir-btn" class="p-2 rounded-full hover:bg-gray-100 text-red-600">
+                                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 10a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td colspan="4"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+             <div class="mt-8 bg-white p-4 sm:p-6 rounded-xl shadow-lg w-full">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Catatan Audit</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="daftarHadir-catatan-audit" class="block text-sm font-medium text-gray-700 mb-1">Catatan Hasil Audit</label>
+                        <div id="daftarHadir-catatan-audit" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                    <div>
+                        <label for="daftarHadir-catatan-auditor" class="block text-sm font-medium text-gray-700 mb-1">Catatan Auditor</label>
+                        <div id="daftarHadir-catatan-auditor" class="p-2 border border-gray-300 rounded-md min-h-[100px] bg-gray-50" contenteditable="true"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     
@@ -1238,6 +1318,20 @@
                 <button id="clear-sig-btn" class="btn-3d bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded-lg">Ulangi</button>
                 <button id="save-sig-btn" class="btn-3d bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">Simpan</button>
                 <button id="close-sig-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div id="image-preview-modal" class="modal-overlay hidden">
+        <div class="modal-content" style="max-width: 600px;">
+            <h3 class="text-xl font-bold mb-4 text-center">Pratinjau Gambar</h3>
+            <div class="bg-gray-100 p-2 rounded-lg">
+                <img id="image-preview-display" src="" alt="Pratinjau Gambar" class="max-w-full max-h-[60vh] mx-auto rounded">
+            </div>
+            <div class="flex justify-center space-x-4 mt-6">
+                <button id="save-image-btn" class="btn-3d bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg">Simpan Gambar</button>
+                <button id="close-image-preview-btn" class="btn-3d bg-gray-400 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">Tutup</button>
             </div>
         </div>
     </div>
@@ -1259,6 +1353,7 @@
                         <option value="analisaResiko">Analisa Resiko</option>
                         <option value="matriksKompetensi">Matriks Kompetensi</option>
                         <option value="jadwalPelatihan">Jadwal Pelatihan</option>
+                        <option value="daftarHadir">Daftar Hadir</option>
                     </select>
                 </div>
                 <div>
@@ -1341,6 +1436,7 @@
                         <option value="analisaResiko">Analisa Resiko</option>
                         <option value="matriksKompetensi">Matriks Kompetensi</option>
                         <option value="jadwalPelatihan">Jadwal Pelatihan</option>
+                        <option value="daftarHadir">Daftar Hadir</option>
                     </select>
                 </div>
                 <div>
@@ -1374,11 +1470,13 @@
     <div id="toast-notification" class="toast"></div>
 
     
+    <input type="file" id="image-upload-input" class="hidden" accept="image/*">
 
 <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
         import { getFirestore, collection, doc, addDoc, serverTimestamp, query, orderBy, limit, onSnapshot, getDocs, where, Timestamp, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js";
         
         // Initialize Firebase
         const firebaseConfig = {
@@ -1393,6 +1491,7 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const auth = getAuth(app);
+        const storage = getStorage(app);
         
         const App = {
             state: {
@@ -1400,13 +1499,15 @@
                 unsubscribeListeners: [],
                 catatanMutu: { items: [], auditNotes: { audit: '', auditor: '' } },
                 sasaranMutu: [], rencanaTindakan: [], sasaranMutuExtraData: {},
-                daftarInventaris: { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' } },
+                daftarInventaris: { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' }, pendingImageFile: null },
                 jadwalPerawatan: { perawatan: [], signatures: {}, extraData: {}, auditNotes: { audit: '', auditor: '' } },
                 ceklisPerawatan: { items: [], signatures: {}, date: '', auditNotes: { audit: '', auditor: '' } },
                 opportunity: { items: [], auditNotes: { audit: '', auditor: '' } },
-                analisaResiko: { items: [], auditNotes: { audit: '', auditor: '' } },
+                analisaResiko: { items: [], extraData: {}, auditNotes: { audit: '', auditor: '' } },
                 matriksKompetensi: { kompetensi: [], auditNotes: { audit: '', auditor: '' } },
-                jadwalPelatihan: { pelatihan: [], extraData: {} }, signatures: {},
+                jadwalPelatihan: { pelatihan: [], extraData: {} },
+                daftarHadir: { items: [], extraData: {}, auditNotes: { audit: '', auditor: '' } },
+                signatures: {},
             },
             elements: {},
             
@@ -1417,19 +1518,21 @@
                         rekapan: document.getElementById('rekapan-modal'), historyList: document.getElementById('history-list-modal'),
                         opportunityResiko: document.getElementById('opportunity-resiko-modal'), sasaranDataPendukung: document.getElementById('sasaran-data-pendukung-modal'),
                         signature: document.getElementById('signature-modal'), delete: document.getElementById('delete-modal'), confirmDelete: document.getElementById('confirm-delete-modal'),
+                        imagePreview: document.getElementById('image-preview-modal'),
                     };
                 },
                 open(id) { this.modals[id]?.classList.remove('hidden'); },
                 close(id) { this.modals[id]?.classList.add('hidden'); }
             },
 
-            tableManagers: {}, db,
+            tableManagers: {}, db, storage,
 
             async init() {
                 this.cacheElements(); this.ModalManager.init();
                 this.setupHeaderNav(); this.setupModalEventListeners();
                 this.setupSignaturePad(); this.setupTableControls();
                 this.setupPWA(); this.setupDeleteFeature();
+                this.setupImageUpload();
                 
                 try {
                     await signInAnonymously(auth); console.log("Signed in anonymously");
@@ -1454,6 +1557,8 @@
                  this.elements.signatureAreas = document.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]');
                  this.elements.tampilkanRekapanBtn = document.getElementById('tampilkan-rekapan-btn'); this.elements.historyFormSelect = document.getElementById('history-form-select');
                  this.elements.moduleChoiceBtns = document.querySelectorAll('.module-choice-btn'); this.elements.historyBanner = document.getElementById('history-banner');
+                 this.elements.imageUploadInput = document.getElementById('image-upload-input');
+                 this.elements.imagePreviewDisplay = document.getElementById('image-preview-display');
             },
             
             showToast(message, duration = 3000) {
@@ -1465,7 +1570,7 @@
             
             setupAllFormListeners() {
                 this.state.unsubscribeListeners.forEach(unsub => unsub()); this.state.unsubscribeListeners = [];
-                const formKeys = ['catatanMutu', 'sasaranMutu', 'daftarInventaris', 'jadwalPerawatan', 'ceklisPerawatan', 'opportunity', 'analisaResiko', 'matriksKompetensi', 'jadwalPelatihan'];
+                const formKeys = ['catatanMutu', 'sasaranMutu', 'daftarInventaris', 'jadwalPerawatan', 'ceklisPerawatan', 'opportunity', 'analisaResiko', 'matriksKompetensi', 'jadwalPelatihan', 'daftarHadir'];
                 formKeys.forEach(key => this.setupFormListener(key));
                 setTimeout(() => this.elements.loadingOverlay.style.display = 'none', 1500);
             },
@@ -1497,13 +1602,14 @@
                     case 'sasaranMutu': 
                         this.state.sasaranMutu = []; this.state.rencanaTindakan = []; 
                         this.state.sasaranMutuExtraData = {}; this.state.signatures = {}; break;
-                    case 'daftarInventaris': this.state.daftarInventaris = { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'daftarInventaris': this.state.daftarInventaris = { inventaris1: [], inventaris2: [], auditNotes: { audit: '', auditor: '' }, pendingImageFile: null }; break;
                     case 'jadwalPerawatan': this.state.jadwalPerawatan = { perawatan: [], signatures: {}, extraData: {}, auditNotes: { audit: '', auditor: '' } }; break;
                     case 'ceklisPerawatan': this.state.ceklisPerawatan = { items: [], signatures: {}, date: '', auditNotes: { audit: '', auditor: '' } }; break;
                     case 'opportunity': this.state.opportunity = { items: [], auditNotes: { audit: '', auditor: '' } }; break;
-                    case 'analisaResiko': this.state.analisaResiko = { items: [], auditNotes: { audit: '', auditor: '' } }; break;
+                    case 'analisaResiko': this.state.analisaResiko = { items: [], extraData: {}, auditNotes: { audit: '', auditor: '' } }; break;
                     case 'matriksKompetensi': this.state.matriksKompetensi = { kompetensi: [], auditNotes: { audit: '', auditor: '' } }; break;
                     case 'jadwalPelatihan': this.state.jadwalPelatihan = { pelatihan: [], extraData: {}, signatures: {} }; break;
+                    case 'daftarHadir': this.state.daftarHadir = { items: [], extraData: {}, auditNotes: { audit: '', auditor: '' } }; break;
                 }
             },
             
@@ -1527,6 +1633,7 @@
                         this.state.daftarInventaris.inventaris1 = data.inventaris1 || [];
                         this.state.daftarInventaris.inventaris2 = data.inventaris2 || [];
                         this.state.daftarInventaris.auditNotes = data.auditNotes || { audit: '', auditor: '' };
+                        // Note: pendingImageFile is not loaded from history.
                         break;
                     case 'jadwalPerawatan':
                         this.state.jadwalPerawatan.perawatan = data.perawatan || [];
@@ -1546,6 +1653,7 @@
                         break;
                     case 'analisaResiko': 
                         this.state.analisaResiko.items = data.items || [];
+                        this.state.analisaResiko.extraData = data.extraData || {};
                         this.state.analisaResiko.auditNotes = data.auditNotes || { audit: '', auditor: '' };
                         break;
                     case 'matriksKompetensi': 
@@ -1556,6 +1664,11 @@
                         this.state.jadwalPelatihan.pelatihan = data.pelatihan || [];
                         this.state.jadwalPelatihan.extraData = data.extraData || {};
                         this.state.signatures = {...this.state.signatures, ...data.signatures};
+                        break;
+                    case 'daftarHadir':
+                        this.state.daftarHadir.items = data.items || [];
+                        this.state.daftarHadir.extraData = data.extraData || {};
+                        this.state.daftarHadir.auditNotes = data.auditNotes || { audit: '', auditor: '' };
                         break;
                 }
             },
@@ -1591,8 +1704,26 @@
                             signatures: { 'dibuat-oleh-signature': this.state.signatures['dibuat-oleh-signature'], 'disetujui-oleh-signature': this.state.signatures['disetujui-oleh-signature'] }
                         }; 
                         break;
-                    case 'daftarInventaris': 
+                    case 'daftarInventaris':
+                        // Handle image upload before creating the data object
+                        if (this.state.daftarInventaris.pendingImageFile) {
+                            try {
+                                const file = this.state.daftarInventaris.pendingImageFile;
+                                const fileName = `${Date.now()}-${file.name}`;
+                                const storageRef = ref(this.storage, `isoAppData/daftarInventaris/images/${fileName}`);
+                                await uploadBytes(storageRef, file);
+                                dataToSave.imageUrl = await getDownloadURL(storageRef);
+                                this.state.daftarInventaris.pendingImageFile = null; // Clear after successful upload prep
+                                this.showToast('Gambar berhasil disiapkan untuk disimpan.');
+                            } catch (error) {
+                                console.error("Image upload failed:", error);
+                                this.showToast('Gagal mengunggah gambar!', 4000);
+                                return; // Stop saving if image upload fails
+                            }
+                        }
+                        
                         dataToSave = {
+                            ...dataToSave,
                             inventaris1: this.state.daftarInventaris.inventaris1,
                             inventaris2: this.state.daftarInventaris.inventaris2,
                             auditNotes: getAuditNotes(formKey)
@@ -1629,6 +1760,10 @@
                     case 'analisaResiko': 
                         dataToSave = {
                             items: this.state.analisaResiko.items,
+                            extraData: {
+                                proses: document.getElementById('resiko-proses').textContent,
+                                tanggalDibuat: document.getElementById('resiko-tanggal').textContent
+                            },
                             auditNotes: getAuditNotes(formKey)
                         }; 
                         break;
@@ -1651,6 +1786,17 @@
                             },
                             signatures: { 'disiapkan-oleh-signature-pelatihan': this.state.signatures['disiapkan-oleh-signature-pelatihan'], 'disetujui-oleh-signature-pelatihan': this.state.signatures['disetujui-oleh-signature-pelatihan'] }
                         }; 
+                        break;
+                    case 'daftarHadir':
+                        dataToSave = {
+                            items: this.state.daftarHadir.items,
+                            extraData: {
+                                tanggal: document.getElementById('hadir-tanggal').textContent,
+                                tempat: document.getElementById('hadir-tempat').textContent,
+                                trainer: document.getElementById('hadir-trainer').textContent,
+                            },
+                            auditNotes: getAuditNotes(formKey)
+                        };
                         break;
                     default: this.showToast('Gagal: Jenis formulir tidak dikenal.'); return;
                 }
@@ -1744,6 +1890,8 @@
                 document.getElementById('close-sig-btn').addEventListener('click', () => this.ModalManager.close('signature'));
                 document.getElementById('close-delete-btn').addEventListener('click', () => this.ModalManager.close('delete'));
                 document.getElementById('cancel-delete-btn').addEventListener('click', () => this.ModalManager.close('confirmDelete'));
+                document.getElementById('close-image-preview-btn').addEventListener('click', () => this.ModalManager.close('imagePreview'));
+
 
                 this.elements.tampilkanRekapanBtn.addEventListener('click', () => {
                     const selectedFormKey = this.elements.historyFormSelect.value;
@@ -1766,7 +1914,7 @@
             async displayHistory(formKey, startDateStr, endDateStr) {
                 const titleMap = {
                     catatanMutu: "Daftar Catatan Mutu", sasaranMutu: "Sasaran Mutu", daftarInventaris: "Daftar Inventaris", jadwalPerawatan: "Jadwal Perawatan",
-                    ceklisPerawatan: "Checklist Perawatan", opportunity: "Tabel Opportunity", analisaResiko: "Analisa Resiko", matriksKompetensi: "Matriks Kompetensi", jadwalPelatihan: "Jadwal Pelatihan",
+                    ceklisPerawatan: "Checklist Perawatan", opportunity: "Tabel Opportunity", analisaResiko: "Analisa Resiko", matriksKompetensi: "Matriks Kompetensi", jadwalPelatihan: "Jadwal Pelatihan", daftarHadir: "Daftar Hadir",
                 };
                 document.getElementById('history-list-title').textContent = `Riwayat: ${titleMap[formKey] || formKey}`;
                 const container = document.getElementById('history-list-container');
@@ -1795,7 +1943,13 @@
                         
                         const itemEl = document.createElement('div');
                         itemEl.className = 'p-3 border-b hover:bg-gray-100 cursor-pointer';
-                        itemEl.textContent = `Disimpan pada: ${formattedDate}`;
+                        
+                        let content = `Disimpan pada: ${formattedDate}`;
+                        if (formKey === 'daftarInventaris' && version.data.imageUrl) {
+                            content += ' 🖼️';
+                        }
+                        itemEl.innerHTML = content;
+
                         itemEl.addEventListener('click', () => {
                             this.loadHistoricalVersion(formKey, version.data, formattedDate);
                             this.ModalManager.close('historyList');
@@ -1814,8 +1968,20 @@
                 this.showPage(formKey);
                 this.setFormReadOnly(true);
 
-                this.elements.historyBanner.textContent = `Anda sedang melihat versi yang disimpan pada ${formattedDate}.`;
+                let bannerContent = `<span>Anda sedang melihat versi yang disimpan pada ${formattedDate}.</span>`;
+                 if (formKey === 'daftarInventaris' && data.imageUrl) {
+                    bannerContent += `<button id="view-history-image-btn" class="btn-3d bg-blue-500 hover:bg-blue-600 text-white text-xs px-2 py-1 rounded">Lihat Gambar</button>`;
+                }
+
+                this.elements.historyBanner.innerHTML = bannerContent;
                 this.elements.historyBanner.classList.remove('hidden');
+
+                if (formKey === 'daftarInventaris' && data.imageUrl) {
+                    document.getElementById('view-history-image-btn').addEventListener('click', () => {
+                        window.open(data.imageUrl, '_blank');
+                    });
+                }
+
                 this.updateActionButtons();
             },
 
@@ -1828,7 +1994,7 @@
                 activePage.querySelectorAll('[contenteditable="true"], [contenteditable="false"]').forEach(el => el.setAttribute('contenteditable', !isReadOnly));
                 activePage.querySelectorAll('.add-row-toggle-btn').forEach(btn => btn.style.display = isReadOnly ? 'none' : 'inline-flex');
                 
-                // Also toggle cursor style on signature areas
+                
                 activePage.querySelectorAll('[id$="-signature"], [id$="-signature-jadwal"], [id$="-signature-ceklis"], [id$="-signature-pelatihan"]').forEach(area => {
                     area.style.cursor = isReadOnly ? 'default' : 'pointer';
                 });
@@ -1838,7 +2004,8 @@
                 const map = {
                     catatanMutu: 'catatan-mutu-page', sasaranMutu: 'sasaran-mutu-page', daftarInventaris: 'daftar-inventaris-page',
                     jadwalPerawatan: 'jadwal-perawatan-page', ceklisPerawatan: 'ceklis-perawatan-page', opportunity: 'opportunity-page',
-                    analisaResiko: 'analisa-resiko-page', matriksKompetensi: 'matriks-kompetensi-page', jadwalPelatihan: 'jadwal-pelatihan-page'
+                    analisaResiko: 'analisa-resiko-page', matriksKompetensi: 'matriks-kompetensi-page', jadwalPelatihan: 'jadwal-pelatihan-page',
+                    daftarHadir: 'daftar-hadir-page'
                 };
                 return map[formKey];
             },
@@ -1865,22 +2032,32 @@
                 const formKey = this.state.currentFormKey;
                 if (!formKey) return;
 
-                const createButton = (text, classes, id, clickHandler) => {
+                const createButton = (content, classes, id, clickHandler) => {
                     const button = document.createElement('button');
-                    button.textContent = text;
+                    button.innerHTML = content;
                     button.className = `header-btn btn-3d ${classes}`;
                     if (id) button.id = id;
                     button.addEventListener('click', clickHandler);
-                    this.elements.headerActions.appendChild(button);
+                    return button;
                 };
 
                 if (this.state.isHistoryView) {
-                    createButton('Jadikan Versi Aktif', 'bg-yellow-500 hover:bg-yellow-600 text-white', null, () => this.saveCurrentVersion(formKey));
+                    this.elements.headerActions.appendChild(
+                        createButton('Jadikan Versi Aktif', 'bg-yellow-500 hover:bg-yellow-600 text-white', null, () => this.saveCurrentVersion(formKey))
+                    );
                 } else {
-                    if (formKey === 'sasaranMutu') createButton('Pendukung', 'bg-blue-600 hover:bg-blue-700 text-white', null, () => this.ModalManager.open('sasaranDataPendukung'));
-                    if (formKey === 'jadwalPerawatan') createButton('Ceklis', 'bg-blue-600 hover:bg-blue-700 text-white', null, () => this.showPage('ceklisPerawatan'));
-                    createButton('Cetak', 'bg-gray-700 hover:bg-gray-800 text-white', null, () => this.handlePrintClick());
-                    createButton('Simpan', 'bg-green-600 hover:bg-green-700 text-white', null, () => this.saveCurrentVersion(formKey));
+                    const actionsContainer = document.createDocumentFragment();
+                    if (formKey === 'sasaranMutu') actionsContainer.appendChild(createButton('Pendukung', 'bg-blue-600 hover:bg-blue-700 text-white', null, () => this.ModalManager.open('sasaranDataPendukung')));
+                    if (formKey === 'jadwalPerawatan') actionsContainer.appendChild(createButton('Ceklis', 'bg-blue-600 hover:bg-blue-700 text-white', null, () => this.showPage('ceklisPerawatan')));
+                    
+                    if (formKey === 'daftarInventaris') {
+                        const cameraIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" /></svg>`;
+                        actionsContainer.appendChild(createButton(cameraIcon, 'bg-gray-200 hover:bg-gray-300 text-gray-700 p-2', null, () => this.elements.imageUploadInput.click()));
+                    }
+                    
+                    actionsContainer.appendChild(createButton('Cetak', 'bg-gray-700 hover:bg-gray-800 text-white', null, () => this.handlePrintClick()));
+                    actionsContainer.appendChild(createButton('Simpan', 'bg-green-600 hover:bg-green-700 text-white', null, () => this.saveCurrentVersion(formKey)));
+                    this.elements.headerActions.appendChild(actionsContainer);
                 }
             },
             
@@ -1947,7 +2124,7 @@
                         }
                         
                         if(this.state.currentFormKey === 'matriksKompetensi') {
-                            this.renderCurrentPage(); // Re-render to update average
+                            this.renderCurrentPage(); 
                         }
                     }
                 };
@@ -2073,6 +2250,27 @@
                 });
             },
 
+            setupImageUpload() {
+                this.elements.imageUploadInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            this.elements.imagePreviewDisplay.src = event.target.result;
+                            this.ModalManager.open('imagePreview');
+                        };
+                        reader.readAsDataURL(file);
+                        this.state.daftarInventaris.selectedImageFile = file;
+                    }
+                });
+
+                document.getElementById('save-image-btn').addEventListener('click', () => {
+                    this.state.daftarInventaris.pendingImageFile = this.state.daftarInventaris.selectedImageFile;
+                    this.showToast('Gambar dipilih dan akan disimpan bersama formulir.');
+                    this.ModalManager.close('imagePreview');
+                });
+            },
+
             setupTables() {
                 this.tableManagers['catatan-mutu-page'] = {
                      manager: this.createTableManager({
@@ -2194,6 +2392,9 @@
                     }),
                      render: function() {
                         this.manager.render();
+                        const extraData = App.state.analisaResiko.extraData || {};
+                        document.getElementById('resiko-proses').textContent = extraData.proses || '';
+                        document.getElementById('resiko-tanggal').textContent = extraData.tanggalDibuat || '';
                         const auditNotes = App.state.analisaResiko.auditNotes || {};
                         document.getElementById('analisaResiko-catatan-audit').textContent = auditNotes.audit || '';
                         document.getElementById('analisaResiko-catatan-auditor').textContent = auditNotes.auditor || '';
@@ -2272,6 +2473,25 @@
                         this.manager.render();
                     }
                 };
+                
+                this.tableManagers['daftar-hadir-page'] = {
+                     manager: this.createTableManager({
+                        tbody: document.getElementById('daftar-hadir-body'), dataKey: 'daftarHadir.items',
+                        rowGenerator: (item, counter) => `<td class="border p-2 text-center">${counter}</td><td class="border p-2" contenteditable="true" data-field="nama">${item.nama || ''}</td><td class="border p-2" contenteditable="true" data-field="jamHadir">${item.jamHadir || ''}</td><td class="border p-2" contenteditable="true" data-field="paraf">${item.paraf || ''}</td><td class="border p-2" contenteditable="true" data-field="keterangan">${item.keterangan || ''}</td>`,
+                        addBtnId: 'add-row-hadir-btn', deleteBtnId: 'delete-row-hadir-btn',
+                        newRowFactory: () => ({ nama: "", jamHadir: "", paraf: "", keterangan: "" }),
+                    }),
+                    render: function() {
+                        const extraData = App.state.daftarHadir.extraData || {};
+                        document.getElementById('hadir-tanggal').textContent = extraData.tanggal || '';
+                        document.getElementById('hadir-tempat').textContent = extraData.tempat || '';
+                        document.getElementById('hadir-trainer').textContent = extraData.trainer || '';
+                        const auditNotes = App.state.daftarHadir.auditNotes || {};
+                        document.getElementById('daftarHadir-catatan-audit').textContent = auditNotes.audit || '';
+                        document.getElementById('daftarHadir-catatan-auditor').textContent = auditNotes.auditor || '';
+                        this.manager.render();
+                    }
+                };
             },
             
             setupDeleteFeature() {
@@ -2340,6 +2560,4 @@
     </script>
 </body>
 </html>
-
-
 
